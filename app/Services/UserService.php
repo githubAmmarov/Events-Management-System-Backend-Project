@@ -17,19 +17,21 @@ class UserService
             'name'=> $request['name'],
             'email'=> $request['email'],
             'password'=> Hash::make($request['password']),
-            'role_id'=> 2,
         ]);
-        // $clientRole = Role::query()->where('name','client')->first();
-        // $user->assignRole($clientRole);
+        $clientRole = Role::query()->where('name','client')->first();
+        $user->assignRole($clientRole);
 
-        // $permissions = $clientRole->permissions()->pluck('name')->toArray();
-        // $user->givePermissionTo($permissions);
+        // Assign permissions associated with the role to the user
+        $permissions = $clientRole->permissions()->pluck('name')->toArray();
+        $user->givePermissionTo($permissions);
 
-        // $user->load('roles','permissions');
+        // Load the user's roles and permissions
+        $user->load('roles','permissions');
 
+        // Reload the user instance to get updated roles and permissions
         $user= User::query()->find($user['id']);
-        // $user= $this->appendRolesAndPermissions($user);
-        $user['token'] = $user->createToken("bilal")->accessToken;
+        $user= $this->appendRolesAndPermissions($user);
+        $user['token'] = $user->createToken("PassportToken")->accessToken;
 
         $message = 'user created successfully';
         return ['user' => $user , 'message' => $message];
@@ -45,8 +47,8 @@ class UserService
                 $message = 'Email Or Password Is Not Valid';
                 $status = 401;
             } else {
-                // $user = $this->appendRolesAndPermissions($user);
-                $user['token'] = $user->createToken("bilal")->accessToken;
+                $user = $this->appendRolesAndPermissions($user);
+                $user['token'] = $user->createToken("PassportToken")->accessToken;
                 $message = 'user logged in successfully';
                 $status = 200;
             }
@@ -60,10 +62,17 @@ class UserService
     public function logout():array
     {
             $user = Auth::user();
-            $user->tokens()->delete();
-            $message = 'user logged out successfully';
-            $status = 200;
-        
+            if (!is_null(Auth::user()))
+            {
+                $user->tokens()->delete();
+            
+                $message = 'user logged out successfully';
+            
+                $status = 200;
+            }else{
+                $message = 'invalid token';
+                $code = 404;
+            }
         return ['user' => $user , 'message' => $message , 'status' => $status];
     }
 

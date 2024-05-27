@@ -3,6 +3,10 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Responses\Response;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class UserLoginRequest extends FormRequest
 {
@@ -26,5 +30,10 @@ class UserLoginRequest extends FormRequest
             'email' => ['required'],
             'password' => ['required'],
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new ValidationException($validator,Response::validation([],$validator->errors()));
     }
 }

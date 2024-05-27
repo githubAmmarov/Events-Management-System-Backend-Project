@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Http\Responses\Response;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class UserRegisterRequest extends FormRequest
 {
@@ -30,5 +33,10 @@ class UserRegisterRequest extends FormRequest
             'email' => ['required', 'string','email'],
             'password' => ['required', 'string', 'min:8','confirmed'],
             ];
+    }
+     
+    protected function failedValidation(Validator $validator)
+    {
+        throw new ValidationException($validator,Response::validation([],$validator->errors()));
     }
 }

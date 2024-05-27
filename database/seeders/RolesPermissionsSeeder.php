@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-//use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -16,39 +14,47 @@ class RolesPermissionsSeeder extends Seeder
      */
     public function run(): void
     {
-        $adminRole = Role::create(['name' => 'admin']);
-        $clientRole = Role::create(['name' => 'client']);
+        // Create Roles
+        $adminrole=Role::create(['name'=>'admin']);
+        $clientrole=Role::create(['name'=>'client']);
 
-        // permissions for users
-        $permissions = [
-            'delete_report', 'update_report', 'create_report', 'index_report'
+        // Define Permissions
+        $permissions= [
+            'delete_hall',
+            'update_hall',
+            'create_hall',
+            'index_hall'
         ];
-        foreach ($permissions as $permissionName) {
-            Permission::findOrCreate($permissionName, 'web');
+        foreach($permissions as $permissionName)
+        {
+            Permission::findOrCreate($permissionName,'web');
         }
-        $adminRole->syncPermissions($permissions); //delete old permissions and instead of those inside $permissions
-        $clientRole->givePermissionTo(['create_report', 'index_report']); // add permissions for this roles addition to his old permissions
 
+        // Assign permissions to roles
+        $adminrole->syncPermissions($permissions); // delete old permissions and keep those inside the $permissions
+        $clientrole->givePermissionTo(['index_hall']); // add permissions on top of old ones
 
-        $adminUser = User::factory()->create([
-            'name' => 'admin user',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('password'),
+        $adminuser=\App\Models\User::factory()->create([
+            "name" => 'Admin User',
+            'email' => 'Admin@example.com',
+            'password' => bcrypt('password'),
         ]);
-        $adminUser->assignRole($adminRole);
+        $adminuser->assignRole($adminrole);
 
-        $permissions = $adminRole->permissions()->pluck('name')->toArray();
-        $adminUser->givePermissionTo($permissions);
+        // Assign permissions associated with the role to the user 
+        $permissions = $adminrole->permissions()->pluck('name')->toArray();
+        $adminuser->givePermissionTo($permissions);
 
-
-        $clientUser = User::factory()->create([
-            'name' => 'admin user',
-            'email' => 'admins@example.com',
-            'password' => Hash::make('password'),
+        $clientuser=\App\Models\User::factory()->create([
+            'name' => 'Client User',
+            'email' => 'Client@example.com',
+            'password' => bcrypt('password'),
         ]);
-        $clientUser->assignRole($adminRole);
+        $clientuser->assignRole($clientrole);
 
-        $permissions = $clientRole->permissions()->pluck('name')->toArray();
-        $clientUser->givePermissionTo($permissions);
-        }
+        // Assign permissions associated with the role to the user 
+        $permissions = $clientrole->permissions()->pluck('name')->toArray();
+        $clientuser->givePermissionTo($permissions);
+
+    }
 }
