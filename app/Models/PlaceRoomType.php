@@ -16,6 +16,9 @@ class PlaceRoomType extends Model
 
     protected $table="place_room_types";
 
+    protected $hidden = ['created_at','updated_at'];
+
+
     /**
     MY PK IS FK WHERE?
      **/

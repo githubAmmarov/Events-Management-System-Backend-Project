@@ -16,6 +16,8 @@ class Media extends Model
         'media_url'
     ];
 
+    protected $hidden = ['created_at','updated_at'];
+
     protected $table="media";
 
     /**

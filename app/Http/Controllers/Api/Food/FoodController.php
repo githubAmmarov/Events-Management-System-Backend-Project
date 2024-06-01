@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Place;
-use App\Http\Requests\StorePlaceRequest;
-use App\Http\Requests\UpdatePlaceRequest;
+use App\Http\Controllers\Controller;
+use App\Models\Food;
+use App\Http\Requests\StoreFoodRequest;
+use App\Http\Requests\UpdateFoodRequest;
 
-class PlaceController extends Controller
+class FoodController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +28,7 @@ class PlaceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePlaceRequest $request)
+    public function store(StoreFoodRequest $request)
     {
         //
     }
@@ -35,7 +36,7 @@ class PlaceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Place $place)
+    public function show(Food $food)
     {
         //
     }
@@ -43,7 +44,7 @@ class PlaceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Place $place)
+    public function edit(Food $food)
     {
         //
     }
@@ -51,7 +52,7 @@ class PlaceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePlaceRequest $request, Place $place)
+    public function update(UpdateFoodRequest $request, Food $food)
     {
         //
     }
@@ -59,7 +60,7 @@ class PlaceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Place $place)
+    public function destroy(Food $food)
     {
         //
     }

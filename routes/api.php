@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\MediaController;
+use App\Http\Controllers\Api\Place\PlaceController;
+use App\Http\Controllers\Api\Place\SubRoomController;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,12 +22,19 @@ Route::post('register',[AuthController::class,'register']);
 Route::post('login',[AuthController::class,'login']);
 
 
-Route::post('logout',[AuthController::class,'logout'])->middleware('auth:api');
+Route::group(['middleware'=>['auth:api']], function(){
+    
+    Route::get('listplacesbycategory',[PlaceController::class,'index']);
+
+    Route::get('subRooms',[SubRoomController::class,'index']);
+
+    Route::post('logout',[AuthController::class,'logout']);
+    
+});
+Route::post('storeimage',[MediaController::class,'store']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
 

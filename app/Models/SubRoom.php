@@ -19,6 +19,8 @@ class SubRoom extends Model
         'cost'
     ];
 
+    protected $hidden = ['created_at','updated_at'];
+
     protected $table="sub_rooms";
 
     /**

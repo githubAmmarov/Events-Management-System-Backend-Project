@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Food;
-use App\Http\Requests\StoreFoodRequest;
-use App\Http\Requests\UpdateFoodRequest;
+use App\Http\Controllers\Controller;
+use App\Models\FoodCategory;
+use App\Http\Requests\StoreFoodCategoryRequest;
+use App\Http\Requests\UpdateFoodCategoryRequest;
 
-class FoodController extends Controller
+class FoodCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +28,7 @@ class FoodController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreFoodRequest $request)
+    public function store(StoreFoodCategoryRequest $request)
     {
         //
     }
@@ -35,7 +36,7 @@ class FoodController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Food $food)
+    public function show(FoodCategory $foodCategory)
     {
         //
     }
@@ -43,7 +44,7 @@ class FoodController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Food $food)
+    public function edit(FoodCategory $foodCategory)
     {
         //
     }
@@ -51,7 +52,7 @@ class FoodController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateFoodRequest $request, Food $food)
+    public function update(UpdateFoodCategoryRequest $request, FoodCategory $foodCategory)
     {
         //
     }
@@ -59,7 +60,7 @@ class FoodController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Food $food)
+    public function destroy(FoodCategory $foodCategory)
     {
         //
     }

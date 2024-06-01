@@ -19,6 +19,8 @@ class Place extends Model
         'address'
     ];
 
+    protected $hidden = ['created_at','updated_at'];
+
     protected $table="places";
 
     /**

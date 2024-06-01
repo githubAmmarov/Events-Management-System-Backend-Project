@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\StorePostRequest as ApiStorePostRequest;
+use App\Http\Requests\Api\UpdatePostRequest as ApiUpdatePostRequest;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
@@ -27,7 +30,7 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePostRequest $request)
+    public function store(ApiStorePostRequest $request)
     {
         //
     }
@@ -51,7 +54,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePostRequest $request, Post $post)
+    public function update(ApiUpdatePostRequest $request, Post $post)
     {
         //
     }

@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Accessory;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\StoreAccessoryRequest as ApiStoreAccessoryRequest;
+use App\Http\Requests\Api\UpdateAccessoryRequest as ApiUpdateAccessoryRequest;
 use App\Models\Accessory;
 use App\Http\Requests\StoreAccessoryRequest;
 use App\Http\Requests\UpdateAccessoryRequest;
@@ -27,7 +30,7 @@ class AccessoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAccessoryRequest $request)
+    public function store(ApiStoreAccessoryRequest $request)
     {
         //
     }
@@ -51,7 +54,7 @@ class AccessoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAccessoryRequest $request, Accessory $accessory)
+    public function update(ApiUpdateAccessoryRequest $request, Accessory $accessory)
     {
         //
     }

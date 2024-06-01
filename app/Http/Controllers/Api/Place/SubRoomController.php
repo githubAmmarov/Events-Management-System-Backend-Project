@@ -1,33 +1,36 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Place;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\StoreSubRoomRequest as ApiStoreSubRoomRequest;
+use App\Http\Requests\Api\UpdateSubRoomRequest as ApiUpdateSubRoomRequest;
 use App\Models\SubRoom;
 use App\Http\Requests\StoreSubRoomRequest;
 use App\Http\Requests\UpdateSubRoomRequest;
+use App\Models\Place;
+use Illuminate\Http\Request;
 
 class SubRoomController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
         //
+        $id=$request->validate([
+            'id'=>'integer'
+        ]);
+        $place_id = Place::find($id['id']); 
+        return SubRoom::where('place_id', $place_id->id)->with('place')->with('place_room_type')->with('media')->get();
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSubRoomRequest $request)
+    public function store(ApiStoreSubRoomRequest $request)
     {
         //
     }
@@ -51,7 +54,7 @@ class SubRoomController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSubRoomRequest $request, SubRoom $subRoom)
+    public function update(ApiUpdateSubRoomRequest $request, SubRoom $subRoom)
     {
         //
     }

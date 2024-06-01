@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\StoreMediaRequest as ApiStoreMediaRequest;
+use App\Http\Requests\Api\UpdateMediaRequest as ApiUpdateMediaRequest;
 use App\Models\Media;
+use App\Traits\ApiTraits;
 use App\Http\Requests\StoreMediaRequest;
 use App\Http\Requests\UpdateMediaRequest;
 
 class MediaController extends Controller
 {
+    use ApiTraits;
     /**
      * Display a listing of the resource.
      */
@@ -27,9 +32,11 @@ class MediaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMediaRequest $request)
+    public function store(ApiStoreMediaRequest $request)
     {
         //
+        $this->saveImage($request->image);
+        return 'success'.'Image uploaded successfully.';
     }
 
     /**
@@ -51,7 +58,7 @@ class MediaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMediaRequest $request, Media $media)
+    public function update(ApiUpdateMediaRequest $request, Media $media)
     {
         //
     }

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\StorePhotographyTeamRequest as ApiStorePhotographyTeamRequest;
+use App\Http\Requests\Api\UpdatePhotographyTeamRequest as ApiUpdatePhotographyTeamRequest;
 use App\Models\PhotographyTeam;
 use App\Http\Requests\StorePhotographyTeamRequest;
 use App\Http\Requests\UpdatePhotographyTeamRequest;
@@ -27,7 +30,7 @@ class PhotographyTeamController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePhotographyTeamRequest $request)
+    public function store(ApiStorePhotographyTeamRequest $request)
     {
         //
     }
@@ -51,7 +54,7 @@ class PhotographyTeamController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePhotographyTeamRequest $request, PhotographyTeam $photographyTeam)
+    public function update(ApiUpdatePhotographyTeamRequest $request, PhotographyTeam $photographyTeam)
     {
         //
     }

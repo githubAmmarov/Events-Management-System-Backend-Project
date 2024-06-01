@@ -15,10 +15,15 @@ class PlaceRoomTypeSeeder extends Seeder
     {
         //
         $types=[
-            'Hotel',
-            'Resturant',
-            'Hall',
-            'Center',
+            'Wedding Halls',
+            'Hotels',
+            'Resturants',
+            'Natural Places',
+            'Centers',
+            'Farms',
+            'Wedding Halls in Hotel',
+            'Resturants in Hotel',
+            'Centers in Hotel',
         ];
         foreach($types as $type)
         {
