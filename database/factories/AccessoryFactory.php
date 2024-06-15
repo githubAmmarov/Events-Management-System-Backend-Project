@@ -17,7 +17,10 @@ class AccessoryFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'media_id'=>$this->faker->numberBetween(1,30),
+            'accessory_type_id' => $this->faker->numberBetween(1,3),
+            'name' => $this->faker->unique()->word(),
+            'price'=>$this->faker->numberBetween(1,200),
         ];
     }
 }

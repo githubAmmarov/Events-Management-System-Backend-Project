@@ -18,13 +18,15 @@ return new class extends Migration
             ->constrained('media')
             ->cascadeOnDelete()
             ->cascadeOnUpdate();
-            
+
             $table->foreignId('food_category_id')
             ->constrained('food_categories')
             ->cascadeOnDelete()
             ->cascadeOnUpdate();
 
             $table->string('name');
+            $table->float('price');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

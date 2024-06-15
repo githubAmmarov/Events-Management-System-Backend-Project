@@ -15,9 +15,11 @@ class Food extends Model
         'media_id',
         'food_category_id',
         'name',
+        'price',
+        'description'
     ];
 
-    protected $table="foods";
+    protected $table="food";
 
     /**
     MY PK IS FK WHERE?
@@ -27,7 +29,7 @@ class Food extends Model
     {
         return $this->hasMany(FoodItem::class);
     }
-    
+
     /**
      MY FK BELONGS TO?
      **/

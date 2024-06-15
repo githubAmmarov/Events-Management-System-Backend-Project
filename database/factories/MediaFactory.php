@@ -17,7 +17,7 @@ class MediaFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            "media_url"=> $this->faker->imageUrl(),
         ];
     }
 }

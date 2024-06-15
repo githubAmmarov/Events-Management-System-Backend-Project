@@ -1,19 +1,35 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Food;
 
-use App\Models\FoodItem;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\StoreFoodItemRequest as ApiStoreFoodItemRequest;
+use App\Http\Requests\Api\UpdateFoodItemRequest as ApiUpdateFoodItemRequest;
+use App\Models\Food;
 use App\Http\Requests\StoreFoodItemRequest;
 use App\Http\Requests\UpdateFoodItemRequest;
+use App\Http\Responses\Response;
+use App\Models\FoodCategory;
+use App\Models\FoodItem;
+use Illuminate\Auth\Events\Validated;
+use Illuminate\Support\Facades\Request;
 
 class FoodItemController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function foodItem(Request $request ,$id)
     {
-        //
+        $item = [];
+        try {
+        $item = Food::query()->with("media")->with("food_category")->findOrFail($id);
+        $message = 'This is Food Item For This ID';
+        return Response::Success($item,$message,200);
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+            return Response::Error($e->getMessage(),$message,404);
+        }
     }
 
     /**
@@ -27,7 +43,7 @@ class FoodItemController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreFoodItemRequest $request)
+    public function store(ApiStoreFoodItemRequest $request)
     {
         //
     }
@@ -51,7 +67,7 @@ class FoodItemController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateFoodItemRequest $request, FoodItem $foodItem)
+    public function update(ApiUpdateFoodItemRequest $request, FoodItem $foodItem)
     {
         //
     }
