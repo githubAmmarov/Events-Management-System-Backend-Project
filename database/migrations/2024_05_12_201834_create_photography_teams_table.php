@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('address');
             $table->float('cost');
             $table->integer('phone_number');
+            $table->timestamps();
         });
     }
 

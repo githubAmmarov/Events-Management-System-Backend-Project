@@ -8,6 +8,7 @@ use App\Http\Requests\Api\UpdatePhotographyTeamRequest as ApiUpdatePhotographyTe
 use App\Models\PhotographyTeam;
 use App\Http\Requests\StorePhotographyTeamRequest;
 use App\Http\Requests\UpdatePhotographyTeamRequest;
+use App\Http\Responses\Response;
 
 class PhotographyTeamController extends Controller
 {
@@ -16,15 +17,29 @@ class PhotographyTeamController extends Controller
      */
     public function index()
     {
-        //
+        $photographyTeam = [];
+        try {
+        $photographyTeam = PhotographyTeam::query()->with('media')->get();
+        $message = 'These are all photographyTeams';
+
+        return Response::Success($photographyTeam,$message,200);
+        } catch(\Exception $e) {
+            $message = $e->getMessage();
+        return Response::Error($message, $e->getCode(),500);
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function indexforID($id)
     {
-        //
+        $photographyTeam = [];
+        try {
+            $photographyTeam = PhotographyTeam::query()->with('media')->findOrFail($id);
+            $message = "This is $id th photographyTeam";
+        return Response::Success($photographyTeam,$message,200);
+        } catch (\Throwable $th) {
+            $message = $th->getMessage();
+        return Response::Error($message, $th->getCode(),500);
+        }
     }
 
     /**

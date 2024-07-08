@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\StoreEventDateRequest as ApiStoreEventDateRequest;
+use App\Http\Requests\Api\UpdateEventDateRequest as ApiUpdateEventDateRequest;
 use App\Models\EventDate;
 use App\Http\Requests\StoreEventDateRequest;
 use App\Http\Requests\UpdateEventDateRequest;
@@ -11,7 +14,7 @@ class EventDateController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() 
     {
         //
     }
@@ -27,7 +30,7 @@ class EventDateController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEventDateRequest $request)
+    public function store(ApiStoreEventDateRequest $request)
     {
         //
     }
@@ -51,7 +54,7 @@ class EventDateController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEventDateRequest $request, EventDate $eventDate)
+    public function update(ApiUpdateEventDateRequest $request, EventDate $eventDate)
     {
         //
     }

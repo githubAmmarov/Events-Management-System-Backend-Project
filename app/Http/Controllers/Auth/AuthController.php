@@ -6,9 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\UserLoginRequest;
 use App\Http\Requests\Auth\UserRegisterRequest;
 use App\Http\Responses\Response;
-use App\Services\UserService;
+use App\Services\ClassServices\UserService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Throwable;
 
 class AuthController extends Controller
@@ -43,6 +42,16 @@ class AuthController extends Controller
         }
     }
 
+    public function profile_Info($id){
+        $data = [];
+        try{
+            $data = $this->userService->profile_Info($id);
+            return Response::Success($data['user'],$data['message']);
+        } catch (Throwable $th) {
+            $message = $th->getMessage();
+            return Response::Error($data, $message);
+        }
+    }
     public function logout(){
         $data = [];
         $user=auth()->user();

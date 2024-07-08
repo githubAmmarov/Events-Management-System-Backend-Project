@@ -13,12 +13,17 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            
+
             $table->foreignId('user_id')
             ->constrained('users')
             ->cascadeOnDelete()
             ->cascadeOnUpdate();
+            $table->foreignId('media_id')->nullable()
+            ->constrained('media')
+            ->cascadeOnUpdate()
+            ->cascadeOnDelete();
 
+            $table->text('title');
             $table->longText('description');
             $table->boolean('is_public');
             $table->timestamps();

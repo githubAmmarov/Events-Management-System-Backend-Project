@@ -11,7 +11,7 @@ class StoreEventRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,13 @@ class StoreEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'description' => 'sometimes|string|nullable',
+            'event_time' => 'required|date',
+            'num_of_guests' => 'required|integer',
+            'is_private' =>'required|boolean',
+            'event_type' => 'required|string|exists:event_types,type',
+            'sub_room_id' => 'sometimes|integer|exists:sub_rooms,id',
+            // 'sub_room_type' => 'required|string|exists:place_room_types,name'
         ];
     }
 }

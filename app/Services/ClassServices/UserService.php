@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\ClassServices;
 
 use App\Models\User;
-use Carbon\Carbon;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserService
 {
@@ -58,16 +57,27 @@ class UserService
         }
         return ['user' => $user , 'message' => $message , 'status'=>$status];
     }
-    
+    public function profile_Info($id)
+    {
+        $user = Auth::user();
+
+        $user = User::query()->findOrFail($id);
+        $mesaage = "This is the $id th User's Profile Info ";
+        $status = 200;
+
+        return ['user'=> $user , 'message'=> $mesaage , 'status' => $status ];
+
+    }
+
     public function logout():array
     {
             $user = Auth::user();
             if (!is_null(Auth::user()))
             {
                 $user->tokens()->delete();
-            
+
                 $message = 'user logged out successfully';
-            
+
                 $status = 200;
             }else{
                 $message = 'invalid token';

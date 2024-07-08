@@ -24,7 +24,6 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             MediaSeeder::class,
-            EventTypeSeeder::class,
             PlaceRoomTypeSeeder::class,
             AccessoryTypeSeeder::class,
             FoodCategorySeeder::class,
@@ -37,6 +36,11 @@ class DatabaseSeeder extends Seeder
             AccessoryShopSeeder::class,
             AccessoryTypeSeeder::class,
             AccessorySeeder::class,
+            PhotographyTeamSeeder::class,
+            UserSeeder::class,
+            PostSeeder::class,
+            EventTypeSeeder::class,
+            EventSeeder::class,
     ]);
 
         Artisan::call('passport:install --force');

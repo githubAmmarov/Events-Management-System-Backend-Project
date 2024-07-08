@@ -54,7 +54,7 @@ class Event extends Model
     }
     public function type_of_event():BelongsTo
     {
-        return $this->belongsTo(EventType::class);
+        return $this->belongsTo(EventType::class, 'event_type_id');
     }
     public function sub_room():BelongsTo
     {

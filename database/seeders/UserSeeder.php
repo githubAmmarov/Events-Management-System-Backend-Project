@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\PhotographyTeam;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class PhotographyTeamSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        PhotographyTeam::factory()->count(6)->create();
+        User::factory()->count(500)->create();
     }
 }

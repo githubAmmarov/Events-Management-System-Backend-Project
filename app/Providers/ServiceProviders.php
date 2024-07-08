@@ -3,21 +3,23 @@
 namespace App\Providers;
 
 use App\Services\ClassServices\EventService;
+use App\Services\ClassServices\postService;
 use App\Services\InterfacesServices\EventServiceInterface;
+use App\Services\InterfacesServices\postServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class ServiceProviders extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * Register services.
      */
     public function register(): void
     {
-        $this->app->bind(EventServiceInterface::class, EventService::class);
+        $this->app->bind(postServiceInterface::class,postService::class);
     }
 
     /**
-     * Bootstrap any application services.
+     * Bootstrap services.
      */
     public function boot(): void
     {

@@ -23,7 +23,7 @@ class Media extends Model
     /**
     MY PK IS FK WHERE?
      **/
-    
+
     public function user():HasOne
     {
         return $this->hasOne(User::class);

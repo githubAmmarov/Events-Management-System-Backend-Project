@@ -18,6 +18,6 @@ class MediaSeeder extends Seeder
         Media::create([
             'media_url' => 'images/' . 'testImage.jpg',
         ]);
-        Media::factory()->count(30)->create();
+        Media::factory()->count(300)->create();
     }
 }

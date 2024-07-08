@@ -11,7 +11,7 @@ class UpdateEventRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class UpdateEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'description' => 'sometimes|string|nullable',
+            'event_time' => 'sometimes|date',
+            'num_of_guests' => 'sometimes|integer',
+            'is_private' =>'sometimes|boolean',
+            'event_type' => 'sometimes|string|exists:event_types,type',
+            'sub_room_id' => 'sometimes|integer|exists:sub_rooms,id',
         ];
     }
 }
