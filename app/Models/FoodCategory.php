@@ -15,6 +15,11 @@ class FoodCategory extends Model
         'category',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
     protected $table="food_categories";
 
     /**

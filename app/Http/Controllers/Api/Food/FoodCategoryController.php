@@ -28,9 +28,20 @@ class FoodCategoryController extends Controller
             $message = $e->getMessage();
         return Response::Error($message, $e->getCode(),500);
         }
-
     }
 
+    public function foodCategories()
+    {
+        $Foods = [];
+        try {
+        $Foods = FoodCategory::query()->get();
+        $message = 'These are all Food Categories in our application';
+        return Response::Success($Foods, $message,200);
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+        return Response::Error($message, $e->getCode(),500);
+        }
+    }
 
     public function foodsForCategory($id)
     {

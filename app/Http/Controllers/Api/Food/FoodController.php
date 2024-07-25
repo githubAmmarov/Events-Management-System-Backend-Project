@@ -6,18 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\StoreFoodRequest as ApiStoreFoodRequest;
 use App\Http\Requests\Api\UpdateFoodRequest as ApiUpdateFoodRequest;
 use App\Models\Food;
-use App\Http\Requests\StoreFoodRequest;
-use App\Http\Requests\UpdateFoodRequest;
 use App\Http\Responses\Response;
+use Illuminate\Http\JsonResponse;
 
 class FoodController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function allFoods()
+    public function allFoods(): JsonResponse
     {
-
         $foods = [];
         try {
             $foods = Food::query()

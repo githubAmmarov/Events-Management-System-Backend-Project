@@ -14,6 +14,10 @@ class AccessoryType extends Model
         'type',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
     protected $table="accessory_types";
 
     /**

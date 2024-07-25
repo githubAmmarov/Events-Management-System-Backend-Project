@@ -29,6 +29,19 @@ class AccessoryTypeController extends Controller
         }
     }
 
+    public function allAccessoryTypes()
+    {
+        $accessoryType = [];
+        try {
+            $accessoryType = AccessoryType::query()->get();
+            $message = "These are all Accessory Types in our application";
+
+            return Response::Success($accessoryType ,$message,200);
+        } catch (\Exception $e){
+            $message = $e->getMessage();
+            return Response::Error($message, $e->getMessage(), 500);
+        }
+    }
     public function indexForType($id)
     {
         $accessory = [];

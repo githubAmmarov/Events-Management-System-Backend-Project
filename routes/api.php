@@ -26,57 +26,62 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('register',[AuthController::class,'register']);
-Route::post('login',[AuthController::class,'login']);
+Route::post('/register',[AuthController::class,'register']);
+Route::post('/login',[AuthController::class,'login']);
 
 
 Route::group(['middleware'=>['auth:api']], function(){
-    Route::get('profileInfo/{id}',[AuthController::class,'profile_Info']);
-    Route::post('logout',[AuthController::class,'logout']);
+    Route::get('/profileInfo/{id}',[AuthController::class,'profile_Info']);
+    Route::post('/logout',[AuthController::class,'logout']);
 
 
-    Route::get('listplacesbycategory',[PlaceController::class,'index']);
-    Route::get('subRooms',[SubRoomController::class,'index']);
+    Route::get('/listplacesbycategory',[PlaceController::class,'index']);
+    Route::get('/subRooms',[SubRoomController::class,'index']);
 
 
 });
-Route::post('storeimage',[MediaController::class,'store']);
+Route::post('/storeimage',[MediaController::class,'store']);
 
 
 Route::group(['middleware'=>['auth:api']], function(){
 
-Route::get('allFoods' ,[FoodController::class,'allFoods']);
-Route::get('foodItem/{id}' ,[FoodItemController::class,'foodItem']);
-Route::get('foodCategory/{id}' ,[FoodCategoryController::class,'foodCategory']);
-Route::get('foodsForCategory/{id}' ,[FoodCategoryController::class,'foodsForCategory']);
+Route::get('/allFoods' ,[FoodController::class,'allFoods']);
+Route::get('/foodItem/{id}' ,[FoodItemController::class,'foodItem']);
+Route::get('/foodCategory/{id}' ,[FoodCategoryController::class,'foodCategory']);
+Route::get('/foodCategories' ,[FoodCategoryController::class,'foodCategories']);
+Route::get('/foodsForCategory/{id}' ,[FoodCategoryController::class,'foodsForCategory']);
 
-Route::get('allAccessories',[AccessoryController::class, 'index']);
-Route::get('accessoryItem/{id}',[AccessoryController::class, 'indexItem']);
-Route::get('accessoriesForType/{id}',[AccessoryTypeController::class, 'indexForType']);
-Route::get('accessoryTypes/{id}',[AccessoryTypeController::class, 'index']);
+Route::get('/allAccessories',[AccessoryController::class, 'index']);
+Route::get('/accessoryItem/{id}',[AccessoryController::class, 'indexItem']);
+Route::get('/accessoriesForType/{id}',[AccessoryTypeController::class, 'indexForType']);
+Route::get('/accessoryTypes/{id}',[AccessoryTypeController::class, 'index']);
+Route::get('/allAccessoryTypes',[AccessoryTypeController::class, 'allAccessoryTypes']);
 
-Route::post('storePost', [PostController::class, 'store']);
-Route::post('storeEvent',[EventController::class, 'store']);
+Route::post('/storePost', [PostController::class, 'store']);
+Route::post('/storeEvent',[EventController::class, 'store']);
 
 
+
+Route::get('/allphotographyTeams', [PhotographyTeamController::class, 'index']);
+Route::get('/photographyTeam/{id}', [PhotographyTeamController::class, 'indexforID']);
+
+
+
+Route::get('/posts', [PostController::class, 'index']);
+Route::post('/showUserPost', [PostController::class, 'showUserPost'])->middleware('api');
+Route::get('/ShowAnPost/{id}', [PostController::class, 'show']);
+Route::post('/updatePost/{id}', [PostController::class, 'update']);
+Route::delete('/deletePost/{id}', [PostController::class, 'destroy']);
+
+
+Route::get('/allEvents',[EventController::class, 'index']);
+Route::get('/showUserEvent/{id}',[EventController::class, 'userEvents']);
+Route::get('/showEvent/{id}',[EventController::class, 'show']);
+Route::post('/updateEvent/{id}',[EventController::class, 'update']);
+Route::delete('/deleteEvent/{id}',[EventController::class, 'destroy']);
 });
-Route::get('allphotographyTeams', [PhotographyTeamController::class, 'index']);
-Route::get('photographyTeam/{id}', [PhotographyTeamController::class, 'indexforID']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::get('posts', [PostController::class, 'index']);
-Route::post('showUserPost', [PostController::class, 'showUserPost'])->middleware('api');
-Route::get('ShowAnPost/{id}', [PostController::class, 'show']);
-Route::post('updatePost/{id}', [PostController::class, 'update']);
-Route::delete('deletePost/{id}', [PostController::class, 'destroy']);
-
-
-Route::get('allEvents',[EventController::class, 'index']);
-Route::get('showUserEvent/{id}',[EventController::class, 'userEvents']);
-Route::get('showEvent/{id}',[EventController::class, 'show']);
-Route::post('updateEvent/{id}',[EventController::class, 'update']);
-Route::delete('deleteEvent/{id}',[EventController::class, 'destroy']);
 
