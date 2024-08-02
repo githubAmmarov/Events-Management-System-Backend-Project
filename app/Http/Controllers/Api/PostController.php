@@ -27,7 +27,7 @@ class PostController extends Controller
         $posts = [];
         try{
             $posts = $this->postService->getAllPosts();
-            $message = 'these all posts';
+            $message = 'these are all public posts';
         return Response::Success($posts,$message,200);
     } catch(Exception $th){
         $error = $th->getMessage();

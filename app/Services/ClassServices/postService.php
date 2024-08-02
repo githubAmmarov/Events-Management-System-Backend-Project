@@ -15,7 +15,7 @@ class postService implements postServiceInterface
 {
     public function getAllPosts(): Collection|array
     {
-        return Post::query()->with('media','user')->get();
+        return Post::query()->where('is_public',1)->with('media','user')->get();
     }
     public function showAnPost($id): Builder|array|Collection|Model
     {

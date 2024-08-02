@@ -13,6 +13,5 @@ class media_postSeeder extends Seeder
      */
     public function run(): void
     {
-        //
-    }
+        media_post::factory()->count(500)->create();    }
 }

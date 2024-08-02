@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\BelongsToManyRelationship;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Post extends Model
@@ -37,8 +39,8 @@ class Post extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function media():BelongsTo
+    public function media():BelongsToMany
     {
-        return $this->belongsTo(Media::class);
+        return $this->belongsToMany(Media::class, 'media_post','post_id','media_id');
     }
 }

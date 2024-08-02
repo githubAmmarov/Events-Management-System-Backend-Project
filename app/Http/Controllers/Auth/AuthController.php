@@ -31,10 +31,31 @@ class AuthController extends Controller
         }
     }
 
+    public function registerAsPlanner(UserRegisterRequest $request): JsonResponse
+    {
+        $data = [];
+        try {
+            $data = $this->userService->registerAsPlanner($request->validated());
+            return Response::Success($data['user'], $data['message']);
+        } catch (Throwable $th) {
+            $message = $th->getMessage();
+            return Response::Error($data, $message);
+        }
+    }
     public function login(UserLoginRequest $request){
         $data = [];
         try {
             $data = $this->userService->login($request->validated());
+            return Response::Success($data['user'],$data['message']);
+        } catch (Throwable $th) {
+            $message = $th->getMessage();
+            return Response::Error($data, $message);
+        }
+    }
+    public function Adminlogin(UserLoginRequest $request){
+        $data = [];
+        try {
+            $data = $this->userService->Adminlogin($request->validated());
             return Response::Success($data['user'],$data['message']);
         } catch (Throwable $th) {
             $message = $th->getMessage();

@@ -17,8 +17,8 @@ class media_postFactory extends Factory
     public function definition(): array
     {
         return [
-            'post_id'=>$this->faker->numberBetween(1,500),
-            'media_id'=>$this->faker->numberBetween(1,500),
+            'post_id'=>$this->faker->numberBetween(1,100),
+            'media_id'=>$this->faker->numberBetween(1,300),
         ];
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Requests\Api\UpdateInvitationCardRequest as ApiUpdateInvitationCard
 use App\Models\InvitationCard;
 use App\Http\Requests\StoreInvitationCardRequest;
 use App\Http\Requests\UpdateInvitationCardRequest;
+use App\Models\InvitationCardStyle;
 
 class InvitationCardController extends Controller
 {
@@ -17,6 +18,12 @@ class InvitationCardController extends Controller
     public function index()
     {
         //
+        return InvitationCardStyle::all();
+    }
+    public function styleItem($id)
+    {
+        //
+        return InvitationCardStyle::find($id);
     }
 
     /**

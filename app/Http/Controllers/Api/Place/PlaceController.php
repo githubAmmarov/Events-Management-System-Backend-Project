@@ -10,6 +10,7 @@ use App\Http\Requests\StorePlaceRequest;
 use App\Http\Requests\UpdatePlaceRequest;
 use App\Http\Responses\Response;
 use App\Models\PlaceRoomType;
+use App\Models\SubRoom;
 use Illuminate\Http\Request;
 use Throwable;
 
@@ -21,14 +22,11 @@ class PlaceController extends Controller
     
     public function index(Request $request)
     {
-
-        //
         $name=$request->validate([
             'name'=>'string',
         ]);
-        
-        $message = 'these are all places';
-        $place_room_type_id = PlaceRoomType::where('name', $name['name'])->first(); 
+        $message = "these are all " . $name['name'];
+        $place_room_type_id = PlaceRoomType::where('name', $name)->first(); 
         
         $places = []; 
         try {
@@ -38,8 +36,6 @@ class PlaceController extends Controller
             $message = $th->getMessage();
             return Response::Error($places, $message);
         }
-    
-
     }
 
 
@@ -57,6 +53,18 @@ class PlaceController extends Controller
     public function show(Place $place)
     {
         //
+        $info = [];
+        $message = "this is place's information";
+        try {
+            $info = [
+                "Place"=>Place::query()->where('id',$place->id)->with('place_room_type','media')->first(),
+                "SubRooms"=>SubRoom::query()->where('place_id',$place->id)->with('place_room_type','media')->get()        
+        ];
+            return Response::Success($info,$message);
+        } catch (Throwable $th) {
+            $message = $th->getMessage();
+            return Response::Error($info, $message);
+        }
     }
 
     /**

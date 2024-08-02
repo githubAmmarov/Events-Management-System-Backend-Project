@@ -6,11 +6,13 @@ use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\Food\FoodController;
 use App\Http\Controllers\Api\Food\FoodCategoryController;
 use App\Http\Controllers\Api\Food\FoodItemController;
+use App\Http\Controllers\Api\InvitationCardController;
 use App\Http\Controllers\Api\MediaController;
 use App\Http\Controllers\Api\PhotographyTeamController;
 use App\Http\Controllers\Api\Place\PlaceController;
 use App\Http\Controllers\Api\Place\SubRoomController;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +30,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
+Route::post('register',[AuthController::class,'register']);
+Route::post('registerAsPlanner',[AuthController::class,'registerAsPlanner']);
+Route::post('login',[AuthController::class,'login']);
+Route::post('adminLogin',[AuthController::class,'Adminlogin']); 
 
 
 Route::group(['middleware'=>['auth:api']], function(){
@@ -37,6 +43,11 @@ Route::group(['middleware'=>['auth:api']], function(){
 
     Route::get('/listplacesbycategory',[PlaceController::class,'index']);
     Route::get('/subRooms',[SubRoomController::class,'index']);
+    Route::get('listplacesbycategory',[PlaceController::class,'index']);
+    Route::get('showPlace/{place}',[PlaceController::class,'show']);
+
+    Route::get('subRooms',[SubRoomController::class,'index']);
+    Route::get('showSubroom/{subRoom}',[SubRoomController::class,'show']);
 
 
 });
@@ -59,7 +70,27 @@ Route::get('/allAccessoryTypes',[AccessoryTypeController::class, 'allAccessoryTy
 
 Route::post('/storePost', [PostController::class, 'store']);
 Route::post('/storeEvent',[EventController::class, 'store']);
+Route::get('allFoods' ,[FoodController::class,'allFoods']);
+Route::get('foodItem/{id}' ,[FoodItemController::class,'foodItem']);
+// Route::get('foodCategory/{id}' ,[FoodCategoryController::class,'foodCategory']);
+Route::get('foodsForCategory/{id}' ,[FoodCategoryController::class,'foodsForCategory']);
 
+Route::get('allAccessories',[AccessoryController::class, 'index']);
+Route::get('accessoryTypes',[AccessoryTypeController::class, 'index']);
+Route::get('accessoriesForType/{id}',[AccessoryTypeController::class, 'indexForType']);
+Route::get('accessoryItem/{id}',[AccessoryController::class, 'indexItem']);
+// Route::get('accessoryTypes/{id}',[AccessoryTypeController::class, 'index']);
+
+Route::get('allInvitationCardStyles',[InvitationCardController::class, 'index']);
+Route::get('showInvitationCardStyle/{id}',[InvitationCardController::class, 'styleItem']);
+
+Route::post('storePost', [PostController::class, 'store']); 
+Route::post('storeEvent',[EventController::class, 'store']); 
+
+Route::get('allClients',[UserController::class, 'indexClients']);
+Route::get('blockedClients',[UserController::class, 'indexBlockedClients']);
+Route::get('allAvailablePlanners',[UserController::class, 'indexAvailablePlanners']);
+Route::get('bannedPlanners',[UserController::class, 'indexBannedPlanners']);
 
 
 Route::get('/allphotographyTeams', [PhotographyTeamController::class, 'index']);
@@ -81,7 +112,7 @@ Route::post('/updateEvent/{id}',[EventController::class, 'update']);
 Route::delete('/deleteEvent/{id}',[EventController::class, 'destroy']);
 });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 

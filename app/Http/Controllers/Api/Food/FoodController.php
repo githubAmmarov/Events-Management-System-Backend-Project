@@ -22,7 +22,7 @@ class FoodController extends Controller
             ->with('media')
             ->with('food_category')
             ->get();
-            $message = 'These are all accessories';
+            $message = 'These are all food';
             return Response::Success($foods,$message,200);
 
         } catch (\Exception $e) {

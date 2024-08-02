@@ -26,7 +26,6 @@ class DatabaseSeeder extends Seeder
             MediaSeeder::class,
             PlaceRoomTypeSeeder::class,
             AccessoryTypeSeeder::class,
-            FoodCategorySeeder::class,
             PlaceSeeder::class,
             SubRoomSeeder::class,
             RolesPermissionsSeeder::class,
@@ -34,13 +33,14 @@ class DatabaseSeeder extends Seeder
             FoodCategorySeeder::class,
             FoodSeeder::class,
             AccessoryShopSeeder::class,
-            AccessoryTypeSeeder::class,
             AccessorySeeder::class,
             PhotographyTeamSeeder::class,
             UserSeeder::class,
             PostSeeder::class,
             EventTypeSeeder::class,
             EventSeeder::class,
+            InvitationCardStyleSeeder::class,
+            media_postSeeder::class,
     ]);
 
         Artisan::call('passport:install --force');

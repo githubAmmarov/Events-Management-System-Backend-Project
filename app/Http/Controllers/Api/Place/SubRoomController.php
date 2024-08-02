@@ -8,8 +8,10 @@ use App\Http\Requests\Api\UpdateSubRoomRequest as ApiUpdateSubRoomRequest;
 use App\Models\SubRoom;
 use App\Http\Requests\StoreSubRoomRequest;
 use App\Http\Requests\UpdateSubRoomRequest;
+use App\Http\Responses\Response;
 use App\Models\Place;
 use Illuminate\Http\Request;
+use Throwable;
 
 class SubRoomController extends Controller
 {
@@ -18,13 +20,20 @@ class SubRoomController extends Controller
      */
     public function index(Request $request)
     {
-
-        //
-        $id=$request->validate([
-            'id'=>'integer'
-        ]);
-        $place_id = Place::find($id['id']); 
-        return SubRoom::where('place_id', $place_id->id)->with('place')->with('place_room_type')->with('media')->get();
+        $subrooms = []; 
+        $message = "these are all place's subrooms";
+        try {
+            $id=$request->validate([
+                'id'=>'integer'
+            ]);
+            $place = Place::find($id['id']); 
+            $message = "these are all $place->name subrooms";
+            $subrooms = SubRoom::where('place_id', $place->id)->with('place')->with('place_room_type')->with('media')->get();
+            return Response::Success($subrooms,$message);
+        } catch (Throwable $th) {
+            $message = $th->getMessage();
+            return Response::Error($subrooms, $message);
+        }
     }
 
     /**
@@ -40,7 +49,15 @@ class SubRoomController extends Controller
      */
     public function show(SubRoom $subRoom)
     {
-        //
+        $subroom = []; 
+        $message = "this is subroom's information";
+        try {
+            $subroom = SubRoom::where('id',$subRoom->id)->with('place_room_type','media','place')->first();
+            return Response::Success($subroom,$message);
+        } catch (Throwable $th) {
+            $message = $th->getMessage();
+            return Response::Error($subroom, $message);
+        }
     }
 
     /**

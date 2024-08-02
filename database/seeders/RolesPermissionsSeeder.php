@@ -16,6 +16,7 @@ class RolesPermissionsSeeder extends Seeder
     {
         // Create Roles
         $adminrole=Role::create(['name'=>'admin']);
+        $plannerrole=Role::create(['name'=>'planner']);
         $clientrole=Role::create(['name'=>'client']);
 
         // Define Permissions
@@ -38,6 +39,7 @@ class RolesPermissionsSeeder extends Seeder
             "name" => 'Admin User',
             'email' => 'Admin@example.com',
             'password' => bcrypt('password'),
+            'blocked' => 0,
         ]);
         $adminuser->assignRole($adminrole);
 
@@ -49,12 +51,25 @@ class RolesPermissionsSeeder extends Seeder
             'name' => 'Client User',
             'email' => 'Client@example.com',
             'password' => bcrypt('password'),
+            'blocked' => 0,
         ]);
         $clientuser->assignRole($clientrole);
 
         // Assign permissions associated with the role to the user 
         $permissions = $clientrole->permissions()->pluck('name')->toArray();
         $clientuser->givePermissionTo($permissions);
+        
+        $planneruser=\App\Models\User::factory()->create([
+            'name' => 'Planner User',
+            'email' => 'planner@example.com',
+            'password' => bcrypt('password'),
+            'blocked' => 1,
+        ]);
+        $planneruser->assignRole($plannerrole);
+
+        // Assign permissions associated with the role to the user 
+        $permissions = $plannerrole->permissions()->pluck('name')->toArray();
+        $planneruser->givePermissionTo($permissions);
 
     }
 }

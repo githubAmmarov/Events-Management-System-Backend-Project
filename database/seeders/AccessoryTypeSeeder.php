@@ -18,6 +18,10 @@ class AccessoryTypeSeeder extends Seeder
             'Flowers',
             'Baloones',
             'Lights',
+            'Cars',
+            'Show Band',
+            'Music and Chanting',
+            "Quran",
         ];
         foreach($types as $type)
         {

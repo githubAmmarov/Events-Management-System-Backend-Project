@@ -18,14 +18,10 @@ return new class extends Migration
             ->constrained('users')
             ->cascadeOnDelete()
             ->cascadeOnUpdate();
-            $table->foreignId('media_id')->nullable()
-            ->constrained('media')
-            ->cascadeOnUpdate()
-            ->cascadeOnDelete();
 
             $table->text('title');
             $table->longText('description');
-            $table->boolean('is_public');
+            $table->boolean('is_public')->default(1);
             $table->timestamps();
         });
     }

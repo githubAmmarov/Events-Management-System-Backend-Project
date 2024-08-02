@@ -10,7 +10,7 @@ class media_post extends Model
 {
     use HasFactory;
 
-    protected $fillible =
+    protected $fillable =
     [
         'media_id',
         'post_id'
@@ -25,6 +25,6 @@ class media_post extends Model
 
     public function media():BelongsTo
     {
-        return $this->belongsTo(Post::class);
+        return $this->belongsTo(Media::class);
     }
 }

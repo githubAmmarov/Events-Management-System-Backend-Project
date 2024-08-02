@@ -28,6 +28,19 @@ class AccessoryTypeController extends Controller
             return Response::Error($message, $e->getMessage(), 500);
         }
     }
+    // public function index()
+    // {
+    //     $accessoryType = [];
+    //     try {
+    //         $accessoryType = AccessoryType::all();
+    //         $message = "these are all types";
+
+    //         return Response::Success($accessoryType ,$message,200);
+    //     } catch (\Exception $e){
+    //         $message = $e->getMessage();
+    //         return Response::Error($message, $e->getMessage(), 500);
+    //     }
+    // }
 
     public function allAccessoryTypes()
     {
@@ -52,7 +65,7 @@ class AccessoryTypeController extends Controller
         $message = "These are all Accessories for $accessoryType->type";
         return response()->json([
             'Accessory_Type'=>$accessoryType,
-            'Accessories_For_Type' => $accessory,
+            "Accessories_For_$accessoryType->type Type" => $accessory,
             'message' => $message,
         ],200);
         } catch (\Exception $e) {
