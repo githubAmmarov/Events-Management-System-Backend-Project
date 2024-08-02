@@ -8,6 +8,7 @@ use App\Http\Requests\Api\UpdateInvitationCardRequest as ApiUpdateInvitationCard
 use App\Models\InvitationCard;
 use App\Http\Requests\StoreInvitationCardRequest;
 use App\Http\Requests\UpdateInvitationCardRequest;
+use App\Http\Responses\Response;
 use App\Models\InvitationCardStyle;
 
 class InvitationCardController extends Controller
@@ -18,12 +19,35 @@ class InvitationCardController extends Controller
     public function index()
     {
         //
-        return InvitationCardStyle::all();
+        $styles = [];
+        try {
+        $message = 'these are all styles';
+        $styles = InvitationCardStyle::
+        with('media')
+        ->get();
+        return Response::Success($styles,$message,200);
+
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+            return Response::Error($e->getMessage(),$message,400);
+        }
+        // return InvitationCardStyle::all();
     }
     public function styleItem($id)
     {
         //
-        return InvitationCardStyle::find($id);
+        $style = [];
+        try {
+            $style = InvitationCardStyle::query()
+            ->with('media')
+            ->findOrFail($id);
+            $message = "this is $style->style style";
+        return Response::Success($style,$message,200);
+
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+            return Response::Error($e->getMessage(),$message,400);
+        }
     }
 
     /**
