@@ -11,6 +11,7 @@ use App\Models\EventDate;
 use App\Models\SubRoom;
 use Illuminate\Support\Facades\Date;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\Request;
 
 class ReservationController extends Controller
@@ -20,21 +21,29 @@ class ReservationController extends Controller
      */
     public function index(SubRoom $subRoom, $month, $year)
     {
-        // $reservations = Reservation::query()
-        // ->where('sub_room_id', $subRoom->id)
-        // ->with('event_date')
-        // ->get();
-
-        if ($month && $year) {
-            $startDate = Carbon::create($year,$month,1)->startOfMonth();
-            $endDate = Carbon::create($year,$month,1)->endOfMonth();
-
-            $reservations = EventDate::query()->whereBetween('event_date',[$startDate, $endDate])
-            // ->with('event_date')
+        $placename = $subRoom->place->name;
+        $reservationsByDate = [];
+        try{
+            $reservations = Reservation::query()
+            ->where('sub_room_id', $subRoom->id)
+            ->with('event_date')
             ->get();
-
-            $message="these are all reservations for $subRoom->id th";
-            return Response::Success($reservations, $message, 200);
+            
+            if ($month && $year) {
+                $startDate = Carbon::create($year,$month,1)->startOfMonth();
+                $endDate = Carbon::create($year,$month,1)->endOfMonth();
+                foreach($reservations as $reservation)
+                {
+                    if ($endDate >= $reservation->event_date->event_date && $reservation->event_date->event_date >= $startDate)
+                    array_push($reservationsByDate,$reservation);
+            }
+            
+            $message="these are all reservations for $placename in month $month year $year ";
+            return Response::Success($reservationsByDate, $message, 200);
+        }
+        }catch(Exception $th){
+            $error = $th->getMessage();
+            return Response::Error($th,$error,500);
         }
     }
     /**
@@ -42,7 +51,10 @@ class ReservationController extends Controller
      */
     public function create()
     {
-        //
+        // ||==========================================================================================||
+        // ||there is a condition that the (reservation->subroom && reservation->event_date->eventdate)||
+        // ||mustn't be duplicated in 2 rows in reservation table                                      ||
+        // ||==========================================================================================||
     }
 
     /**

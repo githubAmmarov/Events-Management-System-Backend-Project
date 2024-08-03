@@ -18,6 +18,8 @@ return new class extends Migration
                 ->constrained('events')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
+                
+                $table->unique('event_id');
 
             $table->date('event_date');    
             $table->timestamps();

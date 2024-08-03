@@ -33,10 +33,10 @@ class UserService
         $user= $this->appendRolesAndPermissions($user);
         $user['token'] = $user->createToken("PassportToken")->accessToken;
 
-        $qrCode = QrCode::format('png')->size(200)->generate($user->id);
-        $qrCodePath = 'qrcodes/user_'.$user->id.'.png';
-        Storage::disk('public')->put($qrCodePath,$qrCode);
-        $user->qr_code_path = $qrCodePath;
+        // $qrCode = QrCode::format('png')->size(200)->generate($user->id);
+        // $qrCodePath = 'qrcodes/user_'.$user->id.'.png';
+        // Storage::disk('public')->put($qrCodePath,$qrCode);
+        // $user->qr_code_path = $qrCodePath;
 
         $message = 'user created successfully';
         return ['user' => $user , 'message' => $message];

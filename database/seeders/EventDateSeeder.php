@@ -14,6 +14,6 @@ class EventDateSeeder extends Seeder
     public function run(): void
     {
         //
-        EventDate::factory()->count(1000)->create();
+        EventDate::factory()->count(500)->create();
     }
 }

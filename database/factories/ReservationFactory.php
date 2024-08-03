@@ -17,7 +17,7 @@ class ReservationFactory extends Factory
     public function definition(): array
     {
         return [
-            'event_date_id'=>$this->faker->unique($maxRetries = 20000)->numberBetween(1,500),
+            'event_date_id'=>fake()->unique()->numberBetween(1,500),
             'sub_room_id'=>$this->faker->numberBetween(1,10),
         ];
     }

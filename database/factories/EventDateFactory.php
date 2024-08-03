@@ -20,7 +20,7 @@ class EventDateFactory extends Factory
         $startDate = Carbon::now();
         $endDate = Carbon::create(2027,1,1);
         return [
-            'event_id'=>$this->faker->unique($maxRetries = 20000)->numberBetween(1,500),
+            'event_id'=>$this->faker->unique()->numberBetween(1,500),
             'event_date'=>$this->faker->dateTimeBetween($startDate,$endDate)
         ];
     }

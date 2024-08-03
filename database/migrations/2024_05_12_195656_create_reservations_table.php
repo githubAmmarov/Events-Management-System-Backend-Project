@@ -19,6 +19,8 @@ return new class extends Migration
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
 
+                $table->unique('event_date_id');
+
                 $table->foreignId('sub_room_id')
                 ->constrained('sub_rooms')
                 ->cascadeOnDelete()
