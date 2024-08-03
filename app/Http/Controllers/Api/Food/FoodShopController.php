@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\StoreFoodShopRequest as ApiStoreFoodShopRequest;
+use App\Http\Requests\Api\UpdateFoodShopRequest as ApiUpdateFoodShopRequest;
 use App\Models\FoodShop;
-use App\Http\Requests\StoreFoodShopRequest;
-use App\Http\Requests\UpdateFoodShopRequest;
 
 class FoodShopController extends Controller
 {
@@ -27,7 +28,7 @@ class FoodShopController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreFoodShopRequest $request)
+    public function store(ApiStoreFoodShopRequest $request)
     {
         //
     }
@@ -51,7 +52,7 @@ class FoodShopController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateFoodShopRequest $request, FoodShop $foodShop)
+    public function update(ApiUpdateFoodShopRequest $request, FoodShop $foodShop)
     {
         //
     }

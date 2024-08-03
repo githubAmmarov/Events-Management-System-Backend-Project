@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Order;
-use App\Http\Requests\StoreOrderRequest;
-use App\Http\Requests\UpdateOrderRequest;
+use App\Http\Requests\Api\StoreOrderRequest;
+use App\Http\Requests\Api\UpdateOrderRequest;
 
 class OrderController extends Controller
 {

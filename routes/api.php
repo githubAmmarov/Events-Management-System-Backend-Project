@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\PhotographyTeamController;
 use App\Http\Controllers\Api\Place\PlaceController;
 use App\Http\Controllers\Api\Place\SubRoomController;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Http\Request;
@@ -33,7 +34,7 @@ Route::post('/login',[AuthController::class,'login']);
 Route::post('register',[AuthController::class,'register']);
 Route::post('registerAsPlanner',[AuthController::class,'registerAsPlanner']);
 Route::post('login',[AuthController::class,'login']);
-Route::post('adminLogin',[AuthController::class,'Adminlogin']); 
+Route::post('adminLogin',[AuthController::class,'Adminlogin']);
 
 
 Route::group(['middleware'=>['auth:api']], function(){
@@ -48,6 +49,8 @@ Route::group(['middleware'=>['auth:api']], function(){
 
     Route::get('subRooms',[SubRoomController::class,'index']);
     Route::get('showSubroom/{subRoom}',[SubRoomController::class,'show']);
+
+    Route::get('showSubroomReservations/{subRoom}/{month}/{year}',[ReservationController::class,'index']);
 
 
 });
@@ -84,8 +87,8 @@ Route::get('accessoryItem/{id}',[AccessoryController::class, 'indexItem']);
 Route::get('allInvitationCardStyles',[InvitationCardController::class, 'index']);
 Route::get('showInvitationCardStyle/{id}',[InvitationCardController::class, 'styleItem']);
 
-Route::post('storePost', [PostController::class, 'store']); 
-Route::post('storeEvent',[EventController::class, 'store']); 
+Route::post('storePost', [PostController::class, 'store']);
+Route::post('storeEvent',[EventController::class, 'store']);
 
 Route::get('allClients',[UserController::class, 'indexClients']);
 Route::get('blockedClients',[UserController::class, 'indexBlockedClients']);
@@ -99,7 +102,7 @@ Route::get('/photographyTeam/{id}', [PhotographyTeamController::class, 'indexfor
 
 
 Route::get('/posts', [PostController::class, 'index']);
-Route::post('/showUserPost', [PostController::class, 'showUserPost'])->middleware('api');
+Route::post('/showUserPost', [PostController::class, 'showUserPost']);
 Route::get('/ShowAnPost/{id}', [PostController::class, 'show']);
 Route::post('/updatePost/{id}', [PostController::class, 'update']);
 Route::delete('/deletePost/{id}', [PostController::class, 'destroy']);

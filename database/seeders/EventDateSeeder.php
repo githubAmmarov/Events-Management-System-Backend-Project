@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\EventDate;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,5 +14,6 @@ class EventDateSeeder extends Seeder
     public function run(): void
     {
         //
+        EventDate::factory()->count(1000)->create();
     }
 }

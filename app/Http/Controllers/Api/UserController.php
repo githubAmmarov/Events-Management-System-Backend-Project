@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Responses\Response ;
 use App\Models\User;
 use Exception;
-use Illuminate\Support\Facades\Auth;
 
 //use Illuminate\Support\Facades\Response;
 

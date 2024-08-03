@@ -15,20 +15,20 @@ use Illuminate\Http\Request;
 use Throwable;
 
 class PlaceController extends Controller
-{   
+{
     /**
      * Display a listing of the resource.
      */
-    
+
     public function index(Request $request)
     {
         $name=$request->validate([
             'name'=>'string',
         ]);
         $message = "these are all " . $name['name'];
-        $place_room_type_id = PlaceRoomType::where('name', $name)->first(); 
-        
-        $places = []; 
+        $place_room_type_id = PlaceRoomType::where('name', $name)->first();
+
+        $places = [];
         try {
             $places = Place::where('place_room_type_id', $place_room_type_id->id)->with('place_room_type')->with('media')->get();
             return Response::Success($places,$message);
@@ -58,7 +58,7 @@ class PlaceController extends Controller
         try {
             $info = [
                 "Place"=>Place::query()->where('id',$place->id)->with('place_room_type','media')->first(),
-                "SubRooms"=>SubRoom::query()->where('place_id',$place->id)->with('place_room_type','media')->get()        
+                "SubRooms"=>SubRoom::query()->where('place_id',$place->id)->with('place_room_type','media')->get()
         ];
             return Response::Success($info,$message);
         } catch (Throwable $th) {

@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\StorePhotographyTeamRequest as ApiStorePhotographyTeamRequest;
 use App\Http\Requests\Api\UpdatePhotographyTeamRequest as ApiUpdatePhotographyTeamRequest;
 use App\Models\PhotographyTeam;
-use App\Http\Requests\StorePhotographyTeamRequest;
-use App\Http\Requests\UpdatePhotographyTeamRequest;
 use App\Http\Responses\Response;
 
 class PhotographyTeamController extends Controller

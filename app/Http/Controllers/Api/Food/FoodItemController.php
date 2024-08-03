@@ -6,12 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\StoreFoodItemRequest as ApiStoreFoodItemRequest;
 use App\Http\Requests\Api\UpdateFoodItemRequest as ApiUpdateFoodItemRequest;
 use App\Models\Food;
-use App\Http\Requests\StoreFoodItemRequest;
-use App\Http\Requests\UpdateFoodItemRequest;
 use App\Http\Responses\Response;
-use App\Models\FoodCategory;
 use App\Models\FoodItem;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Request;
 
 class FoodItemController extends Controller

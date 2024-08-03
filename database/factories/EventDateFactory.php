@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,11 @@ class EventDateFactory extends Factory
      */
     public function definition(): array
     {
+        $startDate = Carbon::now();
+        $endDate = Carbon::create(2027,1,1);
         return [
-            //
+            'event_id'=>$this->faker->unique($maxRetries = 20000)->numberBetween(1,500),
+            'event_date'=>$this->faker->dateTimeBetween($startDate,$endDate)
         ];
     }
 }

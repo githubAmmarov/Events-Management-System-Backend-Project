@@ -6,11 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\StoreFoodCategoryRequest as ApiStoreFoodCategoryRequest;
 use App\Http\Requests\Api\UpdateFoodCategoryRequest as ApiUpdateFoodCategoryRequest;
 use App\Models\FoodCategory;
-use App\Http\Requests\StoreFoodCategoryRequest;
-use App\Http\Requests\UpdateFoodCategoryRequest;
 use App\Http\Responses\Response;
 use App\Models\Food;
-use App\Models\Media;
 
 class FoodCategoryController extends Controller
 {

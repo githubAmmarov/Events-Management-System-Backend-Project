@@ -20,13 +20,13 @@ class SubRoomController extends Controller
      */
     public function index(Request $request)
     {
-        $subrooms = []; 
+        $subrooms = [];
         $message = "these are all place's subrooms";
         try {
             $id=$request->validate([
                 'id'=>'integer'
             ]);
-            $place = Place::find($id['id']); 
+            $place = Place::find($id['id']);
             $message = "these are all $place->name subrooms";
             $subrooms = SubRoom::where('place_id', $place->id)->with('place')->with('place_room_type')->with('media')->get();
             return Response::Success($subrooms,$message);
@@ -49,10 +49,10 @@ class SubRoomController extends Controller
      */
     public function show(SubRoom $subRoom)
     {
-        $subroom = []; 
+        $subroom = [];
         $message = "this is subroom's information";
         try {
-            $subroom = SubRoom::where('id',$subRoom->id)->with('place_room_type','media','place')->first();
+            $subroom = SubRoom::where('id',$subRoom->id)->with('place_room_type','media','place','reservations')->first();
             return Response::Success($subroom,$message);
         } catch (Throwable $th) {
             $message = $th->getMessage();

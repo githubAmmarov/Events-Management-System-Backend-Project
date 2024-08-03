@@ -52,35 +52,35 @@ class UserService
         ]);
 
         // {
-        
+
         // ||==============================================================================||
         // ||this block of code will be put in admin's function (givePermissionToPlanner())||
         // ||==============================================================================||
 
-        
+
         // // Assign permissions associated with the role to the user
         // $permissions = $plannerRole->permissions()->pluck('name')->toArray();
         // $user->givePermissionTo($permissions);
-        
+
         // // Load the user's roles and permissions
         // $user->load('roles','permissions');
-        
+
         // // Reload the user instance to get updated roles and permissions
         // $user= User::query()->find($user['id']);
-        // 
+        //
         // $permissions = [];
         // foreach ($user->permissions as $permission){
         //     $permissions[] = $permission->name;
         // }
         // unset($user['permissions']);
         // $user['permissions'] = $permissions;
-        
+
         // }
 
         $plannerRole = Role::query()->where('name','planner')->first();
         $user->assignRole($plannerRole);
 
-        
+
         $user= User::query()->find($user['id']);
         $roles = [];
         foreach ($user->roles as $role){
@@ -89,7 +89,7 @@ class UserService
         unset($user['roles']);
         $user['roles'] = $roles;
 
-        
+
         $user['token'] = $user->createToken("PassportToken")->accessToken;
 
         $message = "waiting for admin's permission";
@@ -106,12 +106,12 @@ class UserService
             if (!Auth::attempt($request)) {
                 $message = 'Email Or Password Is Not Valid';
                 $status = 401;
-            } 
+            }
             elseif($user['blocked']==1) {
                 $message = 'your account is blocked';
                 $status = 401;
             }
-            
+
             else {
                 $user = $this->appendRolesAndPermissions($user);
                 $user['token'] = $user->createToken("PassportToken")->accessToken;
@@ -135,7 +135,7 @@ class UserService
             if (!Auth::attempt($request) || $request['email'] != 'Admin@example.com') {
                 $message = 'You are not the admin';
                 $status = 401;
-            } 
+            }
             else {
                 $user = $this->appendRolesAndPermissions($user);
                 $user['token'] = $user->createToken("PassportToken")->accessToken;

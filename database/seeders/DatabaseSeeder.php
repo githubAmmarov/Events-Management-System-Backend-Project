@@ -41,7 +41,9 @@ class DatabaseSeeder extends Seeder
             EventSeeder::class,
             InvitationCardStyleSeeder::class,
             media_postSeeder::class,
-    ]);
+            EventDateSeeder::class,
+            ReservationSeeder::class,
+        ]);
 
         Artisan::call('passport:install --force');
     }
