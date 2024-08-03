@@ -31,7 +31,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
-Route::post('register',[AuthController::class,'register']);
 Route::post('registerAsPlanner',[AuthController::class,'registerAsPlanner']);
 Route::post('login',[AuthController::class,'login']);
 Route::post('adminLogin',[AuthController::class,'Adminlogin']);
@@ -44,12 +43,8 @@ Route::group(['middleware'=>['auth:api']], function(){
 
     Route::get('/listplacesbycategory',[PlaceController::class,'index']);
     Route::get('/subRooms',[SubRoomController::class,'index']);
-    Route::get('listplacesbycategory',[PlaceController::class,'index']);
     Route::get('showPlace/{place}',[PlaceController::class,'show']);
-
-    Route::get('subRooms',[SubRoomController::class,'index']);
     Route::get('showSubroom/{subRoom}',[SubRoomController::class,'show']);
-
     Route::get('showSubroomReservations/{subRoom}/{month}/{year}',[ReservationController::class,'index']);
 
 
@@ -71,24 +66,10 @@ Route::get('/accessoriesForType/{id}',[AccessoryTypeController::class, 'indexFor
 Route::get('/accessoryTypes/{id}',[AccessoryTypeController::class, 'index']);
 Route::get('/allAccessoryTypes',[AccessoryTypeController::class, 'allAccessoryTypes']);
 
-Route::post('/storePost', [PostController::class, 'store']);
-Route::post('/storeEvent',[EventController::class, 'store']);
-Route::get('allFoods' ,[FoodController::class,'allFoods']);
-Route::get('foodItem/{id}' ,[FoodItemController::class,'foodItem']);
-// Route::get('foodCategory/{id}' ,[FoodCategoryController::class,'foodCategory']);
-Route::get('foodsForCategory/{id}' ,[FoodCategoryController::class,'foodsForCategory']);
-
-Route::get('allAccessories',[AccessoryController::class, 'index']);
-Route::get('accessoryTypes',[AccessoryTypeController::class, 'index']);
-Route::get('accessoriesForType/{id}',[AccessoryTypeController::class, 'indexForType']);
-Route::get('accessoryItem/{id}',[AccessoryController::class, 'indexItem']);
-// Route::get('accessoryTypes/{id}',[AccessoryTypeController::class, 'index']);
 
 Route::get('allInvitationCardStyles',[InvitationCardController::class, 'index']);
 Route::get('showInvitationCardStyle/{id}',[InvitationCardController::class, 'styleItem']);
 
-Route::post('storePost', [PostController::class, 'store']);
-Route::post('storeEvent',[EventController::class, 'store']);
 
 Route::get('allClients',[UserController::class, 'indexClients']);
 Route::get('blockedClients',[UserController::class, 'indexBlockedClients']);
@@ -99,18 +80,17 @@ Route::get('bannedPlanners',[UserController::class, 'indexBannedPlanners']);
 Route::get('/allphotographyTeams', [PhotographyTeamController::class, 'index']);
 Route::get('/photographyTeam/{id}', [PhotographyTeamController::class, 'indexforID']);
 
-
-
 Route::get('/posts', [PostController::class, 'index']);
 Route::post('/showUserPost', [PostController::class, 'showUserPost']);
 Route::get('/ShowAnPost/{id}', [PostController::class, 'show']);
+Route::post('/storePost', [PostController::class, 'store']);
 Route::post('/updatePost/{id}', [PostController::class, 'update']);
 Route::delete('/deletePost/{id}', [PostController::class, 'destroy']);
-
 
 Route::get('/allEvents',[EventController::class, 'index']);
 Route::get('/showUserEvent/{id}',[EventController::class, 'userEvents']);
 Route::get('/showEvent/{id}',[EventController::class, 'show']);
+Route::post('/storeEvent',[EventController::class, 'store']);
 Route::post('/updateEvent/{id}',[EventController::class, 'update']);
 Route::delete('/deleteEvent/{id}',[EventController::class, 'destroy']);
 });
