@@ -19,7 +19,7 @@ class postService implements postServiceInterface
     }
     public function showAnPost($id): Builder|array|Collection|Model
     {
-        return Post::query()->with(['user','media'])->findOrFail($id);
+        return Post::query()->with(['user','media'])->withCount('likes')->findOrFail($id);
     }
     public function getUserPost(int $user_id): Collection
     {

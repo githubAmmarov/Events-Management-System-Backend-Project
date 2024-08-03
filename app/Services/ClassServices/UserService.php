@@ -5,6 +5,8 @@ namespace App\Services\ClassServices;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Spatie\Permission\Models\Role;
 
 class UserService
@@ -12,7 +14,6 @@ class UserService
     public function  register($request):array
     {
         $user = User::query()->create([
-
             'name'=> $request['name'],
             'email'=> $request['email'],
             'password'=> Hash::make($request['password']),
@@ -31,6 +32,11 @@ class UserService
         $user= User::query()->find($user['id']);
         $user= $this->appendRolesAndPermissions($user);
         $user['token'] = $user->createToken("PassportToken")->accessToken;
+
+        $qrCode = QrCode::format('png')->size(200)->generate($user->id);
+        $qrCodePath = 'qrcodes/user_'.$user->id.'.png';
+        Storage::disk('public')->put($qrCodePath,$qrCode);
+        $user->qr_code_path = $qrCodePath;
 
         $message = 'user created successfully';
         return ['user' => $user , 'message' => $message];
