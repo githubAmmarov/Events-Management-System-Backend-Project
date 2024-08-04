@@ -36,7 +36,7 @@ Route::post('login',[AuthController::class,'login']);
 Route::post('adminLogin',[AuthController::class,'Adminlogin']);
 
 
-Route::group(['middleware'=>['auth:api']], function(){
+// Route::group(['middleware'=>['auth:api']], function(){
     Route::get('/profileInfo/{id}',[AuthController::class,'profile_Info']);
     Route::post('/logout',[AuthController::class,'logout']);
 
@@ -48,11 +48,11 @@ Route::group(['middleware'=>['auth:api']], function(){
     Route::get('showSubroomReservations/{subRoom}/{month}/{year}',[ReservationController::class,'index']);
 
 
-});
+// });
 Route::post('/storeimage',[MediaController::class,'store']);
 
 
-Route::group(['middleware'=>['auth:api']], function(){
+// Route::group(['middleware'=>['auth:api']], function(){
 
 Route::get('/allFoods' ,[FoodController::class,'allFoods']);
 Route::get('/foodItem/{id}' ,[FoodItemController::class,'foodItem']);
@@ -93,7 +93,10 @@ Route::get('/showEvent/{id}',[EventController::class, 'show']);
 Route::post('/storeEvent',[EventController::class, 'store']);
 Route::post('/updateEvent/{id}',[EventController::class, 'update']);
 Route::delete('/deleteEvent/{id}',[EventController::class, 'destroy']);
-});
+
+
+
+// });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

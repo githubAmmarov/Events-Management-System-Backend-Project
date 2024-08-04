@@ -11,4 +11,3 @@ class UserRepository extends baseRepository
         parent::__construct($user);
     }
 }
-م
