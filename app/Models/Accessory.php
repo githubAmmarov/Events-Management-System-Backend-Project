@@ -35,10 +35,10 @@ class Accessory extends Model
     {
         return $this->belongsTo(AccessoryType::class);
     }
-    public function accessory_shop():BelongsToMany
-    {
-        return $this->belongsToMany(AccessoryShop::class);
-    }
+    // public function accessory_shop():BelongsToMany
+    // {
+    //     return $this->belongsToMany(AccessoryShop::class);
+    // }
     public function order_item():BelongsToMany
     {
         return $this->belongsToMany(OrderItem::class);

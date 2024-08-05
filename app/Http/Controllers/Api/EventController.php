@@ -9,6 +9,7 @@ use App\Http\Requests\Api\UpdateEventRequest;
 use App\Http\Responses\Response;
 use App\Models\EventDate;
 use App\Models\EventType;
+use App\Models\Food;
 use App\Models\Reservation;
 use App\Models\SubRoom;
 use App\Services\ClassServices\EventService;
@@ -95,10 +96,8 @@ class EventController extends Controller
 
 
             foreach ($reservations_for_subroom as $reservation_for_subroom){
-                // dd($reservation_for_subroom->event_date->event_date);
 
             if ($reservation_for_subroom->event_date->event_date === $reservation->event_date->event_date) {
-
                 throw new Exception("your reservation date is reserved before" . fake()->emoji());
             }
         }

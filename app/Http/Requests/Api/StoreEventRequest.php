@@ -28,7 +28,7 @@ class StoreEventRequest extends FormRequest
             'is_private' =>'required|boolean',
             'event_type' => 'required|string|exists:event_types,type',
             'sub_room_id' => 'required|integer|exists:sub_rooms,id',
-            'planner_id'=> 'required|integer|between:3,4',
+            'planner_id'=> 'required|integer',
             'event_date'=> 'required|date',
             'food_items' => 'sometimes|array|exists:food,id',
             'accessory_items' => 'sometimes|array|exists:accessories,id',

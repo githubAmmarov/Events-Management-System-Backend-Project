@@ -30,6 +30,13 @@ return new class extends Migration
             ->cascadeOnDelete()
             ->cascadeOnUpdate()->nullable();
 
+            $table->foreignId('invitation_card_id')
+            ->constrained('invitation_cards')
+            ->cascadeOnDelete()
+            ->cascadeOnUpdate()->nullable();
+
+            $table->unique('invitation_card_id');
+
             $table->timestamps();
         });
     }

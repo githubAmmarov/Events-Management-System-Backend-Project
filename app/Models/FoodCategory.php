@@ -26,7 +26,7 @@ class FoodCategory extends Model
     MY PK IS FK WHERE?
     **/
 
-    public function foods():HasMany
+    public function food():HasMany
     {
         return $this->hasMany(Food::class);
     }

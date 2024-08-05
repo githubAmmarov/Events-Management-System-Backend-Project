@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class InvitationCard extends Model
 {
@@ -21,6 +22,10 @@ class InvitationCard extends Model
     /**
     MY PK IS FK WHERE?
     **/
+    public function invitation_card():HasOne
+    {
+        return $this->hasOne(InvitationCard::class);
+    }
 
     /**
     MY FK BELONGS TO?

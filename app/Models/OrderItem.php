@@ -15,6 +15,7 @@ class OrderItem extends Model
         'order_id',
         'sub_room_id',
         'photography_team_id',
+        'invitation_card_id',
     ];
 
     protected $table="order_items";
@@ -26,9 +27,9 @@ class OrderItem extends Model
     MY FK BELONGS TO?
     **/
 
-    public function food_item():BelongsToMany
+    public function food():BelongsToMany
     {
-        return $this->belongsToMany(FoodItem::class);
+        return $this->belongsToMany(Food::class);
     }
     public function accessory():BelongsToMany
     {
@@ -45,6 +46,10 @@ class OrderItem extends Model
     public function photography_team():BelongsTo
     {
         return $this->belongsTo(PhotographyTeam::class);
+    }
+    public function invitaion_card():BelongsTo
+    {
+        return $this->belongsTo(InvitationCard::class);
     }
 
 }
