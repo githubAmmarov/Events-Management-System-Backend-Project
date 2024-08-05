@@ -33,6 +33,8 @@ return new class extends Migration
             $table->time('event_time');
             $table->integer('num_of_guests');
             $table->boolean('is_private');
+            $table->integer('planner_id');
+
             $table->timestamps();
         });
     }

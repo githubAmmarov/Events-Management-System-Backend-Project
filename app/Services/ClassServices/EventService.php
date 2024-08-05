@@ -3,7 +3,9 @@
 namespace App\Services\ClassServices;
 
 use App\Models\Event;
+use App\Models\EventDate;
 use App\Models\EventType;
+use App\Models\Reservation;
 use App\Models\SubRoom;
 use App\Services\InterfacesServices\EventServiceInterface;
 use Illuminate\Support\Facades\Auth;
@@ -36,24 +38,44 @@ class EventService
 
     public function createEvent(array $data)
     {
-        $event = new Event();
-        $event->description = $data['description'];
-        $event->event_time = $data['event_time'];
-        $event->num_of_guests = $data['num_of_guests'];
-        $event->is_private = $data['is_private'];
-        $event->user_id = Auth::id();
+        DB::transaction(function () use (& $data){
+            $event = new Event();
+            $event->description = $data['description'];
+            $event->event_time = $data['event_time'];
+            $event->num_of_guests = $data['num_of_guests'];
+            $event->is_private = $data['is_private'];
+            $event->planner_id = $data['planner_id'];
+            $event->user_id = Auth::id();
 
-        $eventType = EventType::where('type', $data['event_type'])->firstOrFail();
-        $event->event_type_id = $eventType->id;
+            $eventType = EventType::where('type', $data['event_type'])->firstOrFail();
+            $event->event_type_id = $eventType->id;
 
-        if (isset($data['sub_room_id'])) {
-            $subRoom = SubRoom::findOrFail($data['sub_room_id']);
-            $event->sub_room_id = $subRoom->id;
-        }
-        $event->save();
+            if (isset($data['sub_room_id'])) {
+                $subRoom = SubRoom::findOrFail($data['sub_room_id']);
+                $event->sub_room_id = $subRoom->id;
+            }
 
-        return $event;
-    }
+            $data['event_id'] = $event->id;
+
+            $event->save();
+
+            $eventDate = EventDate::create([
+                'event_id' => $event->id,
+                'event_date' => $data['event_date'],
+            ]);
+
+            $reservation = Reservation::create([
+                'event_date_id' => $eventDate->id,
+                'sub_room_id' => $data['sub_room_id'],
+            ]);
+
+            $event->update(['reservation_id' => $reservation->id]);
+
+        });
+
+
+        return $data;
+}
 
     public function geteventByID($id)
     {

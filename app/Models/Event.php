@@ -20,6 +20,7 @@ class Event extends Model
         'event_time',
         'num_of_guests',
         'is_private',
+        'planner_id',
     ];
 
     protected $table="events";

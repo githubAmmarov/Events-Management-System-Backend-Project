@@ -43,7 +43,7 @@ class RolesPermissionsSeeder extends Seeder
         ]);
         $adminuser->assignRole($adminrole);
 
-        // Assign permissions associated with the role to the user 
+        // Assign permissions associated with the role to the user
         $permissions = $adminrole->permissions()->pluck('name')->toArray();
         $adminuser->givePermissionTo($permissions);
 
@@ -55,21 +55,33 @@ class RolesPermissionsSeeder extends Seeder
         ]);
         $clientuser->assignRole($clientrole);
 
-        // Assign permissions associated with the role to the user 
+        // Assign permissions associated with the role to the user
         $permissions = $clientrole->permissions()->pluck('name')->toArray();
         $clientuser->givePermissionTo($permissions);
-        
+
         $planneruser=\App\Models\User::factory()->create([
             'name' => 'Planner User',
             'email' => 'planner@example.com',
             'password' => bcrypt('password'),
-            'blocked' => 1,
+            'blocked' => 0,
         ]);
         $planneruser->assignRole($plannerrole);
 
-        // Assign permissions associated with the role to the user 
+        // Assign permissions associated with the role to the user
         $permissions = $plannerrole->permissions()->pluck('name')->toArray();
         $planneruser->givePermissionTo($permissions);
+
+        $planneruser2=\App\Models\User::factory()->create([
+            'name' => 'Planner User 2',
+            'email' => 'planner2@example.com',
+            'password' => bcrypt('password'),
+            'blocked' => 0,
+        ]);
+        $planneruser2->assignRole($plannerrole);
+
+        // Assign permissions associated with the role to the user
+        $permissions = $plannerrole->permissions()->pluck('name')->toArray();
+        $planneruser2->givePermissionTo($permissions);
 
     }
 }
