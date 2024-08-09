@@ -18,6 +18,7 @@ class Post extends Model
         'title',
         'description',
         'is_public',
+        'image'
     ];
 
     protected $table="posts";

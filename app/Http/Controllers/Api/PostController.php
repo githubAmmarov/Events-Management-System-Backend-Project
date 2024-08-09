@@ -54,7 +54,7 @@ class PostController extends Controller
 
     /**
      * Display the specified resource.
-     */
+     */ 
     public function show($id): \Illuminate\Http\JsonResponse
     {
         $post = [];

@@ -24,7 +24,7 @@ return new class extends Migration
             ->constrained('posts')
             ->cascadeOnDelete()
             ->cascadeOnUpdate();
-
+ 
             $table->timestamps();
         });
     }

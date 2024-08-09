@@ -8,8 +8,10 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
+
 
 class postService implements postServiceInterface
 {
@@ -32,10 +34,16 @@ class postService implements postServiceInterface
     {
         $validatePostData = $this->validateData($postData);
 
+        if (isset($validatePostData['image']) && is_file($validatePostData['image'])) {
+            $imagePath = $validatePostData['image']->Store('image','public');
+            $validatePostData['image'] = $imagePath;
+        }
+        
         $post = new Post();
         $post->title = $validatePostData['title'];
         $post->description = $validatePostData['description'];
         $post->is_public = $validatePostData['is_public'];
+        $post->image = $validatePostData['image'];
         $post->user_id = auth()->id();
         $post->save();
 
@@ -50,6 +58,7 @@ class postService implements postServiceInterface
                 'title'=>'required|string',
                 'description'=>'nullable|string',
                 'is_public'=>'required|boolean',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
             ])->validate();
     }
     public function updatePost(int $post_id , array $data): Builder|array|Collection|Model

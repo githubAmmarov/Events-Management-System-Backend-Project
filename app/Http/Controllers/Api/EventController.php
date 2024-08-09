@@ -10,6 +10,8 @@ use App\Http\Responses\Response;
 use App\Models\EventDate;
 use App\Models\EventType;
 use App\Models\Food;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Reservation;
 use App\Models\SubRoom;
 use App\Services\ClassServices\EventService;
@@ -56,11 +58,25 @@ class EventController extends Controller
     }
 
     public function store(StoreeventRequest $request)
-    {
+{
+    try {
+        // التحقق من البيانات المدخلة
+        $data = $request->validate([
+            'description' => 'sometimes|string',
+            'event_time' => 'required|date_format:H:i',
+            'num_of_guests' => 'required|integer',
+            'is_private' => 'required|boolean',
+            'event_type' => 'required|string|exists:event_types,type',
+            'sub_room_id' => 'required|integer|exists:sub_rooms,id',
+            'planner_id' => 'required|integer',
+            'event_date' => 'required|date',
+            'food_items' => 'sometimes|array',
+            'food_items.*.id' => 'required|exists:food,id',
+            'food_items.*.quantity' => 'required|integer|min:1'
+        ]);
 
-        try{
-            $data = $request->validated();
-            DB::transaction(function () use (& $data){
+        DB::transaction(function () use (&$data) {
+            // إنشاء الحدث الجديد
             $event = new Event();
             $event->description = $data['description'];
             $event->event_time = $data['event_time'];
@@ -69,24 +85,27 @@ class EventController extends Controller
             $event->planner_id = $data['planner_id'];
             $event->user_id = Auth::id();
 
+            // ربط نوع الحدث
             $eventType = EventType::where('type', $data['event_type'])->firstOrFail();
             $event->event_type_id = $eventType->id;
 
-            
-
+            // التأكد من الغرفة الفرعية وربطها بالحدث
             if (isset($data['sub_room_id'])) {
                 $subRoom = SubRoom::findOrFail($data['sub_room_id']);
                 $event->sub_room_id = $subRoom->id;
             }
 
+            // حفظ الحدث
             $event->save();
 
+            // إنشاء تاريخ الحدث
             $eventDate = EventDate::create([
                 'event_id' => $event->id,
                 'event_date' => $data['event_date'],
             ]);
 
-            $reservations_for_subroom = Reservation::where('sub_room_id',$data['sub_room_id'])->get();
+            // إنشاء حجز للغرفة الفرعية
+            $reservations_for_subroom = Reservation::where('sub_room_id', $data['sub_room_id'])->get();
             $reservation = Reservation::create([
                 'event_date_id' => $eventDate->id,
                 'sub_room_id' => $data['sub_room_id'],
@@ -94,26 +113,51 @@ class EventController extends Controller
             $event->update(['reservation_id' => $reservation->id]);
             $event->save();
 
-
-            foreach ($reservations_for_subroom as $reservation_for_subroom){
-
-            if ($reservation_for_subroom->event_date->event_date === $reservation->event_date->event_date) {
-                throw new Exception("your reservation date is reserved before" . fake()->emoji());
+            // التحقق من تداخل الحجز
+            foreach ($reservations_for_subroom as $reservation_for_subroom) {
+                if ($reservation_for_subroom->event_date->event_date === $reservation->event_date->event_date) {
+                    throw new Exception("Your reservation date is reserved before.");
+                }
             }
-        }
 
+            // إنشاء الطلب وربطه بالحدث والمستخدم
+            $order = Order::create([
+                'event_id' => $event->id,
+                'user_id' => Auth::id(),
+            ]);
+
+            // إنشاء عناصر الطلب وربطها بالأطعمة المطلوبة
+            foreach ($data['food_items'] as $foodItem) {
+                $orderItem = OrderItem::create([
+                    'order_id' => $order->id,
+                    'sub_room_id' => $data['sub_room_id'],
+                ]);
+
+                // ربط العناصر الغذائية بالطلب في جدول العلاقة
+                DB::table('food_order_item')->insert([
+                    'food_id' => $foodItem['id'],
+                    'order_item_id' => $orderItem->id,
+                    'quantity' => $foodItem['quantity'],
+                ]);
+            }
+
+            // تحديث معرف الحدث في البيانات
             $data['event_id'] = $event->id;
         });
-            // $eventData = array_merge($request->all(),['user_id'=>$user_id]);
-            // $event = $this->eventService->createEvent($eventData);
-            $message = 'the event is created successfully';
-            return Response::Success($data, $message, 201);
-        } catch(Exception $e){
-            $error = $e->getMessage();
-            return Response::Error($e, $error, 500);
-        }
 
+        // رسالة النجاح
+        $message = 'The event is created successfully';
+        return Response::Success($data, $message, 201);
+
+    } catch(Exception $e) {
+        // التعامل مع الأخطاء
+        $error = $e->getMessage();
+
+        // التأكد من أن الخطأ يعرض بشكل صحيح
+        return Response::Error(['error' => $error], 'Error occurred while creating the event', 500);
     }
+}
+
 
     /**
      * Display the specified resource.

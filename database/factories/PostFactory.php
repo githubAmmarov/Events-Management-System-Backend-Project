@@ -23,6 +23,7 @@ class PostFactory extends Factory
             'title'=> $this->faker->title(),
             'description'=>$this->faker->text(300),
             'is_public'=> $this->faker->numberBetween(0,1),
+            'image'=> $this->faker->imageUrl
         ];
     }
 }

@@ -13,3 +13,4 @@ interface postServiceInterface
     public function updatePost(int $post_id , array $data);
     public function deletePost(int $post_id);
 }
+ 
