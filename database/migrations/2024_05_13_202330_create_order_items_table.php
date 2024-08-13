@@ -20,20 +20,22 @@ return new class extends Migration
             ->cascadeOnDelete()
             ->cascadeOnUpdate();
 
+            $table->unique('order_id');
+
             $table->foreignId('sub_room_id')
             ->constrained('sub_rooms')
             ->cascadeOnDelete()
             ->cascadeOnUpdate();
 
-            $table->foreignId('photography_team_id')
+            $table->foreignId('photography_team_id')->nullable()
             ->constrained('photography_teams')
             ->cascadeOnDelete()
-            ->cascadeOnUpdate()->nullable();
+            ->cascadeOnUpdate();
 
             $table->foreignId('invitation_card_id')
             ->constrained('invitation_cards')
             ->cascadeOnDelete()
-            ->cascadeOnUpdate()->nullable();
+            ->cascadeOnUpdate();
 
             $table->unique('invitation_card_id');
 

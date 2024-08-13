@@ -15,6 +15,7 @@ class SubRoom extends Model
         'place_id',
         'place_room_type_id',
         'media_id',
+        'name',
         'capacity',
         'cost'
     ];

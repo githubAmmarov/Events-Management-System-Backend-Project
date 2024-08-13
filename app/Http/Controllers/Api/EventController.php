@@ -10,6 +10,7 @@ use App\Http\Responses\Response;
 use App\Models\EventDate;
 use App\Models\EventType;
 use App\Models\Food;
+use App\Models\FoodOrderItem;
 use App\Models\InvitationCard;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -57,6 +58,18 @@ class EventController extends Controller
             $error = $th->getMessage();
             return Response::Error($th, $error, 500);
         }
+    }
+    public function indexEventTypes()
+    {
+        $message = "These are all event types";
+        try {
+            return Response::Success(EventType::all() , $message, 200);
+        } catch(Exception $e){
+            $error = $e->getMessage();
+            $code = $e->getCode();
+            return Response::Error($e, $error, $code);
+        }
+
     }
 
     public function store(StoreEventRequest $request)

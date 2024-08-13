@@ -19,6 +19,8 @@ return new class extends Migration
             ->cascadeOnDelete()
             ->cascadeOnUpdate();
 
+            $table->unique('media_id');
+
             $table->foreignId('food_category_id')
             ->constrained('food_categories')
             ->cascadeOnDelete()

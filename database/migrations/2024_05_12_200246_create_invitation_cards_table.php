@@ -19,6 +19,8 @@ return new class extends Migration
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
 
+                $table->unique('event_id');
+
                 $table->foreignId('invitation_card_style_id')
                 ->constrained('invitation_card_styles')
                 ->cascadeOnDelete()

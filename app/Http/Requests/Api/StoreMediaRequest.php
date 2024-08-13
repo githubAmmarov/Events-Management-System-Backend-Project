@@ -16,6 +16,8 @@ class StoreMediaRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
+     * 
+     * |max:2048
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
@@ -23,7 +25,7 @@ class StoreMediaRequest extends FormRequest
     {
         return [
             //
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'media' => 'required|file|mimes:jpeg,png,jpg,gif,mp4',
         ];
     }
 }

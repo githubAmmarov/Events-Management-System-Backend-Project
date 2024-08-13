@@ -35,8 +35,8 @@ class MediaController extends Controller
     public function store(ApiStoreMediaRequest $request)
     {
         //
-        $this->saveImage($request->image);
-        return 'success'.'Image uploaded successfully.';
+        $this->saveMedia($request->media);
+        return 'success'.'media uploaded successfully.';
     }
 
     /**

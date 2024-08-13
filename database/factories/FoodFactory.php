@@ -19,7 +19,7 @@ class FoodFactory extends Factory
         return [
             'food_category_id' => $this->faker->numberBetween(1,4),
             'name' => $this->faker->unique()->word(),
-            'media_id'=>$this->faker->numberBetween(1,30),
+            'media_id'=>$this->faker->unique()->numberBetween(1,300),
             'price'=>$this->faker->numberBetween(1,100),
             'description'=>$this->faker->sentence(10),
         ];

@@ -21,7 +21,7 @@ class PhotographyTeamFactory extends Factory
             'address'=>$this->faker->address,
             'cost'=>$this->faker->numberBetween(10,100),
             'phone_number'=> '09'. $this->faker->numerify('########'),
-            'media_id'=> $this->faker->numberBetween(1,30)
+            'media_id'=> $this->faker->unique()->numberBetween(1,300)
         ];
     }
 }

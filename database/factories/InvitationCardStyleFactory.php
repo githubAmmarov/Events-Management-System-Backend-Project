@@ -18,7 +18,7 @@ class InvitationCardStyleFactory extends Factory
     {
         return [
             //
-            'media_id'=>$this->faker->numberBetween(1,300),
+            'media_id'=>$this->faker->unique()->numberBetween(1,300),
             'style'=>$this->faker->unique()->word(),
         ];
     }

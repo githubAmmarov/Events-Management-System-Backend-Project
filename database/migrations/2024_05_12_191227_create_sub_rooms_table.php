@@ -29,7 +29,10 @@ return new class extends Migration
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
 
+                $table->unique('media_id');
+
             $table->integer('capacity');
+            $table->string('name');
             $table->float('cost');
 
             $table->timestamps();

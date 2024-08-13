@@ -6,15 +6,15 @@ use App\Models\Media;
 
 Trait ApiTraits
 {
-    function saveImage($photo)
+    function saveMedia($media)
     {
         
-        $imageName = time().'.'.$photo->extension();  
-        $photo->move(public_path('images'), $imageName);
+        $mediaName = time().'.'.$media->extension();  
+        $media->move(public_path('media'), $mediaName);
 
         Media::create([
-            'media_url' => 'images/' . $imageName,
+            'media_url' => 'media/' . $mediaName,
         ]);
-        return $imageName;
+        return $mediaName;
     }
 }

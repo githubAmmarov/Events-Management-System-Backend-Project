@@ -24,6 +24,8 @@ return new class extends Migration
             ->cascadeOnDelete()
             ->cascadeOnUpdate();
 
+            $table->unique('media_id');
+
             $table->string('name');
             $table->integer('price');
             $table->timestamps();

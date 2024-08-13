@@ -32,6 +32,7 @@ class EventFactory extends Factory
             'event_type_id' => EventType::inRandomOrder()->firstOr()->id,
             'sub_room_id' => $this->faker->numberBetween(1,10),
             'description' => $this->faker->paragraph,
+            'contact_information' => $this->faker->phoneNumber(10),
             'event_time' => $this->faker->dateTime(),
             'num_of_guests' => $this->faker->numberBetween(5,500),
             'is_private'=> $this->faker->boolean(1),

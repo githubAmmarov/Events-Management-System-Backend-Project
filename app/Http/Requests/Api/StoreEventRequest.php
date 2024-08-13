@@ -22,22 +22,27 @@ class StoreEventRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'event_type_id' => 'required|integer|exists:event_types,id',
+            'sub_room_id' => 'required|integer|exists:sub_rooms,id',
             'description' => 'sometimes|string',
             'event_time' => 'required|date_format:H:i',
             'num_of_guests' => 'required|integer',
+            'contact_information' => 'required|string',
             'is_private' =>'required|boolean',
-            'event_type' => 'required|string|exists:event_types,type',
-            'sub_room_id' => 'required|integer|exists:sub_rooms,id',
             'planner_id'=> 'required|integer',
             'event_date'=> 'required|date',
-            'food_items' => 'sometimes|array|exists:food,id',
-            'accessory_items' => 'sometimes|array|exists:accessories,id',
+
+            'food_items' => 'sometimes|array',
+            'food_items.*.id' => 'required|integer|exists:food,id',
+            'food_items.*.quantity' => 'required|integer|min:1',
+            
+            'accessory_items' => 'sometimes|array',
+            'accessory_items.*.id' => 'required|integer|exists:accessory,id',
+            
             'photography_team_id' => 'sometimes|integer|exists:photography_teams,id',
-            'invetation_card_styles_id' => 'sometimes|integer|exists:invetation_card_styles,id',
-            'invetation_card_description' => 'sometimes|string'
+            'invitation_card_style_id' => 'required|integer|exists:invitation_card_styles,id',
+            'invitation_card_description' => 'required|string'
 
-
-            // 'sub_room_type' => 'required|string|exists:place_room_types,name'
         ];
     }
 }

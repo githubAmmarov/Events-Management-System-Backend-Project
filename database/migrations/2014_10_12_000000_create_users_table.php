@@ -18,6 +18,8 @@ return new class extends Migration
             ->constrained('media')
             ->cascadeOnDelete()
             ->cascadeOnUpdate();
+
+            $table->unique('media_id');
             
             $table->string('name');
             $table->string('email')->unique();

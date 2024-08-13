@@ -47,7 +47,7 @@ Route::group(['middleware'=>['auth:api']], function(){
     Route::get('showSubroom/{subRoom}',[SubRoomController::class,'show']);
     Route::get('showSubroomReservations/{subRoom}/{month}/{year}',[ReservationController::class,'index']);
 
-    Route::post('/storeimage',[MediaController::class,'store']);
+    Route::post('/storemedia',[MediaController::class,'store']);
 
     Route::get('/allFoods' ,[FoodController::class,'allFoods']);
     Route::get('/foodItem/{id}' ,[FoodItemController::class,'foodItem']);
@@ -89,6 +89,7 @@ Route::group(['middleware'=>['auth:api']], function(){
     Route::delete('/deletePost/{id}', [PostController::class, 'destroy']);
 
     Route::get('/allEvents',[EventController::class, 'index']);
+    Route::get('/eventTypes',[EventController::class, 'indexEventTypes']);
     Route::get('/showUserEvent/{id}',[EventController::class, 'userEvents']);
     Route::get('/showEvent/{id}',[EventController::class, 'show']);
     Route::post('/storeEvent',[EventController::class, 'store']);
