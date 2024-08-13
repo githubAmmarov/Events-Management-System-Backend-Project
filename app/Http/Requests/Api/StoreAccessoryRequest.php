@@ -11,7 +11,7 @@ class StoreAccessoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class StoreAccessoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'accessory_type' => 'required|string|exists:accessory_types,type',
+            'media' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'name' => 'required|string',
+            'price' => 'required|integer|min:1'
         ];
     }
 }

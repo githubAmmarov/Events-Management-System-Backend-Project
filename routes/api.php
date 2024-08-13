@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Requests\Api\UpdateAccessoryRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -53,7 +54,13 @@ Route::group(['middleware'=>['auth:api']], function(){
     Route::get('/foodCategory/{id}' ,[FoodCategoryController::class,'foodCategory']);
     Route::get('/foodCategories' ,[FoodCategoryController::class,'foodCategories']);
     Route::get('/foodsForCategory/{id}' ,[FoodCategoryController::class,'foodsForCategory']);
+    Route::post('/storeFood' ,[FoodController::class,'store']);
 
+
+
+    Route::post('/storeAccessory', [AccessoryController::class, 'store']);
+    Route::post('/updateAccessory/{id}', [AccessoryController::class, 'update']);
+    Route::delete('/deleteAccessory/{id}', [AccessoryController::class, 'destroy']);
     Route::get('/allAccessories',[AccessoryController::class, 'index']);
     Route::get('/accessoryItem/{id}',[AccessoryController::class, 'indexItem']);
     Route::get('/accessoriesForType/{id}',[AccessoryTypeController::class, 'indexForType']);
@@ -87,7 +94,10 @@ Route::group(['middleware'=>['auth:api']], function(){
     Route::post('/storeEvent',[EventController::class, 'store']);
     Route::post('/updateEvent/{id}',[EventController::class, 'update']);
     Route::delete('/deleteEvent/{id}',[EventController::class, 'destroy']);
+
+
 });
+
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

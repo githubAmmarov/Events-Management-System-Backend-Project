@@ -11,7 +11,7 @@ class UpdateAccessoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdateAccessoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'accessory_type' => 'nullable|string|exists:accessory_types,type',
+            'media' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg',
+            'name' => 'sometimes|string',
+            'price' => 'sometimes|integer|min:1'
         ];
     }
 }
