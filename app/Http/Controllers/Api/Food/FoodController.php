@@ -11,6 +11,7 @@ use App\Models\FoodCategory;
 use App\Models\Media;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class FoodController extends Controller
 {
@@ -48,16 +49,11 @@ class FoodController extends Controller
     public function store(ApiStoreFoodRequest $request)
     {
 {
-    $validateData = $request->validate([
-            'food_category' => 'required|string|exists:food_categories,category',,
-            'name' => 'required|string',
-            'price' => 'required|integer|min:1',
-            'description' => 'sometimes|string',
-            'media' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-    ]);
+    $validateData = $request->validated();
+
 
     return DB::transaction(function () use ($validateData, $request) {
-        $foodCategory = FoodCategory::query()->where('type', $validateData['accessory_type'])->firstOrFail();
+        $foodCategory = FoodCategory::query()->where('category', $validateData['food_category'])->firstOrFail();
 
         $media = null;
         if ($request->hasFile('media')) {
@@ -71,10 +67,11 @@ class FoodController extends Controller
         }
 
         $food = Food::create([
-            'accessory_type_id' => $foodCategory->id,
+            'food_category_id' => $foodCategory->id,
             'media_id' => $media ? $media->id : null,
             'name' => $validateData['name'],
             'price' => $validateData['price'],
+            'description' => $validateData['description']
         ]);
 
         $message = 'Food created successfully';
@@ -108,9 +105,48 @@ class FoodController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ApiUpdateFoodRequest $request, Food $food)
+    public function update(ApiUpdateFoodRequest $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'food_category' => 'nullable|string|exists:food_categories,category',
+            'media' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg',
+            'name' => 'nullable|string',
+            'price' => 'nullable|integer|min:1'
+        ]);
+
+        return DB::transaction(function () use ($validatedData, $request, $id) {
+            $food = Food::findOrFail($id);
+            $foodCategory = FoodCategory::query()->where('category', $validatedData['food_category'])->first();
+
+            $media = $food->media;
+            if ($request->hasFile('media')) {
+                if ($media) {
+                    Storage::disk('public')->delete(str_replace('storage/', '', $media->media_url));
+                }
+                $file = $request->file('media');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $mediaPath = $file->storeAs('accessories', $fileName, 'public');
+
+                $media = Media::create([
+                    'media_url' => 'storage/' . $mediaPath
+                ]);
+            }
+                $food->update(array_filter([
+                'accessory_type_id' => $foodCategory->id,
+                'media_id' => $media ? $media->id : $food->media_id,
+                'name' => $validatedData['name'] ?? $food->name,
+                'price' => $validatedData['price'] ?? $food->price,
+            ]));
+            $food->save();
+
+            $message = 'Food Updated Successfully';
+            return response()->json([
+                'message' => $message,
+                'accessory_data' => $food,
+                'image_url' => $media ? url($media->media_url) : ($food->media ? url($food->media->media_url) : null)
+            ], 200);
+        });
+
     }
 
     /**

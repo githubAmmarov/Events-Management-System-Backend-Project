@@ -18,6 +18,10 @@ class AccessoryShop extends Model
         'phone_number'
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
     protected $table="accessory_shops";
 
     /**

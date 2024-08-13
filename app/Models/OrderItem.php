@@ -18,6 +18,10 @@ class OrderItem extends Model
         'invitation_card_id',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
     protected $table="order_items";
 
     /**

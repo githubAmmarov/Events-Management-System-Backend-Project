@@ -16,6 +16,10 @@ class Reservation extends Model
         'sub_room_id',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
     protected $table="reservations";
 
     /**

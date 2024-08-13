@@ -26,7 +26,7 @@ class FoodShop extends Model
 
     public function food_items():HasMany
     {
-        return $this->hasMany(FoodItem::class);
+        return $this->hasMany(FoodOrderItem::class);
     }
 
     /**

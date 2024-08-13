@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Accessory extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'accessory_type_id',
         'media_id',
@@ -18,6 +18,10 @@ class Accessory extends Model
         'price',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
     protected $table="accessories";
 
     /**

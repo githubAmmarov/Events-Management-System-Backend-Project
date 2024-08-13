@@ -15,6 +15,10 @@ class Like extends Model
         'post_id',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
     protected $table="likes";
 
     /**

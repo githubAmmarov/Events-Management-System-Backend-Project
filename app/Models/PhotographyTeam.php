@@ -19,6 +19,10 @@ class PhotographyTeam extends Model
         'phone_number'
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
     protected $table="photography_teams";
 
     /**
@@ -29,7 +33,7 @@ class PhotographyTeam extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
-    
+
     /**
     MY FK BELONGS TO?
     **/

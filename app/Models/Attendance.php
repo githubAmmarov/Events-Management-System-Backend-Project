@@ -18,12 +18,16 @@ class Attendance extends Model
         'priority'
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
     protected $table="attendances";
 
     /**
     MY PK IS FK WHERE?
      */
-    
+
     /**
     MY FK BELONGS TO?
      **/

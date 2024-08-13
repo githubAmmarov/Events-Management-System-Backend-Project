@@ -20,6 +20,10 @@ class Order extends Model
 
     protected $table="orders";
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
     /**
     MY PK IS FK WHERE?
      **/
@@ -28,7 +32,7 @@ class Order extends Model
     {
         return $this->hasOne(OrderItem::class);
     }
-    
+
     /**
     MY FK BELONGS TO?
      **/

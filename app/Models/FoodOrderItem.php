@@ -16,6 +16,10 @@ class FoodOrderItem extends Model
         'quantity',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
     protected $table="food_order_item";
 
     /**

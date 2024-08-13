@@ -16,6 +16,10 @@ class media_post extends Model
         'post_id'
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
     protected $table = 'media_post';
 
     public function post():BelongsTo

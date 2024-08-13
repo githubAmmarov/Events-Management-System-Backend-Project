@@ -24,6 +24,10 @@ class Event extends Model
         'planner_id',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
     protected $table="events";
 
     /**

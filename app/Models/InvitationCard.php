@@ -17,6 +17,10 @@ class InvitationCard extends Model
         'description',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
     protected $table="invitation_cards";
 
     /**

@@ -28,7 +28,7 @@ class Media extends Model
     {
         return $this->hasOne(User::class);
     }
-     public function photography_team():HasOne
+    public function photography_team():HasOne
     {
         return $this->hasOne(PhotographyTeam::class);
     }
@@ -46,7 +46,7 @@ class Media extends Model
     }
     public function food_item():HasOne
     {
-        return $this->hasOne(FoodItem::class);
+        return $this->hasOne(FoodOrderItem::class);
     }
     public function sub_room():HasOne
     {

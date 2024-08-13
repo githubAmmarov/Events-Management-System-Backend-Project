@@ -16,12 +16,16 @@ class InvitationCardStyle extends Model
         'style',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
     protected $table="invitation_card_styles";
 
     /**
     MY PK IS FK WHERE?
      **/
-    
+
     public function invitation_card():HasMany
     {
         return $this->hasMany(InvitationCard::class);

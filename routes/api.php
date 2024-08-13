@@ -55,6 +55,7 @@ Route::group(['middleware'=>['auth:api']], function(){
     Route::get('/foodCategories' ,[FoodCategoryController::class,'foodCategories']);
     Route::get('/foodsForCategory/{id}' ,[FoodCategoryController::class,'foodsForCategory']);
     Route::post('/storeFood' ,[FoodController::class,'store']);
+    Route::post('/updateFood/{id}' ,[FoodController::class,'update']);
 
 
 
