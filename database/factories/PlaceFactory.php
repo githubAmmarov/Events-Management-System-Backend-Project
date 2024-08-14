@@ -18,7 +18,7 @@ class PlaceFactory extends Factory
     {
         return [
             //
-            'place_room_type_id' => $this->faker->numberBetween(1,9),
+            'place_room_type_id' => $this->faker->numberBetween(1,6),
             'media_id'=> $this->faker->unique()->numberBetween(1,300),
             'name' => $this->faker->unique()->word(),
             'phone_number' => fake()->phoneNumber(10),

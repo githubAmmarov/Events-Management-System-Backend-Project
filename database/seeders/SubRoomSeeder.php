@@ -14,6 +14,6 @@ class SubRoomSeeder extends Seeder
     public function run(): void
     {
         //
-        SubRoom::factory(10)->create();
+        SubRoom::factory(100)->create();
     }
 }
