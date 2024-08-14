@@ -19,7 +19,12 @@ class Place extends Model
         'address'
     ];
 
-    protected $hidden = ['created_at','updated_at'];
+    protected $hidden = [
+        'place_room_type_id',
+        'media_id',
+        'created_at',
+        'updated_at'
+    ];
 
     protected $table="places";
 

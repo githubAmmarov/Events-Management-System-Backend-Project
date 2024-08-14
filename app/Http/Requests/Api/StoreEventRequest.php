@@ -37,7 +37,7 @@ class StoreEventRequest extends FormRequest
             'food_items.*.quantity' => 'required|integer|min:1',
             
             'accessory_items' => 'sometimes|array',
-            'accessory_items.*.id' => 'required|integer|exists:accessory,id',
+            'accessory_items.*.id' => 'required|integer|exists:accessories,id',
             
             'photography_team_id' => 'sometimes|integer|exists:photography_teams,id',
             'invitation_card_style_id' => 'required|integer|exists:invitation_card_styles,id',

@@ -7,16 +7,19 @@ use App\Models\Event;
 use App\Http\Requests\Api\StoreEventRequest;
 use App\Http\Requests\Api\UpdateEventRequest;
 use App\Http\Responses\Response;
+use App\Models\AccessoryOrderItem;
 use App\Models\EventDate;
 use App\Models\EventType;
 use App\Models\Food;
 use App\Models\FoodOrderItem;
 use App\Models\InvitationCard;
+use App\Models\InvitationCardStyle;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Reservation;
 use App\Models\SubRoom;
 use App\Services\ClassServices\EventService;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -38,7 +41,20 @@ class EventController extends Controller
     {
         $message = 'There are all Events';
         try {
-            $event = $this->eventService->getAllEvent();
+            $event = $this->eventService->getAllEvents();
+            return Response::Success($event , $message, 200);
+        } catch(Exception $e){
+            $error = $e->getMessage();
+            $code = $e->getCode();
+            return Response::Error($e, $error, $code);
+        }
+
+    }
+    public function indexPublicEvents()
+    {
+        $message = 'These are the comming public events';
+        try {
+            $event = $this->eventService->getPublicEvents();
             return Response::Success($event , $message, 200);
         } catch(Exception $e){
             $error = $e->getMessage();
@@ -53,6 +69,28 @@ class EventController extends Controller
         $message = "These events for user id: $user_id";
         try {
             $events = $this->eventService->getUserEvents($user_id);
+            return Response::Success($events, $message, 200);
+        } catch (\Throwable $th) {
+            $error = $th->getMessage();
+            return Response::Error($th, $error, 500);
+        }
+    }
+    public function myEvents()
+    {
+        $message = "These are my comming events ";
+        try {
+            $events = $this->eventService->myEvents();
+            return Response::Success($events, $message, 200);
+        } catch (\Throwable $th) {
+            $error = $th->getMessage();
+            return Response::Error($th, $error, 500);
+        }
+    }
+    public function myLastEvents()
+    {
+        $message = "These are my last events ";
+        try {
+            $events = $this->eventService->myLastEvents();
             return Response::Success($events, $message, 200);
         } catch (\Throwable $th) {
             $error = $th->getMessage();
@@ -104,6 +142,7 @@ class EventController extends Controller
                 $order = Order::create([
                     'event_id' => $event->id,
                     'user_id' => auth()->id(),
+                    'is_paid' => 0,
             ]);
 
             $order_item = OrderItem::query()->create([
@@ -111,6 +150,9 @@ class EventController extends Controller
                 'sub_room_id' => $data['sub_room_id'],
                 'invitation_card_id' => $invitation_card->id,
             ]);
+
+            if(array_key_exists('photography_team_id', $data)) 
+            $order_item->update(['photography_team_id'=>$data['photography_team_id']]);
 
             $reservations_for_subroom = Reservation::where('sub_room_id',$data['sub_room_id'])->get();
 
@@ -131,23 +173,34 @@ class EventController extends Controller
                     ]);
                     }
                 }
+            if(array_key_exists('accessory_items', $data))
+            {
+                foreach($data['accessory_items'] as $accessory_item)
+                {
+                    $accessory_item = AccessoryOrderItem::create([
+                        'accessory_id'=>$accessory_item['id'],
+                        'order_item_id'=>$order_item->id,
+                    ]);
+                    }
+                }
                 $event->save();
 
 
                 foreach ($reservations_for_subroom as $reservation_for_subroom){
 
-                    if ($reservation_for_subroom->event_date->event_date == $reservation->event_date->event_date) {
-                        throw new Exception("your reservation date is reserved before" . fake()->emoji());
+                    if ($reservation_for_subroom->event_date->event_date == $reservation->event_date->event_date 
+                        || $reservation->event_date->event_date < Carbon::now()) {
+                        throw new Exception("your reservation date is reserved before or invalid" . fake()->emoji());
                     }
                 }
-                $this->event_info = [$event,$eventDate,$invitation_card, $order,$order_item,$reservation];
-                if(array_key_exists('food_items', $data))
-            {$this->event_info = [$event,$eventDate,$invitation_card, $order,$order_item,$reservation,$data['food_items']];}
-
+                $this->event_info = [
+                    'Event'=>Event::query()->where('id',$event->id)->with(['type_of_event','event_date','attendances'])->first(),
+                    'Order'=>$order,
+                    'Details'=>[OrderItem::where('id',$order_item->id)->with(['sub_room','food','accessory','photography_team','invitation_card',])->first(),
+                    'invitation_card_style'=>[InvitationCardStyle::with('media')->find($data['invitation_card_style_id'])]],
+                ];
         });
 
-        // $eventData = array_merge($request->all(),['user_id'=>$user_id]);
-        // $event = $this->eventService->createEvent($eventData);
         $message = 'the event is created successfully';
         return Response::Success($this->event_info, $message, 201);
     } catch(Exception $e){

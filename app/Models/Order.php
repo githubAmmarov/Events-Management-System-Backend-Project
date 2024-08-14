@@ -21,6 +21,8 @@ class Order extends Model
     protected $table="orders";
 
     protected $hidden = [
+        'event_id',
+        'user_id',
         'created_at',
         'updated_at'
     ];

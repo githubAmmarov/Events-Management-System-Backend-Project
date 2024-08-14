@@ -8,25 +8,33 @@ use App\Models\EventType;
 use App\Models\Reservation;
 use App\Models\SubRoom;
 use App\Services\InterfacesServices\EventServiceInterface;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class EventService
 {
-    public function getAllEvent()
+    public function getAllEvents()
     {
-        DB::enableQueryLog();
-
         $events = Event::query()
-        ->with('type_of_event','user','sub_room')
+        ->with('type_of_event','event_date','sub_room')
         ->get();
-        foreach ($events as $event) {
-            // echo 'id :' . $event->id . ' Type :' . ($event->type_of_event ? $event->type_of_event->name : 'NULL') . PHP_EOL;
-            if ($event->type_of_event === null) {
-                $event= 'this private event';
-            }
-        }
         return $events;
+    }
+    public function getPublicEvents()
+    {
+        $comming_events = [];
+
+        $events = Event::query()->where('is_private',0)
+        ->with(['type_of_event','event_date','sub_room'])
+        ->get();
+        foreach($events as $event)
+        {
+            if($event->event_date->event_date > Carbon::now())
+            array_push($comming_events,$event);
+        }
+        
+        return $comming_events;
     }
     public function getUserEvents($user_id)
     {
@@ -34,6 +42,37 @@ class EventService
             ->where('user_id',$user_id)
             ->with(['user' , 'type_of_event','sub_room'])
             ->get();
+            
+    }
+    public function myEvents()
+    {
+        $comming_events = [];
+
+        $events = Event::query()->where('user_id',auth()->id())
+        ->with(['type_of_event','event_date','sub_room'])
+        ->get();
+        foreach($events as $event)
+        {
+            if($event->event_date->event_date > Carbon::now())
+            array_push($comming_events,$event);
+        }
+        
+        return $comming_events;
+    }
+    public function myLastEvents()
+    {
+        $history = [];
+
+        $events = Event::query()->where('user_id',auth()->id())
+        ->with(['type_of_event','event_date','sub_room'])
+        ->get();
+        foreach($events as $event)
+        {
+            if($event->event_date->event_date < Carbon::now())
+            array_push($history,$event);
+        }
+        
+        return $history;
     }
 
     public function createEvent(array $data)

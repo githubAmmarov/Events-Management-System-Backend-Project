@@ -90,14 +90,19 @@ Route::group(['middleware'=>['auth:api']], function(){
     Route::delete('/deletePost/{id}', [PostController::class, 'destroy']);
 
     Route::get('/allEvents',[EventController::class, 'index']);
+
+    Route::get('/publicEvents',[EventController::class, 'indexPublicEvents']);
+    Route::get('/myEvents',[EventController::class, 'myEvents']);
+    Route::get('/history',[EventController::class, 'myLastEvents']);
+
     Route::get('/eventTypes',[EventController::class, 'indexEventTypes']);
-    Route::get('/showUserEvent/{id}',[EventController::class, 'userEvents']);
     Route::get('/showEvent/{id}',[EventController::class, 'show']);
     Route::post('/storeEvent',[EventController::class, 'store']);
     Route::post('/updateEvent/{id}',[EventController::class, 'update']);
     Route::delete('/deleteEvent/{id}',[EventController::class, 'destroy']);
-
-
+    
+    // api for admin
+    Route::get('/showUserEvent/{id}',[EventController::class, 'userEvents']);
 });
 
 

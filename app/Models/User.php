@@ -36,6 +36,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'media_id',
         'created_at',
         'updated_at'
     ];

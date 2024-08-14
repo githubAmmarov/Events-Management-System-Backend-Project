@@ -5,38 +5,37 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class FoodOrderItem extends Model
+class AccessoryOrderItem extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'food_id',
+        'accessory_id',
         'order_item_id',
-        'quantity',
     ];
 
+    protected $table="accessory_order_item";
+
     protected $hidden = [
-        'food_id',
+        'accessory_id',
         'order_item_id',
-        'quantity',
         'created_at',
         'updated_at'
     ];
-    protected $table="food_order_item";
-
     /**
     MY PK IS FK WHERE?
     **/
     /**
     MY FK BELONGS TO?
     **/
-    public function food():BelongsTo
-    {
-        return $this->belongsTo(Food::class);
-    }
     public function order_item():BelongsTo
     {
         return $this->belongsTo(OrderItem::class);
+    }
+    public function accessory():BelongsTo
+    {
+        return $this->belongsTo(Accessory::class);
     }
 }

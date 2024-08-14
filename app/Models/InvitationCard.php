@@ -18,6 +18,8 @@ class InvitationCard extends Model
     ];
 
     protected $hidden = [
+        'event_id',
+        'invitation_card_style_id',
         'created_at',
         'updated_at'
     ];

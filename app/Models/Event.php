@@ -25,6 +25,10 @@ class Event extends Model
     ];
 
     protected $hidden = [
+        'user_id',
+        'event_type_id',
+        'sub_room_id',
+        'planner_id',
         'created_at',
         'updated_at'
     ];

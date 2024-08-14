@@ -19,6 +19,10 @@ class OrderItem extends Model
     ];
 
     protected $hidden = [
+        'order_id',
+        'sub_room_id',
+        'photography_team_id',
+        'invitation_card_id',
         'created_at',
         'updated_at'
     ];
@@ -33,7 +37,7 @@ class OrderItem extends Model
 
     public function food():BelongsToMany
     {
-        return $this->belongsToMany(Food::class);
+        return $this->belongsToMany(Food::class)->withPivot('quantity');
     }
     public function accessory():BelongsToMany
     {
@@ -51,7 +55,7 @@ class OrderItem extends Model
     {
         return $this->belongsTo(PhotographyTeam::class);
     }
-    public function invitaion_card():BelongsTo
+    public function invitation_card():BelongsTo
     {
         return $this->belongsTo(InvitationCard::class);
     }

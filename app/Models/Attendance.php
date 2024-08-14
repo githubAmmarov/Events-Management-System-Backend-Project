@@ -19,6 +19,7 @@ class Attendance extends Model
     ];
 
     protected $hidden = [
+        'event_id',
         'created_at',
         'updated_at'
     ];

@@ -18,6 +18,11 @@ class EventDate extends Model
 
     protected $table="event_dates";
 
+    protected $hidden = [
+        'event_id',
+        'created_at',
+        'updated_at'
+    ];
     /**
     MY PK IS FK WHERE?
      **/

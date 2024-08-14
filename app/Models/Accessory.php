@@ -20,6 +20,8 @@ class Accessory extends Model
 
     protected $hidden = [
         'created_at',
+        'accessory_type_id',
+        'media_id',
         'updated_at'
     ];
     protected $table="accessories";

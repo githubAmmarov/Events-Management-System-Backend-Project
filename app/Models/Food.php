@@ -21,6 +21,8 @@ class Food extends Model
     ];
 
     protected $hidden = [
+        'media_id',
+        'food_category_id',
         'created_at',
         'updated_at'
     ];
