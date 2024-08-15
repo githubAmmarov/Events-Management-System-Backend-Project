@@ -7,7 +7,10 @@ use App\Http\Requests\Api\StoreInvitationCardRequest as ApiStoreInvitationCardRe
 use App\Http\Requests\Api\UpdateInvitationCardRequest as ApiUpdateInvitationCardRequest;
 use App\Models\InvitationCard;
 use App\Http\Responses\Response;
+use App\Models\Event;
 use App\Models\InvitationCardStyle;
+use App\Models\Media;
+use Illuminate\Support\Facades\DB;
 
 class InvitationCardController extends Controller
 {
@@ -59,9 +62,41 @@ class InvitationCardController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ApiStoreInvitationCardRequest $request)
-    {
-        //
+    public function store(ApiStoreInvitationCardRequest $request){
+
+
+        $validateData = $request->validated();
+
+
+        return DB::transaction(function () use ($validateData, $request) {
+            $InvitationCardStyle = InvitationCardStyle::query()->where('style', $validateData['invitation_card_style'])->firstOrFail();
+
+            $media = null;
+            if ($request->hasFile('media')) {
+                $file = $request->file('media');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $mediaPath = $file->storeAs('InvitationCards', $fileName, 'public');
+
+                $media = Media::create([
+                    'media_url' => 'storage/' . $mediaPath
+                ]);
+            }
+
+
+            $InvitationCard = InvitationCard::create([
+                'invitation_card_style_id' => $InvitationCardStyle->id,
+                'event_id' => $validateData['event_id'],  // Add event_id here
+                'description' => $validateData['description']
+            ])->where('event_id',);
+
+            $message = 'Invitation Card created successfully';
+
+            return response()->json([
+                'message' => $message,
+                'Invitation_card_data' => $InvitationCard,
+                'image_url' => $media ? url($media->media_url) : null
+            ], 201);
+        });
     }
 
     /**

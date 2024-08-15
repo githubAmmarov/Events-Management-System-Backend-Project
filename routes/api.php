@@ -56,6 +56,8 @@ Route::group(['middleware'=>['auth:api']], function(){
     Route::get('/foodsForCategory/{id}' ,[FoodCategoryController::class,'foodsForCategory']);
     Route::post('/storeFood' ,[FoodController::class,'store']);
     Route::post('/updateFood/{id}' ,[FoodController::class,'update']);
+    Route::delete('/deleteFood/{id}' ,[FoodController::class,'destroy']);
+
 
 
 
@@ -71,6 +73,7 @@ Route::group(['middleware'=>['auth:api']], function(){
 
     Route::get('allInvitationCardStyles',[InvitationCardController::class, 'index']);
     Route::get('showInvitationCardStyle/{id}',[InvitationCardController::class, 'styleItem']);
+    Route::post('storeInvitationCard',[InvitationCardController::class, 'store']);
 
 
     Route::get('allClients',[UserController::class, 'indexClients']);

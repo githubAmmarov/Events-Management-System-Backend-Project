@@ -152,8 +152,17 @@ class FoodController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Food $food)
+    public function destroy($id)
     {
-        //
+        $food = Food::findOrFail($id);
+        if ($food->media) {
+            Storage::disk('public')->delete(str_replace('storage/', '', $food->media->media_url));
+            $food->media->delete();
+        }
+        $food->delete();
+        $message = 'food deleted successfully';
+        return response()->json([
+            'message' => $message
+        ], 200);
     }
 }
