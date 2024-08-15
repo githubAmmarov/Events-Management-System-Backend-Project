@@ -84,6 +84,7 @@ Route::group(['middleware'=>['auth:api']], function(){
 
     Route::get('/allphotographyTeams', [PhotographyTeamController::class, 'index']);
     Route::get('/photographyTeam/{id}', [PhotographyTeamController::class, 'indexforID']);
+    Route::post('/storePhotographyTeam', [PhotographyTeamController::class, 'store']);
 
     Route::get('/posts', [PostController::class, 'index']);
     Route::post('/showUserPost', [PostController::class, 'showUserPost']);
@@ -103,7 +104,7 @@ Route::group(['middleware'=>['auth:api']], function(){
     Route::post('/storeEvent',[EventController::class, 'store']);
     Route::post('/updateEvent/{id}',[EventController::class, 'update']);
     Route::delete('/deleteEvent/{id}',[EventController::class, 'destroy']);
-    
+
     // api for admin
     Route::get('/showUserEvent/{id}',[EventController::class, 'userEvents']);
 });
