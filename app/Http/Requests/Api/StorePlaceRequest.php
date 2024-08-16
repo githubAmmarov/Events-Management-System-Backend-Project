@@ -26,7 +26,7 @@ class StorePlaceRequest extends FormRequest
         'name' => 'required|string',
         'phone_number' => ['required','regex:/^(\+?963|0)?9[0-9]{8}$/'],
         'address' => 'required|string',
-        'media' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg'
+        'media' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
         ];
     }
 }

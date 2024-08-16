@@ -22,7 +22,7 @@ class StoreInvitationCardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'media' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg',
+            'media' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'style' => 'required|string'
         ];
     }
