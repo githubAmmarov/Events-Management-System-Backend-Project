@@ -5,6 +5,9 @@ namespace App\Services\ClassServices;
 use App\Models\Event;
 use App\Models\EventDate;
 use App\Models\EventType;
+use App\Models\InvitationCardStyle;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Reservation;
 use App\Models\SubRoom;
 use App\Services\InterfacesServices\EventServiceInterface;
@@ -118,21 +121,35 @@ class EventService
 
     public function geteventByID($id)
     {
-        $event = event::query()->find($id);
-        return $event;
+        $event = Event::query()->with('type_of_event','event_date','attendances')->find($id);
+        $order = Order::where('event_id',$event->id)->first();
+        $order_item = OrderItem::where('order_id',$order->id)->
+        with('sub_room','food','accessory','photography_team','invitation_card')->first();
+        $invitation_card_style = InvitationCardStyle::with('media')->find($order_item->invitation_card->invitation_card_style_id);
+        $event_info = [
+            'Event'=>$event,
+            'Order'=>$order,
+            'Details'=>$order_item,
+            'invitation_card_style'=>$invitation_card_style,
+        ];
+        return $event_info;
     }
 
     public function updateEvent($event_id ,array $data)
     {
         $event = Event::query()->with(['user', 'type_of_event', 'sub_room'])->findOrFail($event_id);
+        if ($event->created_at > Carbon::now()->subDays(3))
         $event->update($data);
+        else return "you can't update this event it's out of three days";
         return $event;
     }
 
     public function deleteEvent(int $event_id)
     {
         $event = Event::query()->findOrFail($event_id);
+        if ($event->created_at < Carbon::now()->subDays(3))
         $event->delete();
+        else return "you can't delete this event it's out of three days";
         return $event;
     }
 

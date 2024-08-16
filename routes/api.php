@@ -37,7 +37,7 @@ Route::post('login',[AuthController::class,'login']);
 Route::post('adminLogin',[AuthController::class,'Adminlogin']);
 
 
-Route::group(['middleware'=>['auth:api']], function(){
+Route::group(['middleware'=>['auth:api','active']], function(){
     Route::get('/profileInfo/{id}',[AuthController::class,'profile_Info']);
     Route::post('/logout',[AuthController::class,'logout']);
 
@@ -98,8 +98,8 @@ Route::group(['middleware'=>['auth:api']], function(){
     Route::get('/eventTypes',[EventController::class, 'indexEventTypes']);
     Route::get('/showEvent/{id}',[EventController::class, 'show']);
     Route::post('/storeEvent',[EventController::class, 'store']);
-    Route::post('/updateEvent/{id}',[EventController::class, 'update']);
-    Route::delete('/deleteEvent/{id}',[EventController::class, 'destroy']);
+    Route::post('/updateEvent/{event}',[EventController::class, 'update']);
+    Route::delete('/deleteEvent/{event}',[EventController::class, 'destroy']);
     
     // api for admin
     Route::get('/showUserEvent/{id}',[EventController::class, 'userEvents']);

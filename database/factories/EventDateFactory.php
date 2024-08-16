@@ -17,7 +17,8 @@ class EventDateFactory extends Factory
      */
     public function definition(): array
     {
-        $startDate = Carbon::now();
+        // $startDate = Carbon::now();
+        $startDate = "2022-05-31";
         $endDate = Carbon::create(2027,1,1);
         return [
             'event_id'=>fake()->unique()->numberBetween(1,500),

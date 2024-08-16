@@ -127,6 +127,9 @@ class EventController extends Controller
                     'is_private' => $data['is_private'],
                     'planner_id' => $data['planner_id'],
                 ]);
+                if(array_key_exists('ticket_price', $data)) 
+                $event->update(['ticket_price'=>$data['ticket_price']]);
+
 
                 $eventDate = EventDate::create([
                     'event_id' => $event->id,
@@ -219,7 +222,7 @@ class EventController extends Controller
         $error = 'event not found';
         try{
             $event = $this->eventService->geteventByID($id);
-            $message = 'this is required event';
+            $message = "this is event's details";
         if (is_null($event)){
             return Response::Error($error,404);
         }
@@ -230,12 +233,12 @@ class EventController extends Controller
         }
     }
 
-    public function update(UpdateEventRequest $request, event $event ,$id):JsonResponse
+    public function update(UpdateEventRequest $request, Event $event):JsonResponse
     {
         $data = $request->validated();
         $message = 'Event Updated successfully';
         try{
-            $event = $this->eventService->updateEvent($id, $data);
+            $event = $this->eventService->updateEvent($event->id, $data);
         return Response::Success($event, $message, 200);
         } catch (Exception $e){
             $error = $e->getMessage();
@@ -246,11 +249,11 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(event $event, $id)
+    public function destroy(Event $event)
     {
         try {
-            $message = "the $id Event is deleted successfully";
-            $event = $this->eventService->deleteEvent($id);
+            $message = "the Event $event->id is deleted successfully";
+            $event = $this->eventService->deleteEvent($event->id);
             return Response::Success($event, $message, 200);
         } catch(Exception $e){
             $errorMessage = $e->getMessage();

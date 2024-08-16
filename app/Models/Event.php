@@ -19,6 +19,7 @@ class Event extends Model
         'description',
         'event_time',
         'num_of_guests',
+        'ticket_price',
         'contact_information',
         'is_private',
         'planner_id',

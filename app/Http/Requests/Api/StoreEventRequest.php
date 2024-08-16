@@ -27,6 +27,7 @@ class StoreEventRequest extends FormRequest
             'description' => 'sometimes|string',
             'event_time' => 'required|date_format:H:i',
             'num_of_guests' => 'required|integer',
+            'ticket_price' => 'sometimes|integer',
             'contact_information' => 'required|string',
             'is_private' =>'required|boolean',
             'planner_id'=> 'required|integer',

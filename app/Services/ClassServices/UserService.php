@@ -109,6 +109,8 @@ class UserService
             }
             elseif($user['blocked']==1) {
                 $message = 'your account is blocked';
+                if ($user->hasRole('planner'))
+                $message = "waiting for admin's permission";
                 $status = 401;
             }
 

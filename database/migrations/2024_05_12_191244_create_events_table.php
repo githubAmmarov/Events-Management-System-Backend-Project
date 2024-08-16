@@ -32,6 +32,7 @@ return new class extends Migration
             $table->longText('description');
             $table->time('event_time');
             $table->integer('num_of_guests');
+            $table->integer('ticket_price')->nullable();
             $table->string('contact_information');
             $table->boolean('is_private');
             $table->integer('planner_id');

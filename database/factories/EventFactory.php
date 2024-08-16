@@ -35,6 +35,7 @@ class EventFactory extends Factory
             'contact_information' => $this->faker->phoneNumber(10),
             'event_time' => $this->faker->dateTime(),
             'num_of_guests' => $this->faker->numberBetween(5,500),
+            'ticket_price' => 10*$this->faker->numberBetween(1,20),
             'is_private'=> $this->faker->boolean(1),
             'planner_id'=> $this->faker->numberBetween(3,4),
         ];
