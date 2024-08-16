@@ -18,6 +18,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Reservation;
 use App\Models\SubRoom;
+use App\Models\User;
 use App\Services\ClassServices\EventService;
 use Carbon\Carbon;
 use Exception;
@@ -199,6 +200,7 @@ class EventController extends Controller
                 $this->event_info = [
                     'Event'=>Event::query()->where('id',$event->id)->with(['type_of_event','event_date','attendances'])->first(),
                     'Order'=>$order,
+                    'Planner'=> User::query()->with('media')->find($event->planner_id),
                     'Details'=>[OrderItem::where('id',$order_item->id)->with(['sub_room','food','accessory','photography_team','invitation_card',])->first(),
                     'invitation_card_style'=>[InvitationCardStyle::with('media')->find($data['invitation_card_style_id'])]],
                 ];
