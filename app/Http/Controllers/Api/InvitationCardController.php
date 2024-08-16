@@ -69,7 +69,6 @@ class InvitationCardController extends Controller
 
 
         return DB::transaction(function () use ($validateData, $request) {
-            $InvitationCardStyle = InvitationCardStyle::query()->where('style', $validateData['invitation_card_style'])->firstOrFail();
 
             $media = null;
             if ($request->hasFile('media')) {
@@ -83,17 +82,15 @@ class InvitationCardController extends Controller
             }
 
 
-            $InvitationCard = InvitationCard::create([
-                'invitation_card_style_id' => $InvitationCardStyle->id,
-                'event_id' => $validateData['event_id'],  // Add event_id here
-                'description' => $validateData['description']
-            ])->where('event_id',);
-
-            $message = 'Invitation Card created successfully';
+            $InvitationCardStyle = InvitationCardStyle::create([
+                'media_id' => $media->id,
+                'style' => $validateData['style'],
+            ]);
+            $message = 'Invitation Card Style created successfully';
 
             return response()->json([
                 'message' => $message,
-                'Invitation_card_data' => $InvitationCard,
+                'Invitation_card_data' => $InvitationCardStyle,
                 'image_url' => $media ? url($media->media_url) : null
             ], 201);
         });

@@ -17,7 +17,6 @@ class InvitationCardStyle extends Model
     ];
 
     protected $hidden = [
-        'media_id',
         'created_at',
         'updated_at'
     ];

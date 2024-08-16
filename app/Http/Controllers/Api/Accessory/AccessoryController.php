@@ -68,12 +68,7 @@ class AccessoryController extends Controller
      */
     public function store(ApiStoreAccessoryRequest $request)
 {
-    $validateData = $request->validate([
-        'accessory_type' => 'required|string|exists:accessory_types,type',
-        'media' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'name' => 'required|string',
-        'price' => 'required|integer|min:1'
-    ]);
+    $validateData = $request->validated();
 
     return DB::transaction(function () use ($validateData, $request) {
         $accessoryType = AccessoryType::query()->where('type', $validateData['accessory_type'])->firstOrFail();
@@ -108,12 +103,7 @@ class AccessoryController extends Controller
 
     public function update(ApiUpdateAccessoryRequest $request, $id)
     {
-        $validatedData = $request->validate([
-            'accessory_type' => 'nullable|string|exists:accessory_types,type',
-            'media' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg',
-            'name' => 'nullable|string',
-            'price' => 'nullable|integer|min:1'
-        ]);
+        $validatedData = $request->validated();
 
         return DB::transaction(function () use ($validatedData, $request, $id) {
             $accessory = Accessory::findOrFail($id);

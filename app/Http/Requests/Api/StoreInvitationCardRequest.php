@@ -22,9 +22,9 @@ class StoreInvitationCardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'invitation_card_style' => 'required|string|exists:invitation_card_styles,style',
-            'description' => 'nullable|string',
-            'event_id' => 'nullable|integer'
+            'media' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg',
+            'style' => 'required|string'
         ];
     }
 }
+

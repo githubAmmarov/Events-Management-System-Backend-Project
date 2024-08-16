@@ -23,7 +23,7 @@ class StoreAccessoryRequest extends FormRequest
     {
         return [
             'accessory_type' => 'required|string|exists:accessory_types,type',
-            'media' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'media' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'name' => 'required|string',
             'price' => 'required|integer|min:1'
         ];

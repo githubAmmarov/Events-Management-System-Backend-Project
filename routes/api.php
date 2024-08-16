@@ -75,8 +75,7 @@ Route::group(['middleware'=>['auth:api']], function(){
 
     Route::get('allInvitationCardStyles',[InvitationCardController::class, 'index']);
     Route::get('showInvitationCardStyle/{id}',[InvitationCardController::class, 'styleItem']);
-    Route::post('storeInvitationCard',[InvitationCardController::class, 'store']);
-
+    Route::post('storeInvitationCardStyle',[InvitationCardController::class, 'store']);
 
     Route::get('allClients',[UserController::class, 'indexClients']);
     Route::get('blockedClients',[UserController::class, 'indexBlockedClients']);

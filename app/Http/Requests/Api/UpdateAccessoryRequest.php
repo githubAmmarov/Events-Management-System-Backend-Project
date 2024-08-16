@@ -24,8 +24,8 @@ class UpdateAccessoryRequest extends FormRequest
         return [
             'accessory_type' => 'nullable|string|exists:accessory_types,type',
             'media' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg',
-            'name' => 'sometimes|string',
-            'price' => 'sometimes|integer|min:1'
+            'name' => 'nullable|string',
+            'price' => 'nullable|integer|min:1'
         ];
     }
 }
