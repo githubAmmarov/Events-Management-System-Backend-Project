@@ -11,7 +11,7 @@ class StorePlaceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class StorePlaceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+        'place_room_type' => 'required|string|exists:place_room_types,name',
+        'name' => 'required|string',
+        'phone_number' => ['required','regex:/^(\+?963|0)?9[0-9]{8}$/'],
+        'address' => 'required|string',
+        'media' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg'
         ];
     }
 }

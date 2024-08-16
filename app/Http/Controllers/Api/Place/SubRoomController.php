@@ -9,8 +9,11 @@ use App\Models\SubRoom;
 use App\Http\Requests\StoreSubRoomRequest;
 use App\Http\Requests\UpdateSubRoomRequest;
 use App\Http\Responses\Response;
+use App\Models\Media;
 use App\Models\Place;
+use App\Models\PlaceRoomType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Throwable;
 
 class SubRoomController extends Controller
@@ -41,8 +44,44 @@ class SubRoomController extends Controller
      */
     public function store(ApiStoreSubRoomRequest $request)
     {
-        //
-    }
+        $validateData = $request->validated();
+
+    return DB::transaction(function () use (& $validateData, $request) {
+        $PlaceRoomType = PlaceRoomType::query()->where('name', $validateData['place_room_type'])->firstOrFail();
+        $place = Place::query()->where('name', $validateData['place_name'])->firstOrFail();
+
+        $media = null;
+        if ($request->hasFile('media')) {
+            $file = $request->file('media');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $mediaPath = $file->storeAs('places', $fileName, 'public');
+
+            $media = Media::create([
+                'media_url' => 'storage/' . $mediaPath
+            ]);
+        }
+
+
+
+        $SubRoom = SubRoom::create([
+            'place_id' => $place->id,
+            'place_room_type_id' => $PlaceRoomType->id,
+            'media_id' => $media ? $media->id : null,
+            'name' => $validateData['name'],
+            'capacity' => $validateData['capacity'],
+            'cost' => $validateData['cost']
+        ]);
+
+        $message = 'SubRoom created successfully';
+
+        return response()->json([
+            'message' => $message,
+            'subroom_data' => $SubRoom,
+            'image_url' => $media ? url($media->media_url) : null
+        ], 201);
+    });
+}
+
 
     /**
      * Display the specified resource.
