@@ -11,7 +11,7 @@ class StoreSubRoomRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class StoreSubRoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+        'place_name' => 'required|string|exists:places,name',
+        'place_room_type' => 'required|string|exists:place_room_types,name',
+        'name' => 'required|string',
+        'capacity' => 'required|integer',
+        'cost' => 'required|integer',
+        'media' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg'
         ];
     }
 }

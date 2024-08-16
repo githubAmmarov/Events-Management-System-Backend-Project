@@ -9,9 +9,11 @@ use App\Models\Place;
 use App\Http\Requests\StorePlaceRequest;
 use App\Http\Requests\UpdatePlaceRequest;
 use App\Http\Responses\Response;
+use App\Models\Media;
 use App\Models\PlaceRoomType;
 use App\Models\SubRoom;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Throwable;
 
 class PlaceController extends Controller
@@ -44,8 +46,41 @@ class PlaceController extends Controller
      */
     public function store(ApiStorePlaceRequest $request)
     {
-        //
-    }
+        $validateData = $request->validated();
+
+
+    return DB::transaction(function () use (& $validateData, $request) {
+        $PlaceRoomType = PlaceRoomType::query()->where('name', $validateData['place_room_type'])->firstOrFail();
+
+        $media = null;
+        if ($request->hasFile('media')) {
+            $file = $request->file('media');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $mediaPath = $file->storeAs('places', $fileName, 'public');
+
+            $media = Media::create([
+                'media_url' => 'storage/' . $mediaPath
+            ]);
+        }
+
+
+        $place = Place::create([
+            'place_room_type_id' => $PlaceRoomType->id,
+            'media_id' => $media ? $media->id : null,
+            'name' => $validateData['name'],
+            'phone_number' => $validateData['phone_number'],
+            'address' => $validateData['address']
+        ]);
+
+        $message = 'place created successfully';
+
+        return response()->json([
+            'message' => $message,
+            'place_data' => $place,
+            'image_url' => $media ? url($media->media_url) : null
+        ], 201);
+    });
+}
 
     /**
      * Display the specified resource.

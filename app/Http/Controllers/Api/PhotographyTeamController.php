@@ -9,6 +9,7 @@ use App\Models\PhotographyTeam;
 use App\Http\Responses\Response;
 use App\Models\Media;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PhotographyTeamController extends Controller
 {
@@ -110,8 +111,18 @@ class PhotographyTeamController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PhotographyTeam $photographyTeam)
+    public function destroy($id)
     {
-        //
+        $PhotographyTeam = PhotographyTeam::findOrFail($id);
+        if ($PhotographyTeam->media) {
+            Storage::disk('public')->delete(str_replace('storage/', '', $PhotographyTeam->media->media_url));
+            $PhotographyTeam->media->delete();
+        }
+        $PhotographyTeam->delete();
+        $message = 'PhotographyTeam deleted successfully';
+        return response()->json([
+            'message' => $message
+        ], 200);
     }
 }
+

@@ -37,7 +37,7 @@ Route::post('login',[AuthController::class,'login']);
 Route::post('adminLogin',[AuthController::class,'Adminlogin']);
 
 
-Route::group(['middleware'=>['auth:api','active']], function(){
+Route::group(['middleware'=>['auth:api']], function(){
     Route::get('/profileInfo/{id}',[AuthController::class,'profile_Info']);
     Route::post('/logout',[AuthController::class,'logout']);
 
@@ -46,6 +46,8 @@ Route::group(['middleware'=>['auth:api','active']], function(){
     Route::get('showPlace/{place}',[PlaceController::class,'show']);
     Route::get('showSubroom/{subRoom}',[SubRoomController::class,'show']);
     Route::get('showSubroomReservations/{subRoom}/{month}/{year}',[ReservationController::class,'index']);
+    Route::post('/storePlace',[PlaceController::class, 'store']);
+    Route::post('/storeSubRoom',[SubRoomController::class, 'store']);
 
     Route::post('/storemedia',[MediaController::class,'store']);
 
@@ -56,6 +58,8 @@ Route::group(['middleware'=>['auth:api','active']], function(){
     Route::get('/foodsForCategory/{id}' ,[FoodCategoryController::class,'foodsForCategory']);
     Route::post('/storeFood' ,[FoodController::class,'store']);
     Route::post('/updateFood/{id}' ,[FoodController::class,'update']);
+    Route::delete('/deleteFood/{id}' ,[FoodController::class,'destroy']);
+
 
 
 
@@ -71,6 +75,7 @@ Route::group(['middleware'=>['auth:api','active']], function(){
 
     Route::get('allInvitationCardStyles',[InvitationCardController::class, 'index']);
     Route::get('showInvitationCardStyle/{id}',[InvitationCardController::class, 'styleItem']);
+    Route::post('storeInvitationCard',[InvitationCardController::class, 'store']);
 
 
     Route::get('allClients',[UserController::class, 'indexClients']);
@@ -81,6 +86,8 @@ Route::group(['middleware'=>['auth:api','active']], function(){
 
     Route::get('/allphotographyTeams', [PhotographyTeamController::class, 'index']);
     Route::get('/photographyTeam/{id}', [PhotographyTeamController::class, 'indexforID']);
+    Route::post('/storePhotographyTeam', [PhotographyTeamController::class, 'store']);
+    Route::delete('/deletePhotographyTeam/{id}', [PhotographyTeamController::class, 'destroy']);
 
     Route::get('/posts', [PostController::class, 'index']);
     Route::post('/showUserPost', [PostController::class, 'showUserPost']);
@@ -98,9 +105,9 @@ Route::group(['middleware'=>['auth:api','active']], function(){
     Route::get('/eventTypes',[EventController::class, 'indexEventTypes']);
     Route::get('/showEvent/{id}',[EventController::class, 'show']);
     Route::post('/storeEvent',[EventController::class, 'store']);
-    Route::post('/updateEvent/{event}',[EventController::class, 'update']);
-    Route::delete('/deleteEvent/{event}',[EventController::class, 'destroy']);
-    
+    Route::post('/updateEvent/{id}',[EventController::class, 'update']);
+    Route::delete('/deleteEvent/{id}',[EventController::class, 'destroy']);
+
     // api for admin
     Route::get('/showUserEvent/{id}',[EventController::class, 'userEvents']);
 });
