@@ -11,7 +11,7 @@ class StoreInvitationCardRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreInvitationCardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'invitation_card_style' => 'required|string|exists:invitation_card_styles,style',
+            'description' => 'nullable|string',
+            'event_id' => 'nullable|integer'
         ];
     }
 }

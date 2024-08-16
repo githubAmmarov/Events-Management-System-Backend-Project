@@ -7,6 +7,8 @@ use App\Http\Requests\Api\StorePhotographyTeamRequest as ApiStorePhotographyTeam
 use App\Http\Requests\Api\UpdatePhotographyTeamRequest as ApiUpdatePhotographyTeamRequest;
 use App\Models\PhotographyTeam;
 use App\Http\Responses\Response;
+use App\Models\Media;
+use Illuminate\Support\Facades\DB;
 
 class PhotographyTeamController extends Controller
 {
@@ -45,8 +47,41 @@ class PhotographyTeamController extends Controller
      */
     public function store(ApiStorePhotographyTeamRequest $request)
     {
-        //
+{
+    $validateData = $request->validated();
+
+
+    return DB::transaction(function () use (& $validateData, $request) {
+        $media = null;
+
+        if ($request->hasFile('media')) {
+            $file = $request->file('media');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $mediaPath = $file->storeAs('PhotographTeams', $fileName, 'public');
+
+            $media = Media::create([
+                'media_url' => 'storage/' . $mediaPath
+            ]);
+        }
+
+        $PhotographyTeam = PhotographyTeam::create([
+            'media_id' => $media ? $media->id : null,
+            'name' => $validateData['name'],
+            'address' => $validateData['address'],
+            'cost' => $validateData['cost'],
+            'phone_number' => $validateData['phone_number']
+        ]);
+
+        $message = 'PhotographyTeam created successfully';
+
+        return response()->json([
+            'message' => $message,
+            'PhotographyTeam_data' => $PhotographyTeam,
+            'image_url' => $media ? url($media->media_url) : null
+        ], 201);
+    });
     }
+}
 
     /**
      * Display the specified resource.

@@ -11,7 +11,7 @@ class StorePhotographyTeamRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class StorePhotographyTeamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
-        ];
+        'name' => 'required|string',
+        'address' => 'required|string',
+        'cost' => 'required|integer|min:1',
+        'phone_number' => ['required','regex:/^(\+?963|0)?9[0-9]{8}$/'],
+        'media' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg'
+    ];
     }
 }
