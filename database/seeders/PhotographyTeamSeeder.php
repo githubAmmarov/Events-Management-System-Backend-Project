@@ -13,6 +13,19 @@ class PhotographyTeamSeeder extends Seeder
      */
     public function run(): void
     {
-        PhotographyTeam::factory()->count(6)->create();
+        $media_id = 66;
+        
+        $photogrphy_names =['Al-Ameer','Media962','Opri'];
+        foreach($photogrphy_names as $photogrphy_name)
+        {
+            PhotographyTeam::create([
+                'media_id' => $media_id++,
+                'name' => $photogrphy_name,
+                'address' => 'Syria\Damascus',
+                'cost' => 25,
+                'phone_number' => "0988762341",
+            ]);
+        }
+        // PhotographyTeam::factory()->count(6)->create();
     }
 }

@@ -23,6 +23,5 @@ class InvitationCardStyleSeeder extends Seeder
                 'style' => $style_name,
             ]);
         }
-        // InvitationCardStyle::factory(10)->create();
     }
 }
