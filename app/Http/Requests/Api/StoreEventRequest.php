@@ -31,6 +31,7 @@ class StoreEventRequest extends FormRequest
             'contact_information' => 'required|string',
             'is_private' =>'required|boolean',
             'planner_id'=> 'required|integer',
+            'total_cost'=> 'required|integer',
             'event_date'=> 'required|date',
 
             'food_items' => 'sometimes|array',

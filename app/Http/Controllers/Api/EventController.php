@@ -147,6 +147,7 @@ class EventController extends Controller
                     'event_id' => $event->id,
                     'user_id' => auth()->id(),
                     'is_paid' => 0,
+                    'total_cost' => $data['total_cost'],
             ]);
 
             $order_item = OrderItem::query()->create([

@@ -16,6 +16,7 @@ class Order extends Model
         'event_id',
         'user_id',
         'is_paid',
+        'total_cost',
     ];
 
     protected $table="orders";

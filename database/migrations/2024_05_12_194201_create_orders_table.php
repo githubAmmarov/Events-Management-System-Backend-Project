@@ -27,6 +27,7 @@ return new class extends Migration
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
 
+            $table->integer('total_cost');
             $table->boolean('is_paid')->default(false);
             $table->timestamps();
         });

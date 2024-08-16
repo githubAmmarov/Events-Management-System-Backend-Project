@@ -31,6 +31,7 @@ class UpdateEventRequest extends FormRequest
             'contact_information' => 'sometimes|required|string',
             'is_private' =>'sometimes|required|boolean',
             'planner_id'=> 'sometimes|required|integer',
+            'total_cost'=> 'sometimes|required|integer',
             'event_date'=> 'sometimes|required|date',
 
             'food_items' => 'sometimes|array',
