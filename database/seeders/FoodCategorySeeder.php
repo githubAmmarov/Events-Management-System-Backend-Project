@@ -17,7 +17,7 @@ class FoodCategorySeeder extends Seeder
         $categories=[
             'Dessert',
             'appetizers',
-            'Eastern sweets',
+            'Cakes',
             'drinks',
             ];
         foreach($categories as $category)

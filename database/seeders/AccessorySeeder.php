@@ -13,6 +13,9 @@ class AccessorySeeder extends Seeder
      */
     public function run(): void
     {
+        
+
+
         Accessory::factory(10)->count(20)->create();
     }
 }

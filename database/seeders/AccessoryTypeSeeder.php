@@ -17,7 +17,6 @@ class AccessoryTypeSeeder extends Seeder
         $types=[
             'Flowers',
             'Baloones',
-            'Lights',
             'Cars',
             'Show Band',
             'Music and Chanting',

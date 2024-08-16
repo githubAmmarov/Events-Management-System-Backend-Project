@@ -18,7 +18,7 @@ class AccessoryFactory extends Factory
     {
         return [
             'media_id'=>$this->faker->unique()->numberBetween(1,300),
-            'accessory_type_id' => $this->faker->numberBetween(1,7),
+            'accessory_type_id' => $this->faker->numberBetween(1,6),
             'name' => $this->faker->unique()->word(),
             'price'=>$this->faker->numberBetween(1,200),
         ];

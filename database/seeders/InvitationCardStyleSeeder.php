@@ -14,6 +14,15 @@ class InvitationCardStyleSeeder extends Seeder
     public function run(): void
     {
         //
-        InvitationCardStyle::factory(10)->create();
+        $media_id = 26;
+        $style_names =['Vintage Elegance','Modern Minimalist','Rustic Charm','Watercolor Floral','Botanical Garden'];
+        foreach($style_names as $style_name)
+        {
+            InvitationCardStyle::create([
+                'media_id' => $media_id++,
+                'style' => $style_name,
+            ]);
+        }
+        // InvitationCardStyle::factory(10)->create();
     }
 }
