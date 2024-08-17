@@ -18,10 +18,10 @@ class SubRoomFactory extends Factory
     {
         return [
             //
-            'place_id' => $this->faker->numberBetween(1,100),
+            'place_id' => $this->faker->numberBetween(1,14),
             'media_id'=> $this->faker->unique()->numberBetween(1,300),
             'name'=>$this->faker->word(),
-            'place_room_type_id' => $this->faker->numberBetween(7,9),
+            // 'place_room_type_id' => $this->faker->numberBetween(6,8),
             'capacity' => 10*$this->faker->numberBetween(7,20),
             'cost' => 100*$this->faker->numberBetween(20,40),
         ];

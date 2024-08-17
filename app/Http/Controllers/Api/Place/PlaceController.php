@@ -93,7 +93,7 @@ class PlaceController extends Controller
         try {
             $info = [
                 "Place"=>Place::query()->where('id',$place->id)->with('place_room_type','media')->first(),
-                "SubRooms"=>SubRoom::query()->where('place_id',$place->id)->with('place_room_type','media')->get()
+                "SubRooms"=>SubRoom::query()->where('place_id',$place->id)->with('media')->get()
         ];
             return Response::Success($info,$message);
         } catch (Throwable $th) {

@@ -31,7 +31,7 @@ class SubRoomController extends Controller
             ]);
             $place = Place::find($id['id']);
             $message = "these are all $place->name subrooms";
-            $subrooms = SubRoom::where('place_id', $place->id)->with('place')->with('place_room_type')->with('media')->get();
+            $subrooms = SubRoom::where('place_id', $place->id)->with('place')->with('media')->get();
             return Response::Success($subrooms,$message);
         } catch (Throwable $th) {
             $message = $th->getMessage();
@@ -65,7 +65,7 @@ class SubRoomController extends Controller
 
         $SubRoom = SubRoom::create([
             'place_id' => $place->id,
-            'place_room_type_id' => $PlaceRoomType->id,
+            // 'place_room_type_id' => $PlaceRoomType->id,
             'media_id' => $media ? $media->id : null,
             'name' => $validateData['name'],
             'capacity' => $validateData['capacity'],
@@ -91,7 +91,7 @@ class SubRoomController extends Controller
         $subroom = [];
         $message = "this is subroom's information";
         try {
-            $subroom = SubRoom::where('id',$subRoom->id)->with('place_room_type','media','place','reservations')->first();
+            $subroom = SubRoom::where('id',$subRoom->id)->with('media','place','reservations')->first();
             return Response::Success($subroom,$message);
         } catch (Throwable $th) {
             $message = $th->getMessage();

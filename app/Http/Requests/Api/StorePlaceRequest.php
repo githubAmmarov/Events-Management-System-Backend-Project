@@ -24,7 +24,8 @@ class StorePlaceRequest extends FormRequest
         return [
         'place_room_type' => 'required|string|exists:place_room_types,name',
         'name' => 'required|string',
-        'phone_number' => ['required','regex:/^(\+?963|0)?9[0-9]{8}$/'],
+        // 'phone_number' => ['required','regex:/^(\+?963|0)?9[0-9]{8}$/'],
+        'phone_number' => 'required|integer',
         'address' => 'required|string',
         'media' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
         ];

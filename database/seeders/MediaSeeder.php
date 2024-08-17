@@ -28,6 +28,25 @@ class MediaSeeder extends Seeder
         $music_and_chanting_dir = public_path('storage/accessories/music_and_chanting');
         $quran_dir = public_path('storage/accessories/quran');
         
+        // places directory
+        $hotels_dir = public_path('storage/places/hotels');
+        $wedding_halls_dir = public_path('storage/places/wedding_halls');
+        $resturants_dir = public_path('storage/places/resturants');
+        $farms_dir = public_path('storage/places/farms');
+        $centers_dir = public_path('storage/places/centers');
+        
+        // subRooms directory
+        $Four_Season_dir = public_path('storage/places/hotels/Four_Season');
+        $sheraton_dir = public_path('storage/places/hotels/sheraton');
+        $Albishr_dir = public_path('storage/places/wedding_halls/Albishr');
+        $Elite_Plaza_dir = public_path('storage/places/wedding_halls/Elite_Plaza');
+        $Naqaba_Hall_dir = public_path('storage/places/wedding_halls/Naqaba_Hall');
+        $beit_al_mokhtar_dir = public_path('storage/places/resturants/beit_al_mokhtar');
+        $mazaya_dir = public_path('storage/places/resturants/mazaya');
+        $serjella_dir = public_path('storage/places/resturants/serjella');
+        $farms_subrooms_dir = public_path('storage/places/farms/farms_subrooms');
+        $centers_subrooms_dir = public_path('storage/places/centers/centers_subrooms');
+        
         $invitationCards_dir = public_path('storage/InvitationCards');
 
         $PhotographTeams_dir = public_path('storage/PhotographTeams');
@@ -46,11 +65,38 @@ class MediaSeeder extends Seeder
         $music_and_chantings = File::files($music_and_chanting_dir);
         $Quran = File::files($quran_dir);
         
+        //places photos
+        $places =
+        [    
+            File::files($hotels_dir),
+            File::files($wedding_halls_dir),
+            File::files($resturants_dir),
+            File::files($farms_dir),
+            File::files($centers_dir),
+        ];
+        $places_dir = ['hotels','wedding_halls','resturants','farms','centers'];
+        
+
+        //subRooms photos
+        $subRooms =
+        [    
+            File::files($Four_Season_dir),
+            File::files($sheraton_dir),
+            File::files($Albishr_dir),
+            File::files($Elite_Plaza_dir),
+            File::files($Naqaba_Hall_dir),
+            File::files($beit_al_mokhtar_dir),
+            File::files($mazaya_dir),
+            File::files($serjella_dir),
+            File::files($farms_subrooms_dir),
+            File::files($centers_subrooms_dir),
+        ];
+        $subrooms_dir = ['hotels/Four_Season','hotels/sheraton','wedding_halls/Albishr','wedding_halls/Elite_Plaza',
+        'wedding_halls/Naqaba_Hall','resturants/beit_al_mokhtar','resturants/mazaya','resturants/serjella','farms/farms_subrooms','centers/centers_subrooms'];
+        
         $InvitationCards = File::files($invitationCards_dir);
 
         $PhotographTeams = File::files($PhotographTeams_dir);
-        
-        
         
         //food images seed
         // =============================================================================
@@ -140,14 +186,40 @@ class MediaSeeder extends Seeder
                 'media_url' => 'http://127.0.0.1:8000/storage/PhotographTeams/' . $PhotographTeam->getFilename(),
             ]);
         }
-        
         // =================================================================================
-        
-        Media::create([
-            'media_url' => 'images/' . 'testImage.jpg',
-        ]);
+
+        //places seed
+        // =================================================================================
+        $index = 0;
+        foreach($places as $Place)
+        {
+            $dir = $places_dir[$index++];
+            foreach($Place as $place)
+            {
+                Media::create([
+                    'media_url' => "http://127.0.0.1:8000/storage/places/$dir/" . $place->getFilename(),
+                ]);
+            }
+        }
+        // =================================================================================
+
+        //subRooms seed
+        // =================================================================================
+        $index = 0;
+        foreach($subRooms as $subRoom)
+        {
+            $dir = $subrooms_dir[$index++];
+            foreach($subRoom as $subroom)
+            {
+                Media::create([
+                    'media_url' => "http://127.0.0.1:8000/storage/places/$dir/" . $subroom->getFilename(),
+                ]);
+            }
+        }
+        // =================================================================================
+
+
         Media::factory()->count(300)->create();
         
     }
 }
-
