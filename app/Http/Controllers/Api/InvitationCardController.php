@@ -11,6 +11,7 @@ use App\Models\Event;
 use App\Models\InvitationCardStyle;
 use App\Models\Media;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class InvitationCardController extends Controller
 {
@@ -123,8 +124,17 @@ class InvitationCardController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(InvitationCard $invitationCard)
+    public function destroy($id)
     {
-        //
+        $invitationCard = InvitationCardStyle::findOrFail($id);
+        if ($invitationCard->media) {
+            Storage::disk('public')->delete(str_replace('storage/', '', $invitationCard->media->media_url));
+            $invitationCard->media->delete();
+        }
+        $invitationCard->delete();
+        $message = 'invitationCard deleted successfully';
+        return response()->json([
+            'message' => $message
+        ], 200);
     }
 }

@@ -14,6 +14,7 @@ use App\Models\Place;
 use App\Models\PlaceRoomType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Throwable;
 
 class SubRoomController extends Controller
@@ -118,8 +119,17 @@ class SubRoomController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SubRoom $subRoom)
+    public function destroy($id)
     {
-        //
+        $SubRoom = SubRoom::findOrFail($id);
+        if ($SubRoom->media) {
+            Storage::disk('public')->delete(str_replace('storage/', '', $SubRoom->media->media_url));
+            $SubRoom->media->delete();
+        }
+        $SubRoom->delete();
+        $message = 'SubRoom deleted successfully';
+        return response()->json([
+            'message' => $message
+        ], 200);
     }
 }

@@ -48,6 +48,8 @@ Route::group(['middleware'=>['auth:api']], function(){
     Route::get('showSubroomReservations/{subRoom}/{month}/{year}',[ReservationController::class,'index']);
     Route::post('/storePlace',[PlaceController::class, 'store']);
     Route::post('/storeSubRoom',[SubRoomController::class, 'store']);
+    Route::delete('/deleteSubRoom/{id}',[SubRoomController::class, 'destroy']);
+    Route::delete('/deletePlace/{id}',[PlaceController::class, 'destroy']);
 
     Route::post('/storemedia',[MediaController::class,'store']);
 
@@ -63,19 +65,20 @@ Route::group(['middleware'=>['auth:api']], function(){
 
 
 
-    Route::post('/storeAccessory', [AccessoryController::class, 'store']);
-    Route::post('/updateAccessory/{id}', [AccessoryController::class, 'update']);
-    Route::delete('/deleteAccessory/{id}', [AccessoryController::class, 'destroy']);
+
     Route::get('/allAccessories',[AccessoryController::class, 'index']);
     Route::get('/accessoryItem/{id}',[AccessoryController::class, 'indexItem']);
     Route::get('/accessoriesForType/{id}',[AccessoryTypeController::class, 'indexForType']);
     Route::get('/accessoryTypes/{id}',[AccessoryTypeController::class, 'index']);
     Route::get('/allAccessoryTypes',[AccessoryTypeController::class, 'allAccessoryTypes']);
-
+    Route::post('/storeAccessory', [AccessoryController::class, 'store']);
+    Route::post('/updateAccessory/{id}', [AccessoryController::class, 'update']);
+    Route::delete('/deleteAccessory/{id}', [AccessoryController::class, 'destroy']);
 
     Route::get('allInvitationCardStyles',[InvitationCardController::class, 'index']);
     Route::get('showInvitationCardStyle/{id}',[InvitationCardController::class, 'styleItem']);
     Route::post('storeInvitationCardStyle',[InvitationCardController::class, 'store']);
+    Route::delete('deleteInvitationCardStyle/{id}',[InvitationCardController::class, 'destroy']);
 
     Route::get('allClients',[UserController::class, 'indexClients']);
     Route::get('blockedClients',[UserController::class, 'indexBlockedClients']);
