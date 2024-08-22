@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Repositories;
+namespace App\Repositories\Classes;
 
+use App\Repositories\baseRepository;
 use App\Models\Post;
 
 class PostRepository extends baseRepository

@@ -5,33 +5,41 @@ namespace App\Http\Controllers\Api\Accessory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\StoreAccessoryRequest as ApiStoreAccessoryRequest;
 use App\Http\Requests\Api\UpdateAccessoryRequest as ApiUpdateAccessoryRequest;
+use App\Http\Resources\AccessoryResource;
 use App\Models\Accessory;
 use App\Http\Responses\Response;
 use App\Models\AccessoryType;
 use App\Models\Media;
-use Illuminate\Support\Facades\Auth;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class AccessoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $accessory = [];
-        try {
-        $message = 'these are all accessories';
-        $accessory = Accessory::query()
-        ->with('media')
-        ->with('accessory_type')
-        ->get();
-        return Response::Success($accessory,$message,200);
+    protected $accessoryService;
 
-        } catch (\Exception $e) {
-            $message = $e->getMessage();
-            return Response::Error($e->getMessage(),$message,400);
+    // public function __construct(AccessoryServiceInterface $accessoryServiceInterface)
+    // {
+    //     $this->accessoryService = $accessoryServiceInterface;
+    // }
+    public function index(): JsonResponse
+    {
+        $accessories = [];
+        try {
+            $message = 'these are all accessories';
+        $accessories= Accessory::with(['media','accessory_type'])->get();
+
+            return Response::Success(AccessoryResource::collection($accessories), $message, 200);
+        } catch (Exception $e) {
+            $logId = uniqid('log_');
+            $error = "Failed to retrieve accessories. please contact support with log ID: " . $logId;
+            return Response::error($error, [
+                'Error_details' => $e->getMessage(),
+                'File' => $e->getFile(),
+                'Line' => $e->getLine(),
+            ], 500);
         }
     }
 
@@ -39,17 +47,19 @@ class AccessoryController extends Controller
     {
         $accessory = [];
         try {
-        $accessory = Accessory::query()
-        ->with('media')
-        ->with('accessory_type')
-        ->findOrFail($id);
+            $message = "this is accessory for $id th id";
+            // $accessory = $this->accessoryService->getAccessoryItem($id);
+        $accessory= Accessory::query()->with('media')->with('accessory_type')->findOrFail($id);
 
-        $message = "this is accessory for $id th id";
-        return Response::Success($accessory,$message,200);
-
-        } catch (\Exception $e) {
+            return Response::Success($accessory,$message,200);
+        } catch (Throwable $e) {
             $message = $e->getMessage();
-            return Response::Error($e->getMessage(),$message,400);
+            $error = "Failed to retrieve accessories.";
+            return Response::error($error, [
+                'Error_details' => $e->getMessage(),
+                'File' => $e->getFile(),
+                'Line' => $e->getLine(),
+            ], 500);
         }
     }
 

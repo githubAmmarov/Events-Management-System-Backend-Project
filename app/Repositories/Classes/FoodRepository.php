@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Repositories;
+namespace App\Repositories\Classes;
 
 use App\Models\Food;
+use App\Repositories\baseRepository;
 
 class FoodRepository extends baseRepository
 {
