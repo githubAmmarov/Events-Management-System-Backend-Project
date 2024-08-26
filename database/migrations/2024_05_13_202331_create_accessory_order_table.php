@@ -8,28 +8,24 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * PIVOT TABLE
      */
     public function up(): void
     {
-        Schema::create('food_items', function (Blueprint $table) {
+        Schema::create('accessory_order', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('media_id')
-            ->constrained('media')
-            ->cascadeOnDelete()
-            ->cascadeOnUpdate();
             
-            $table->foreignId('food_id')
-            ->constrained('food')
-            ->cascadeOnDelete()
-            ->cascadeOnUpdate();
-            
-            $table->foreignId('food_shop_id')
-            ->constrained('food_shops')
+            $table->foreignId('accessory_id')
+            ->constrained('accessories')
             ->cascadeOnDelete()
             ->cascadeOnUpdate();
 
-            $table->float('price');
+            $table->foreignId('order_id')
+            ->constrained('orders')
+            ->cascadeOnDelete()
+            ->cascadeOnUpdate();
+
             $table->timestamps();
         });
     }
@@ -39,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('food_items');
+        Schema::dropIfExists('accessory_order');
     }
 };

@@ -6,24 +6,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class FoodOrderItem extends Model
+class FoodOrder extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'food_id',
-        'order_item_id',
+        'order_id',
         'quantity',
     ];
 
     protected $hidden = [
         'food_id',
-        'order_item_id',
-        'quantity',
+        'order_id',
         'created_at',
         'updated_at'
     ];
-    protected $table="food_order_item";
+    protected $table="food_order";
 
     /**
     MY PK IS FK WHERE?
@@ -35,8 +34,8 @@ class FoodOrderItem extends Model
     {
         return $this->belongsTo(Food::class);
     }
-    public function order_item():BelongsTo
+    public function order():BelongsTo
     {
-        return $this->belongsTo(OrderItem::class);
+        return $this->belongsTo(Order::class);
     }
 }

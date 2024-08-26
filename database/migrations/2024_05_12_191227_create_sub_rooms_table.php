@@ -19,11 +19,6 @@ return new class extends Migration
             ->cascadeOnDelete()
             ->cascadeOnUpdate();
 
-            // $table->foreignId('place_room_type_id')
-            // ->constrained('place_room_types')
-            // ->cascadeOnDelete()
-            // ->cascadeOnUpdate();
-
             $table->foreignId('media_id')->nullable()
                 ->constrained('media')
                 ->cascadeOnDelete()

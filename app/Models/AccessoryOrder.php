@@ -7,35 +7,35 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class AccessoryShop extends Model
+class AccessoryOrder extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'media_id',
-        'name',
-        'address',
-        'phone_number'
+        'accessory_id',
+        'order_id',
     ];
 
+    protected $table="accessory_order";
+
     protected $hidden = [
+        'accessory_id',
+        'order_id',
         'created_at',
         'updated_at'
     ];
-    protected $table="accessory_shops";
-
     /**
     MY PK IS FK WHERE?
     **/
     /**
     MY FK BELONGS TO?
     **/
-    public function media():BelongsTo
+    public function order():BelongsTo
     {
-        return $this->belongsTo(Media::class);
+        return $this->belongsTo(Order::class);
     }
-    public function accessory():BelongsToMany
+    public function accessory():BelongsTo
     {
-        return $this->belongsToMany(Accessory::class);
+        return $this->belongsTo(Accessory::class);
     }
 }

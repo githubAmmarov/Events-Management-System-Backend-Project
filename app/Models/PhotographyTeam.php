@@ -30,9 +30,9 @@ class PhotographyTeam extends Model
     MY PK IS FK WHERE?
     **/
 
-    public function order_items():HasMany
+    public function orders():HasMany
     {
-        return $this->hasMany(OrderItem::class);
+        return $this->hasMany(Order::class);
     }
 
     /**

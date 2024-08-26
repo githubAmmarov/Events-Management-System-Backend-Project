@@ -12,7 +12,7 @@ class Place extends Model
     use HasFactory;
 
     protected $fillable = [
-        'place_room_type_id',
+        'place_type_id',
         'media_id',
         'name',
         'phone_number',
@@ -20,7 +20,7 @@ class Place extends Model
     ];
 
     protected $hidden = [
-        'place_room_type_id',
+        'place_type_id',
         'media_id',
         'created_at',
         'updated_at'
@@ -41,9 +41,9 @@ class Place extends Model
     MY FK BELONGS TO?
      **/
 
-    public function place_room_type():BelongsTo
+    public function place_type():BelongsTo
     {
-        return $this->belongsTo(PlaceRoomType::class);
+        return $this->belongsTo(PlaceType::class);
     }
     public function media():BelongsTo
     {

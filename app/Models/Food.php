@@ -32,16 +32,10 @@ class Food extends Model
     /**
     MY PK IS FK WHERE?
     **/
-    public function order_items():BelongsToMany
+    public function orders():BelongsToMany
     {
-        return $this->belongsToMany(OrderItem::class);
+        return $this->belongsToMany(Order::class);
     }
-
-    // public function food_items():HasMany
-    // {
-    //     return $this->hasMany(FoodItem::class);
-    // }
-
     /**
      MY FK BELONGS TO?
      **/

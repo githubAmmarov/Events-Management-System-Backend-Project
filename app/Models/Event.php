@@ -22,6 +22,7 @@ class Event extends Model
         'ticket_price',
         'contact_information',
         'is_private',
+        'planned',
         'planner_id',
     ];
 

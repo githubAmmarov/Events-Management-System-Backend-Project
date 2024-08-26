@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class PlaceRoomType extends Model
+class PlaceType extends Model
 {
     use HasFactory;
 
@@ -14,7 +14,7 @@ class PlaceRoomType extends Model
         'name'
     ];
 
-    protected $table="place_room_types";
+    protected $table="place_types";
 
     protected $hidden = ['created_at','updated_at'];
 
@@ -22,11 +22,6 @@ class PlaceRoomType extends Model
     /**
     MY PK IS FK WHERE?
      **/
-
-     public function sub_rooms():HasMany
-    {
-        return $this->hasMany(SubRoom::class);
-    }
     public function places():HasMany
     {
         return $this->hasMany(Place::class);

@@ -21,7 +21,6 @@ return new class extends Migration
 
             $table->text('title');
             $table->longText('description');
-            $table->boolean('is_public')->default(1);
             $table->string('image')->nullable();
             $table->timestamps();
         });

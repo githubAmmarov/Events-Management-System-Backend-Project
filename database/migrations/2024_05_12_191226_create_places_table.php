@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('places', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('place_room_type_id')
-            ->constrained('place_room_types')
+            $table->foreignId('place_type_id')
+            ->constrained('place_types')
             ->cascadeOnDelete()
             ->cascadeOnUpdate();
 

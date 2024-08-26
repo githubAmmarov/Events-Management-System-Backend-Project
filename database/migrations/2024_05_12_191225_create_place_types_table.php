@@ -11,17 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('food_shops', function (Blueprint $table) {
+        Schema::create('place_types', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId('media_id')
-            ->constrained('media')
-            ->cascadeOnDelete()
-            ->cascadeOnUpdate();
-
             $table->string('name');
-            $table->text('address');
-            $table->integer('phone_number');
             $table->timestamps();
         });
     }
@@ -31,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('food_shops');
+        Schema::dropIfExists('place_types');
     }
 };

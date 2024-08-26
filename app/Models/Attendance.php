@@ -14,8 +14,7 @@ class Attendance extends Model
         'event_id',
         'name',
         'email',
-        'phone_number',
-        'priority'
+        'contact_info',
     ];
 
     protected $hidden = [

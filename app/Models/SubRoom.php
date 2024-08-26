@@ -13,7 +13,6 @@ class SubRoom extends Model
 
     protected $fillable = [
         'place_id',
-        // 'place_room_type_id',
         'media_id',
         'name',
         'capacity',
@@ -22,7 +21,6 @@ class SubRoom extends Model
 
     protected $hidden = [
         'place_id',
-        // 'place_room_type_id',
         'media_id',
         'created_at',
         'updated_at'
@@ -42,9 +40,9 @@ class SubRoom extends Model
     {
         return $this->hasMany(Event::class);
     }
-    public function order_items():HasMany
+    public function orders():HasMany
     {
-        return $this->hasMany(OrderItem::class);
+        return $this->hasMany(Order::class);
     }
 
     /**
@@ -59,8 +57,4 @@ class SubRoom extends Model
     {
         return $this->belongsTo(Place::class);
     }
-    // public function place_room_type():BelongsTo
-    // {
-    //     return $this->belongsTo(PlaceRoomType::class);
-    // }
 }

@@ -28,9 +28,9 @@ class InvitationCard extends Model
     /**
     MY PK IS FK WHERE?
     **/
-    public function order_item():HasOne
+    public function order():HasOne
     {
-        return $this->hasOne(OrderItem::class);
+        return $this->hasOne(Order::class);
     }
 
     /**

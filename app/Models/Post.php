@@ -17,7 +17,6 @@ class Post extends Model
         'user_id',
         'title',
         'description',
-        'is_public',
         'image'
     ];
 
@@ -47,6 +46,6 @@ class Post extends Model
     }
     public function media():BelongsToMany
     {
-        return $this->belongsToMany(Media::class, 'media_post','post_id','media_id');
+        return $this->belongsToMany(Media::class,'media_post','post_id','media_id');
     }
 }

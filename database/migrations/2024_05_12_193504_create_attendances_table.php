@@ -21,8 +21,7 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('email');
-            $table->integer('phone_number');
-            $table->integer('priority')->default(3);
+            $table->string('contact_info');
             $table->timestamps();
         });
     }

@@ -36,17 +36,9 @@ class Media extends Model
     {
         return $this->hasOne(Accessory::class);
     }
-    public function accessory_shop():HasOne
-    {
-        return $this->hasOne(AccessoryShop::class);
-    }
     public function food():HasOne
     {
         return $this->hasOne(Food::class);
-    }
-    public function food_item():HasOne
-    {
-        return $this->hasOne(FoodOrderItem::class);
     }
     public function sub_room():HasOne
     {

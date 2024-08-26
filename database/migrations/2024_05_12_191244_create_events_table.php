@@ -35,6 +35,7 @@ return new class extends Migration
             $table->integer('ticket_price')->nullable();
             $table->string('contact_information');
             $table->boolean('is_private');
+            $table->boolean('planned')->default(false);
             $table->integer('planner_id');
 
             $table->timestamps();
