@@ -34,13 +34,10 @@ class DatabaseSeeder extends Seeder
             PlaceSeeder::class,
             SubRoomSeeder::class,
             RolesPermissionsSeeder::class,
-            // FoodShopSeeder::class,
-            // AccessoryShopSeeder::class,
             UserSeeder::class,
             PostSeeder::class,
             EventTypeSeeder::class,
             EventSeeder::class,
-            media_postSeeder::class,
             EventDateSeeder::class,
             ReservationSeeder::class,
         ]);

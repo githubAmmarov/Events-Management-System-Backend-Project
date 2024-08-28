@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\PlaceRoomType;
+use App\Models\PlaceType;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -26,7 +27,7 @@ class PlaceRoomTypeSeeder extends Seeder
         ];
         foreach($types as $type)
         {
-            PlaceRoomType::create(['name'=>$type]);
+            PlaceType::create(['name'=>$type]);
         }
     }
 }

@@ -22,7 +22,6 @@ class PostFactory extends Factory
             'user_id'=>$this->faker->numberBetween(1,50),
             'title'=> $this->faker->title(),
             'description'=>$this->faker->text(300),
-            'is_public'=> $this->faker->numberBetween(0,1),
             'image'=> $this->faker->imageUrl
         ];
     }

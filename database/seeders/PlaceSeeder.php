@@ -25,7 +25,7 @@ class PlaceSeeder extends Seeder
         foreach($hotels as $hotel)
         {
             Place::create([
-                'place_room_type_id' => 1,
+                'place_type_id' => 1,
                 'name' => $hotel,
                 'phone_number' => "0988762341",
                 'address' => 'Syria\Damascus',
@@ -35,7 +35,7 @@ class PlaceSeeder extends Seeder
         foreach($wedding_halls as $wedding_hall)
         {
             Place::create([
-                'place_room_type_id' => 2,
+                'place_type_id' => 2,
                 'name' => $wedding_hall,
                 'phone_number' => "0988762341",
                 'address' => 'Syria\Damascus',
@@ -45,7 +45,7 @@ class PlaceSeeder extends Seeder
         foreach($resturants as $resturant)
         {
             Place::create([
-                'place_room_type_id' => 3,
+                'place_type_id' => 3,
                 'name' => $resturant,
                 'phone_number' => "0988762341",
                 'address' => 'Syria\Damascus',
@@ -55,7 +55,7 @@ class PlaceSeeder extends Seeder
         foreach($farms as $farm)
         {
             Place::create([
-                'place_room_type_id' => 4,
+                'place_type_id' => 4,
                 'name' => $farm,
                 'phone_number' => "0988762341",
                 'address' => 'Syria\Damascus',
@@ -65,7 +65,7 @@ class PlaceSeeder extends Seeder
         foreach($centers as $center)
         {
             Place::create([
-                'place_room_type_id' => 5,
+                'place_type_id' => 5,
                 'name' => $center,
                 'phone_number' => "0988762341",
                 'address' => 'Syria\Damascus',
