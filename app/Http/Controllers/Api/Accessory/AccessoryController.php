@@ -10,6 +10,7 @@ use App\Models\Accessory;
 use App\Http\Responses\Response;
 use App\Models\AccessoryType;
 use App\Models\Media;
+use App\Repositories\Classes\AccessoryRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
@@ -19,28 +20,16 @@ use Throwable;
 class AccessoryController extends Controller
 {
     protected $accessoryService;
+    protected $accessoryRepository;
 
-    // public function __construct(AccessoryServiceInterface $accessoryServiceInterface)
-    // {
-    //     $this->accessoryService = $accessoryServiceInterface;
-    // }
-    public function index(): JsonResponse
+    public function __construct(AccessoryRepository $accessoryRepository)
     {
-        $accessories = [];
-        try {
-            $message = 'these are all accessories';
-        $accessories= Accessory::with(['media','accessory_type'])->get();
-
-            return Response::Success(AccessoryResource::collection($accessories), $message, 200);
-        } catch (Exception $e) {
-            $logId = uniqid('log_');
-            $error = "Failed to retrieve accessories. please contact support with log ID: " . $logId;
-            return Response::error($error, [
-                'Error_details' => $e->getMessage(),
-                'File' => $e->getFile(),
-                'Line' => $e->getLine(),
-            ], 500);
-        }
+        // $this->accessoryService = $accessoryService;
+        $this->accessoryRepository = $accessoryRepository;
+    }
+    public function index()
+    {
+        return $this->accessoryRepository->index();
     }
 
     public function indexItem($id)
@@ -61,16 +50,6 @@ class AccessoryController extends Controller
                 'Line' => $e->getLine(),
             ], 500);
         }
-    }
-
-
-
-    /*
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**

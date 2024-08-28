@@ -2,12 +2,13 @@
 
 use App\Http\Controllers\Api\Accessory\AccessoryController;
 use App\Http\Controllers\Api\Accessory\AccessoryTypeController;
-use App\Http\Controllers\Api\EventController;
+use App\Http\Controllers\Api\Event\EventController;
 use App\Http\Controllers\Api\Food\FoodController;
 use App\Http\Controllers\Api\Food\FoodCategoryController;
-use App\Http\Controllers\Api\Food\FoodItemController;
-use App\Http\Controllers\Api\InvitationCardController;
+use App\Http\Controllers\Api\InvitationCardStyleController;
+use App\Http\Controllers\Api\Order\InvitationCardController;
 use App\Http\Controllers\Api\MediaController;
+use App\Http\Controllers\Api\Order\OrderController;
 use App\Http\Controllers\Api\PhotographyTeamController;
 use App\Http\Controllers\Api\Place\PlaceController;
 use App\Http\Controllers\Api\Place\SubRoomController;
@@ -53,8 +54,8 @@ Route::group(['middleware'=>['auth:api']], function(){
 
     Route::post('/storemedia',[MediaController::class,'store']);
 
-    Route::get('/allFoods' ,[FoodController::class,'allFoods']);
-    Route::get('/foodItem/{id}' ,[FoodItemController::class,'foodItem']);
+    
+    // Route::get('/foodItem/{id}' ,[FoodItemController::class,'foodItem']);
     Route::get('/foodCategory/{id}' ,[FoodCategoryController::class,'foodCategory']);
     Route::get('/foodCategories' ,[FoodCategoryController::class,'foodCategories']);
     Route::get('/foodsForCategory/{id}' ,[FoodCategoryController::class,'foodsForCategory']);
@@ -66,55 +67,59 @@ Route::group(['middleware'=>['auth:api']], function(){
 
 
 
-    Route::get('/allAccessories',[AccessoryController::class, 'index']);
     Route::get('/accessoryItem/{id}',[AccessoryController::class, 'indexItem']);
     Route::get('/accessoriesForType/{id}',[AccessoryTypeController::class, 'indexForType']);
     Route::get('/accessoryTypes/{id}',[AccessoryTypeController::class, 'index']);
-    Route::get('/allAccessoryTypes',[AccessoryTypeController::class, 'allAccessoryTypes']);
     Route::post('/storeAccessory', [AccessoryController::class, 'store']);
     Route::post('/updateAccessory/{id}', [AccessoryController::class, 'update']);
     Route::delete('/deleteAccessory/{id}', [AccessoryController::class, 'destroy']);
-
-    Route::get('allInvitationCardStyles',[InvitationCardController::class, 'index']);
+    
     Route::get('showInvitationCardStyle/{id}',[InvitationCardController::class, 'styleItem']);
     Route::post('storeInvitationCardStyle',[InvitationCardController::class, 'store']);
     Route::delete('deleteInvitationCardStyle/{id}',[InvitationCardController::class, 'destroy']);
-
+    
     Route::get('allClients',[UserController::class, 'indexClients']);
     Route::get('blockedClients',[UserController::class, 'indexBlockedClients']);
     Route::get('allAvailablePlanners',[UserController::class, 'indexAvailablePlanners']);
     Route::get('bannedPlanners',[UserController::class, 'indexBannedPlanners']);
-
-
+    
+    
     Route::get('/allphotographyTeams', [PhotographyTeamController::class, 'index']);
     Route::get('/photographyTeam/{id}', [PhotographyTeamController::class, 'indexforID']);
     Route::post('/storePhotographyTeam', [PhotographyTeamController::class, 'store']);
     Route::delete('/deletePhotographyTeam/{id}', [PhotographyTeamController::class, 'destroy']);
-
+    
     Route::get('/posts', [PostController::class, 'index']);
     Route::post('/showUserPost', [PostController::class, 'showUserPost']);
     Route::get('/ShowAnPost/{id}', [PostController::class, 'show']);
     Route::post('/storePost', [PostController::class, 'store']);
     Route::post('/updatePost/{id}', [PostController::class, 'update']);
     Route::delete('/deletePost/{id}', [PostController::class, 'destroy']);
-
+    
     Route::get('/allEvents',[EventController::class, 'index']);
-
+    
     Route::get('/publicEvents',[EventController::class, 'indexPublicEvents']);
     Route::get('/myEvents',[EventController::class, 'myEvents']);
     Route::get('/history',[EventController::class, 'myLastEvents']);
-
+    
     Route::get('/eventTypes',[EventController::class, 'indexEventTypes']);
     Route::get('/showEvent/{id}',[EventController::class, 'show']);
     Route::post('/storeEvent',[EventController::class, 'store']);
     Route::post('/updateEvent/{event}',[EventController::class, 'update']);
     Route::delete('/deleteEvent/{event}',[EventController::class, 'destroy']);
-
+    
     // api for admin
     Route::get('/showUserEvent/{id}',[EventController::class, 'userEvents']);
 });
+Route::get('allInvitationCardStyles',[InvitationCardStyleController::class, 'index']);
+Route::get('allInvitationCards',[InvitationCardController::class, 'index']);
 
+Route::get('/allAccessories',[AccessoryController::class, 'index']);
+Route::get('/allAccessoryTypes',[AccessoryTypeController::class, 'allAccessoryTypes']);
 
+Route::get('/allOrders',[OrderController::class, 'index']);
+
+Route::get('/allFoods' ,[FoodController::class,'allFoods']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

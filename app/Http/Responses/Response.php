@@ -4,6 +4,8 @@ namespace App\Http\Responses;
 
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Api\AuthController;
+use Exception;
+
 class Response
 {
     public static function Success($data , $message , $status = 200):JsonResponse
@@ -15,12 +17,16 @@ class Response
         ] , $status);
     }
 
-    public static function Error($data , $message , $status = 500):JsonResponse
+    public static function Error($data , $e , $status = 500):JsonResponse
     {
         return response()->json([
             'status' => false,
             'data' => $data,
-            'message' => $message
+            'message' => [
+                'Error_details' => $e->getMessage(),
+                'File' => $e->getFile(),
+                'Line' => $e->getLine(),
+            ]
         ] , $status);
     }
 

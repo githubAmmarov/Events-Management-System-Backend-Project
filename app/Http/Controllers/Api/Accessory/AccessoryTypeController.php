@@ -10,10 +10,19 @@ use App\Http\Requests\StoreAccessoryTypeRequest;
 use App\Http\Requests\UpdateAccessoryTypeRequest;
 use App\Http\Responses\Response;
 use App\Models\Accessory;
+use App\Repositories\Classes\AccessoryTypeRepository;
 
 class AccessoryTypeController extends Controller
 {
 
+    protected $accessoryTypeService;
+    protected $accessoryTypeRepository;
+
+    public function __construct(AccessoryTypeRepository $accessoryTypeRepository)
+    {
+        // $this->accessoryTypeService = $accessoryService;
+        $this->accessoryTypeRepository = $accessoryTypeRepository;
+    }
 
     public function index($id)
     {
@@ -44,16 +53,7 @@ class AccessoryTypeController extends Controller
 
     public function allAccessoryTypes()
     {
-        $accessoryType = [];
-        try {
-            $accessoryType = AccessoryType::query()->get();
-            $message = "These are all Accessory Types in our application";
-
-            return Response::Success($accessoryType ,$message,200);
-        } catch (\Exception $e){
-            $message = $e->getMessage();
-            return Response::Error($message, $e->getMessage(), 500);
-        }
+        return $this->accessoryTypeRepository->index();
     }
     public function indexForType($id)
     {

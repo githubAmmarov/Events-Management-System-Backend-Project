@@ -12,6 +12,7 @@ use App\Http\Responses\Response;
 use App\Models\Media;
 use App\Models\Place;
 use App\Models\PlaceRoomType;
+use App\Models\PlaceType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -48,7 +49,7 @@ class SubRoomController extends Controller
         $validateData = $request->validated();
 
     return DB::transaction(function () use (& $validateData, $request) {
-        $PlaceRoomType = PlaceRoomType::query()->where('name', $validateData['place_room_type'])->firstOrFail();
+        $PlaceRoomType = PlaceType::query()->where('name', $validateData['place_room_type'])->firstOrFail();
         $place = Place::query()->where('name', $validateData['place_name'])->firstOrFail();
 
         $media = null;

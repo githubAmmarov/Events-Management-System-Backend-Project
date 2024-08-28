@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Responses\Response;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 
 class baseRepository
@@ -13,32 +15,34 @@ class baseRepository
         $this->model = $model;
 
     }
-    public function index():array
+    public function index()
     {
         $modelName = class_basename($this->model);
 
-        $data =$this->model::paginate(10);
+        try {
+        $data =$this->model::all();
         if ($data->isEmpty()){
             $message="There are no $modelName at the moment";
         }else
         {
             $message="$modelName indexed successfully";
         }
-        return ['message'=>$message,"$modelName"=>$data];
+            return Response::Success($data,$message);
+        } catch (Exception $e) {
+            $error = "Failed to retrieve accessories." ;
+            return Response::Error($error, $e , 500);
+        }
     }
 
-    public function create($request):array
+    public function create($request)
     {
-
         $modelName = class_basename($this->model);
         $data=$this->model::create($request);
         $message="$modelName created successfully";
-        return ['message'=>$message,"$modelName"=>$data];
-
+        return Response::Success($data,$message);
     }
-    public function update($request, $model): array
+    public function update($request, $model)
     {
-
         $validatedData=$request;
         $modelName = class_basename($this->model);
 
@@ -50,14 +54,31 @@ class baseRepository
 
             $message = "$modelName updated successfully";
             $code = 200;
+            return Response::Success($data,$message,$code);
         } else {
             $message = "$modelName not found";
             $code = 404;
+            return Response::Error($data,$message,$code);
         }
-        return ["$modelName" => $data, 'message' => $message, 'code' => $code];
     }
+    public function show($model)
+    {
+        $modelName = class_basename($this->model);
 
-    public function destroy($model):array
+        $data=$this->model::find($model->id);
+        if(!is_null($model))
+        {
+            $message="This is the information of $modelName number $model->id";
+            $code=200;
+            return Response::Success($data,$message,$code);
+        }else
+        {
+            $message="$modelName not found";
+            $code=404;
+            return Response::Error($data,$message,$code);
+        }
+    }
+    public function destroy($model)
     {
         $modelName = class_basename($this->model);
 
@@ -65,15 +86,17 @@ class baseRepository
         if(!is_null($model))
         {
             $data=$this->model::find($model->id)->delete();
-            $message="$modelName delete successfully";
+            $message="$modelName deleted successfully";
             $code=200;
+            return Response::Success($data,$message,$code);
         }else
         {
             $message="$modelName not found";
             $code=404;
+            return Response::Error($data,$message,$code);
         }
-        return ['message'=>$message,'code'=>$code];
     }
+
 
     public function showDeleted():array
     {

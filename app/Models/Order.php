@@ -43,7 +43,7 @@ class Order extends Model
      **/
     public function food():BelongsToMany
     {
-        return $this->belongsToMany(Food::class)->withPivot('quantity');
+        return $this->belongsToMany(Food::class,'food_order','order_id','food_id')->withPivot('quantity');
     }
     public function accessory():BelongsToMany
     {

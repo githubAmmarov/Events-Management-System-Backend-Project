@@ -34,7 +34,7 @@ class Food extends Model
     **/
     public function orders():BelongsToMany
     {
-        return $this->belongsToMany(Order::class);
+        return $this->belongsToMany(Order::class,'food_order','food_id','order_id');
     }
     /**
      MY FK BELONGS TO?

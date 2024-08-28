@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Order;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\StoreInvitationCardRequest as ApiStoreInvitationCardRequest;
@@ -10,6 +10,7 @@ use App\Http\Responses\Response;
 use App\Models\Event;
 use App\Models\InvitationCardStyle;
 use App\Models\Media;
+use App\Repositories\Classes\InvitationCardRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,22 +19,17 @@ class InvitationCardController extends Controller
     /**
      * Display a listing of the resource.
      */
+    protected $invitationCardService;
+    protected $invitationCardRepository;
+
+    public function __construct(InvitationCardRepository $invitationCardRepository)
+    {
+        // $this->invitationCardService = $invitationCardService;
+        $this->invitationCardRepository = $invitationCardRepository;
+    }
     public function index()
     {
-        //
-        $styles = [];
-        try {
-        $message = 'these are all styles';
-        $styles = InvitationCardStyle::
-        with('media')
-        ->get();
-        return Response::Success($styles,$message,200);
-
-        } catch (\Exception $e) {
-            $message = $e->getMessage();
-            return Response::Error($e->getMessage(),$message,400);
-        }
-        // return InvitationCardStyle::all();
+        return $this->invitationCardRepository->index(); 
     }
     public function styleItem($id)
     {

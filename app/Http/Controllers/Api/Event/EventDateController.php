@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Event;
 
 use App\Http\Controllers\Controller;
-use App\Models\OrderItem;
-use App\Http\Requests\Api\StoreOrderItemRequest;
-use App\Http\Requests\Api\UpdateOrderItemRequest;
+use App\Http\Requests\Api\StoreEventDateRequest as ApiStoreEventDateRequest;
+use App\Http\Requests\Api\UpdateEventDateRequest as ApiUpdateEventDateRequest;
+use App\Models\EventDate;
 
-class OrderItemController extends Controller
+class EventDateController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,7 +28,7 @@ class OrderItemController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreOrderItemRequest $request)
+    public function store(ApiStoreEventDateRequest $request)
     {
         //
     }
@@ -36,7 +36,7 @@ class OrderItemController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(OrderItem $orderItem)
+    public function show(EventDate $eventDate)
     {
         //
     }
@@ -44,7 +44,7 @@ class OrderItemController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(OrderItem $orderItem)
+    public function edit(EventDate $eventDate)
     {
         //
     }
@@ -52,7 +52,7 @@ class OrderItemController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateOrderItemRequest $request, OrderItem $orderItem)
+    public function update(ApiUpdateEventDateRequest $request, EventDate $eventDate)
     {
         //
     }
@@ -60,7 +60,7 @@ class OrderItemController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(OrderItem $orderItem)
+    public function destroy(EventDate $eventDate)
     {
         //
     }

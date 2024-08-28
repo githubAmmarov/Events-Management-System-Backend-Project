@@ -11,6 +11,7 @@ use App\Http\Requests\UpdatePlaceRequest;
 use App\Http\Responses\Response;
 use App\Models\Media;
 use App\Models\PlaceRoomType;
+use App\Models\PlaceType;
 use App\Models\SubRoom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,7 +30,7 @@ class PlaceController extends Controller
             'name'=>'string',
         ]);
         $message = "these are all " . $name['name'];
-        $place_room_type_id = PlaceRoomType::where('name', $name)->first();
+        $place_room_type_id = PlaceType::where('name', $name)->first();
 
         $places = [];
         try {
@@ -51,7 +52,7 @@ class PlaceController extends Controller
 
 
     return DB::transaction(function () use (& $validateData, $request) {
-        $PlaceRoomType = PlaceRoomType::query()->where('name', $validateData['place_room_type'])->firstOrFail();
+        $PlaceRoomType = PlaceType::query()->where('name', $validateData['place_room_type'])->firstOrFail();
 
         $media = null;
         if ($request->hasFile('media')) {

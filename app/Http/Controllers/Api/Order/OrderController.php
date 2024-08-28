@@ -1,20 +1,29 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Order;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Http\Requests\Api\StoreOrderRequest;
 use App\Http\Requests\Api\UpdateOrderRequest;
+use App\Repositories\Classes\OrderRepository;
 
 class OrderController extends Controller
 {
+    protected $orderRepository;
+    protected $orderService;
+
+    public function __construct(OrderRepository $orderRepository)
+    {
+        // $this->orderService = $orderService;
+        $this->orderRepository = $orderRepository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return $this->orderRepository->index();
     }
 
     /**

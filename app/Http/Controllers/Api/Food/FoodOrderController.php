@@ -10,7 +10,7 @@ use App\Http\Responses\Response;
 use App\Models\FoodItem;
 use Illuminate\Support\Facades\Request;
 
-class FoodItemController extends Controller
+class FoodOrderController extends Controller
 {
     /**
      * Display a listing of the resource.

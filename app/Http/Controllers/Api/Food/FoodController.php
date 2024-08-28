@@ -9,17 +9,27 @@ use App\Models\Food;
 use App\Http\Responses\Response;
 use App\Models\FoodCategory;
 use App\Models\Media;
+use App\Repositories\Classes\FoodRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class FoodController extends Controller
 {
+    protected $foodService;
+    protected $foodRepository;
+
+    public function __construct(FoodRepository $foodRepository)
+    {
+        // $this->accessoryService = $accessoryService;
+        $this->foodRepository = $foodRepository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function allFoods(): JsonResponse
     {
+        return $this->foodRepository->index();
         $foods = [];
         try {
             $foods = Food::query()

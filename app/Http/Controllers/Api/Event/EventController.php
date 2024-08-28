@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Event;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
@@ -19,6 +19,7 @@ use App\Models\OrderItem;
 use App\Models\Reservation;
 use App\Models\SubRoom;
 use App\Models\User;
+use App\Repositories\Classes\EventRepository;
 use App\Services\ClassServices\EventService;
 use Carbon\Carbon;
 use Exception;
@@ -32,24 +33,17 @@ class EventController extends Controller
      * Display a listing of the resource.
      */
     protected $eventService;
+    protected $eventRepository;
     protected $event_info=[];
 
-    public function __construct(EventService $eventService)
+    public function __construct(EventService $eventService,EventRepository $eventRepository)
     {
         $this->eventService = $eventService;
+        $this->eventRepository = $eventRepository;
     }
     public function index()
     {
-        $message = 'There are all Events';
-        try {
-            $event = $this->eventService->getAllEvents();
-            return Response::Success($event , $message, 200);
-        } catch(Exception $e){
-            $error = $e->getMessage();
-            $code = $e->getCode();
-            return Response::Error($e, $error, $code);
-        }
-
+        return $this->eventRepository->index();
     }
     public function indexPublicEvents()
     {
