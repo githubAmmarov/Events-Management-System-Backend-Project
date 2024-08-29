@@ -125,7 +125,7 @@ class EventService
         $event = Event::query()->with('type_of_event','event_date','attendances')->find($id);
         $order = Order::where('event_id',$event->id)->first();
         $planner = User::query()->with('media')->find($event->planner_id); 
-        $order_item = OrderItem::where('order_id',$order->id)->
+        $order_item = Order::where('order_id',$order->id)->
         with('sub_room','food','accessory','photography_team','invitation_card')->first();
         $invitation_card_style = InvitationCardStyle::with('media')->find($order_item->invitation_card->invitation_card_style_id);
         $event_info = [
