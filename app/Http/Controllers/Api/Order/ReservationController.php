@@ -9,6 +9,7 @@ use App\Http\Requests\Api\UpdateReservationRequest;
 use App\Http\Responses\Response;
 use App\Models\EventDate;
 use App\Models\SubRoom;
+use App\Repositories\Classes\ReservationRepository;
 use Illuminate\Support\Facades\Date;
 use Carbon\Carbon;
 use Exception;
@@ -16,10 +17,23 @@ use Illuminate\Support\Facades\Request;
 
 class ReservationController extends Controller
 {
+    protected $reservationRepository;
+    protected $reservationService;
+
+    public function __construct(ReservationRepository $reservationRepository)
+    {
+        // $this->reservationService = $reservationService;
+        $this->reservationRepository = $reservationRepository;
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index(SubRoom $subRoom, $month, $year)
+    public function index()
+    {
+        return $this->reservationRepository->index();
+    }
+
+    public function filter(SubRoom $subRoom, $month, $year)
     {
         $placename = $subRoom->place->name;
         $reservationsByDate = [];

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\StorePostRequest as ApiStorePostRequest;
 use App\Http\Requests\Api\UpdatePostRequest as ApiUpdatePostRequest;
 use App\Http\Responses\Response;
+use App\Repositories\Classes\PostRepository;
 use App\Services\InterfacesServices\postServiceInterface;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -13,27 +14,21 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    protected postServiceInterface $postService;
+    protected $postService;
+    protected $postRepository;
 
-    public function __construct(postServiceInterface $postService)
+    public function __construct(postServiceInterface $postService,PostRepository $postRepository)
     {
         $this->postService = $postService;
+        $this->postRepository = $postRepository;
     }
     /**
      * Display a listing of the resource.
      */
-    public function index(): \Illuminate\Http\JsonResponse
+    public function index()
     {
-        $posts = [];
-        try{
-            $posts = $this->postService->getAllPosts();
-            $message = 'these are all public posts';
-        return Response::Success($posts,$message,200);
-    } catch(Exception $th){
-        $error = $th->getMessage();
-        return Response::Error($th,$error,500);
+        return $this->postRepository->index(); 
     }
-}
 
     /**
      * Store a newly created resource in storage.

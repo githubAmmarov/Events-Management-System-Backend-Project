@@ -16,7 +16,7 @@ class PlaceRepository extends baseRepository
     public function index()
     {
         $places = Place::with('sub_rooms','place_type','media')->get();
-        $message = 'these are all photography teams';
+        $message = 'these are all places';
         try {
             return Response::Success($places,$message);
         } catch (Exception $e) {

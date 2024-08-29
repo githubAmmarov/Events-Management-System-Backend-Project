@@ -5,15 +5,28 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\Response ;
 use App\Models\User;
+use App\Repositories\Classes\UserRepository;
 use Exception;
 
 //use Illuminate\Support\Facades\Response;
 
 class UserController extends Controller
 {
-    public function __construct()
+    protected $userService;
+    protected $userRepository;
+
+    public function __construct(UserRepository $userRepository)
     {
+        // $this->userService = $userService;
+        $this->userRepository = $userRepository;
         $this->middleware('role:admin')->except('indexAvailablePlanners');
+    }
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        return $this->userRepository->index(); 
     }
     public function indexClients()
     {

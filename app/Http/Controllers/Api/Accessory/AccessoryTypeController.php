@@ -23,35 +23,7 @@ class AccessoryTypeController extends Controller
         // $this->accessoryTypeService = $accessoryService;
         $this->accessoryTypeRepository = $accessoryTypeRepository;
     }
-
-    public function index($id)
-    {
-        $accessoryType = [];
-        try {
-            $accessoryType = AccessoryType::query()->findOrFail($id);
-            $message = "this is $id th Accessory Type";
-
-            return Response::Success($accessoryType ,$message,200);
-        } catch (\Exception $e){
-            $message = $e->getMessage();
-            return Response::Error($message, $e->getMessage(), 500);
-        }
-    }
-    // public function index()
-    // {
-    //     $accessoryType = [];
-    //     try {
-    //         $accessoryType = AccessoryType::all();
-    //         $message = "these are all types";
-
-    //         return Response::Success($accessoryType ,$message,200);
-    //     } catch (\Exception $e){
-    //         $message = $e->getMessage();
-    //         return Response::Error($message, $e->getMessage(), 500);
-    //     }
-    // }
-
-    public function allAccessoryTypes()
+    public function index()
     {
         return $this->accessoryTypeRepository->index();
     }

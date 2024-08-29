@@ -9,16 +9,25 @@ use App\Models\Media;
 use App\Traits\ApiTraits;
 use App\Http\Requests\StoreMediaRequest;
 use App\Http\Requests\UpdateMediaRequest;
+use App\Repositories\Classes\MediaRepository;
 
 class MediaController extends Controller
 {
     use ApiTraits;
+    protected $mediaService;
+    protected $mediaRepository;
+
+    public function __construct(MediaRepository $mediaRepository)
+    {
+        // $this->mediaService = $mediaService;
+        $this->mediaRepository = $mediaRepository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return $this->mediaRepository->index(); 
     }
 
     /**

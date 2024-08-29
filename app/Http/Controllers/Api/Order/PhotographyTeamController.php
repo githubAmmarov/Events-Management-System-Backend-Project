@@ -8,26 +8,26 @@ use App\Http\Requests\Api\UpdatePhotographyTeamRequest as ApiUpdatePhotographyTe
 use App\Models\PhotographyTeam;
 use App\Http\Responses\Response;
 use App\Models\Media;
+use App\Repositories\Classes\PhotographyTeamRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class PhotographyTeamController extends Controller
 {
+    protected $photographyTeamRepository;
+    protected $photographyTeamService;
+
+    public function __construct(PhotographyTeamRepository $photographyTeamRepository)
+    {
+        // $this->photographyTeamService = $photographyTeamService;
+        $this->photographyTeamRepository = $photographyTeamRepository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $photographyTeam = [];
-        try {
-        $photographyTeam = PhotographyTeam::query()->with('media')->get();
-        $message = 'These are all photographyTeams';
-
-        return Response::Success($photographyTeam,$message,200);
-        } catch(\Exception $e) {
-            $message = $e->getMessage();
-        return Response::Error($message, $e->getCode(),500);
-        }
+        return $this->photographyTeamRepository->index();
     }
 
     public function indexforID($id)

@@ -6,15 +6,24 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\StoreEventDateRequest as ApiStoreEventDateRequest;
 use App\Http\Requests\Api\UpdateEventDateRequest as ApiUpdateEventDateRequest;
 use App\Models\EventDate;
+use App\Repositories\Classes\EventDateRepository;
 
 class EventDateController extends Controller
 {
+    // protected $eventTypeService;
+    protected $eventDateRepository;
+
+    public function __construct(EventDateRepository $eventDateRepository)
+    {
+        // $this->eventTypeService = $eventTypeService;
+        $this->eventDateRepository = $eventDateRepository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return $this->eventDateRepository->index();
     }
 
     /**

@@ -92,18 +92,6 @@ class EventController extends Controller
             return Response::Error($th, $error, 500);
         }
     }
-    public function indexEventTypes()
-    {
-        $message = "These are all event types";
-        try {
-            return Response::Success(EventType::all() , $message, 200);
-        } catch(Exception $e){
-            $error = $e->getMessage();
-            $code = $e->getCode();
-            return Response::Error($e, $error, $code);
-        }
-
-    }
 
     public function store(StoreEventRequest $request)
     {

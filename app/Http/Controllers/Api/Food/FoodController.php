@@ -27,32 +27,10 @@ class FoodController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function allFoods(): JsonResponse
+    public function index()
     {
         return $this->foodRepository->index();
-        $foods = [];
-        try {
-            $foods = Food::query()
-            ->with('media')
-            ->with('food_category')
-            ->get();
-            $message = 'These are all food';
-            return Response::Success($foods,$message,200);
-
-        } catch (\Exception $e) {
-            $message = $e->getMessage();
-            return Response::Error($e->getMessage(),$message,400);
-        }
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      */

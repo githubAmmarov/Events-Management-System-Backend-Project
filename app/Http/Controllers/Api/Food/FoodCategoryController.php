@@ -8,38 +8,25 @@ use App\Http\Requests\Api\UpdateFoodCategoryRequest as ApiUpdateFoodCategoryRequ
 use App\Models\FoodCategory;
 use App\Http\Responses\Response;
 use App\Models\Food;
+use App\Repositories\Classes\FoodCategoryRepository;
 
 class FoodCategoryController extends Controller
 {
+    protected $foodCategoryService;
+    protected $foodCategoryRepository;
+
+    public function __construct(FoodCategoryRepository $foodCategoryRepository)
+    {
+        // $this->foodCategoryService = $foodCategoryService;
+        $this->foodCategoryRepository = $foodCategoryRepository;
+    }
     /**
      * Display a listing of the resource.
      */
-    public function foodCategory($id)
+    public function index()
     {
-        $Foods = [];
-        try {
-        $Foods = FoodCategory::query()->findOrFail($id);
-        $message = 'This is Food Category for this ID';
-        return Response::Success($Foods, $message,200);
-        } catch (\Exception $e) {
-            $message = $e->getMessage();
-        return Response::Error($message, $e->getCode(),500);
-        }
+        return $this->foodCategoryRepository->index();
     }
-
-    public function foodCategories()
-    {
-        $Foods = [];
-        try {
-        $Foods = FoodCategory::query()->get();
-        $message = 'These are all Food Categories in our application';
-        return Response::Success($Foods, $message,200);
-        } catch (\Exception $e) {
-            $message = $e->getMessage();
-        return Response::Error($message, $e->getCode(),500);
-        }
-    }
-
     public function foodsForCategory($id)
     {
 

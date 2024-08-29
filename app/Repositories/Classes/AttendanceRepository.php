@@ -20,7 +20,7 @@ class AttendanceRepository extends baseRepository
         try {
             return Response::Success($attendeese,$message);
         } catch (Exception $e) {
-            $error = "Failed to retrieve accessories." ;
+            $error = "Failed to retrieve attendeese." ;
             return Response::Error($error, $e , 500);
         }
     }

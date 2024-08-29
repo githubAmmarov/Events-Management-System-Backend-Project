@@ -7,15 +7,28 @@ use App\Http\Requests\Api\StoreFoodItemRequest as ApiStoreFoodItemRequest;
 use App\Http\Requests\Api\UpdateFoodItemRequest as ApiUpdateFoodItemRequest;
 use App\Models\Food;
 use App\Http\Responses\Response;
-use App\Models\FoodItem;
+use App\Models\FoodOrder;
+use App\Repositories\Classes\FoodOrderRepository;
 use Illuminate\Support\Facades\Request;
 
 class FoodOrderController extends Controller
 {
+    protected $foodOrderService;
+    protected $foodOrderRepository;
+
+    public function __construct(FoodOrderRepository $foodOrderRepository)
+    {
+        // $this->foodOrderService = $foodOrderService;
+        $this->foodOrderRepository = $foodOrderRepository;
+    }
     /**
      * Display a listing of the resource.
      */
-    public function foodItem(Request $request ,$id)
+    public function index()
+    {
+        return $this->foodOrderRepository->index();
+    }
+    public function foodItem($id)
     {
         $item = [];
         try {
@@ -47,7 +60,7 @@ class FoodOrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(FoodItem $foodItem)
+    public function show(FoodOrder $foodItem)
     {
         //
     }
@@ -55,7 +68,7 @@ class FoodOrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(FoodItem $foodItem)
+    public function edit(FoodOrder $foodItem)
     {
         //
     }
@@ -63,7 +76,7 @@ class FoodOrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ApiUpdateFoodItemRequest $request, FoodItem $foodItem)
+    public function update(ApiUpdateFoodItemRequest $request, FoodOrder $foodItem)
     {
         //
     }
@@ -71,7 +84,7 @@ class FoodOrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(FoodItem $foodItem)
+    public function destroy(FoodOrder $foodItem)
     {
         //
     }

@@ -3,16 +3,25 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\Classes\LikeRepository;
 use Illuminate\Http\Request;
 
 class LikeController extends Controller
 {
+    protected $likeService;
+    protected $likeRepository;
+
+    public function __construct(LikeRepository $likeRepository)
+    {
+        // $this->invitationCardService = $invitationCardService;
+        $this->likeRepository = $likeRepository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return $this->likeRepository->index(); 
     }
 
     /**

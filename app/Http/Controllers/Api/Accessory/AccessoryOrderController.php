@@ -3,16 +3,25 @@
 namespace App\Http\Controllers\Api\Accessory;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\Classes\AccessoryOrderRepository;
 use Illuminate\Http\Request;
 
 class AccessoryOrderController extends Controller
 {
+    protected $accessoryOrderService;
+    protected $accessoryOrderRepository;
+
+    public function __construct(AccessoryOrderRepository $accessoryOrderRepository)
+    {
+        // $this->accessoryOrderService = $accessoryOrderService;
+        $this->accessoryOrderRepository = $accessoryOrderRepository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return $this->accessoryOrderRepository->index();
     }
 
     /**

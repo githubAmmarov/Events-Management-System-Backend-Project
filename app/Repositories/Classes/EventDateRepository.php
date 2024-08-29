@@ -20,7 +20,7 @@ class EventDateRepository extends baseRepository
         try {
             return Response::Success($eventDates,$message);
         } catch (Exception $e) {
-            $error = "Failed to retrieve accessories." ;
+            $error = "Failed to retrieve events dates." ;
             return Response::Error($error, $e , 500);
         }
     }

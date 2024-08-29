@@ -3,16 +3,25 @@
 namespace App\Http\Controllers\Api\Place;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\Classes\PlaceTypeRepository;
 use Illuminate\Http\Request;
 
 class PlaceTypeController extends Controller
 {
+    protected $placeTypeRepository;
+    protected $placeTypeService;
+
+    public function __construct(PlaceTypeRepository $placeTypeRepository)
+    {
+        // $this->placeService = $placeService;
+        $this->placeTypeRepository = $placeTypeRepository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return $this->placeTypeRepository->index();
     }
 
     /**

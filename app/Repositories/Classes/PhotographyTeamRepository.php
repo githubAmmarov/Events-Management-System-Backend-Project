@@ -20,7 +20,7 @@ class PhotographyTeamRepository extends baseRepository
         try {
             return Response::Success($photographyTeam,$message);
         } catch (Exception $e) {
-            $error = "Failed to retrieve accessories." ;
+            $error = "Failed to retrieve photography teams." ;
             return Response::Error($error, $e , 500);
         }
     }

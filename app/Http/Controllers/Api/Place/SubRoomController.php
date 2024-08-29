@@ -13,6 +13,7 @@ use App\Models\Media;
 use App\Models\Place;
 use App\Models\PlaceRoomType;
 use App\Models\PlaceType;
+use App\Repositories\Classes\SubRoomRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -20,10 +21,22 @@ use Throwable;
 
 class SubRoomController extends Controller
 {
+    protected $subRoomRepository;
+    protected $subRoomService;
+
+    public function __construct(SubRoomRepository $subRoomRepository)
+    {
+        // $this->subRoomService = $subRoomService;
+        $this->subRoomRepository = $subRoomRepository;
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
+    {
+        return $this->subRoomRepository->index();
+    }
+    public function indexByPlace(Request $request)
     {
         $subrooms = [];
         $message = "these are all place's subrooms";

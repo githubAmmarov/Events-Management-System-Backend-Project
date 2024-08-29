@@ -20,7 +20,7 @@ class FoodRepository extends baseRepository
         try {
             return Response::Success($food,$message);
         } catch (Exception $e) {
-            $error = "Failed to retrieve accessories." ;
+            $error = "Failed to retrieve Food." ;
             return Response::Error($error, $e , 500);
         }
     }

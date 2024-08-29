@@ -42,11 +42,11 @@ Route::group(['middleware'=>['auth:api']], function(){
     Route::get('/profileInfo/{id}',[AuthController::class,'profile_Info']);
     Route::post('/logout',[AuthController::class,'logout']);
 
-    Route::get('/listplacesbycategory',[PlaceController::class,'index']);
-    Route::get('/subRooms',[SubRoomController::class,'index']);
+    Route::get('/listplacesbycategory',[PlaceController::class,'indexByCategory']);
+    Route::get('/subRooms',[SubRoomController::class,'indexByPlace']);
     Route::get('showPlace/{place}',[PlaceController::class,'show']);
     Route::get('showSubroom/{subRoom}',[SubRoomController::class,'show']);
-    Route::get('showSubroomReservations/{subRoom}/{month}/{year}',[ReservationController::class,'index']);
+    Route::get('showSubroomReservations/{subRoom}/{month}/{year}',[ReservationController::class,'filter']);
     Route::post('/storePlace',[PlaceController::class, 'store']);
     Route::post('/storeSubRoom',[SubRoomController::class, 'store']);
     Route::delete('/deleteSubRoom/{id}',[SubRoomController::class, 'destroy']);
@@ -56,8 +56,7 @@ Route::group(['middleware'=>['auth:api']], function(){
 
     
     // Route::get('/foodItem/{id}' ,[FoodItemController::class,'foodItem']);
-    Route::get('/foodCategory/{id}' ,[FoodCategoryController::class,'foodCategory']);
-    Route::get('/foodCategories' ,[FoodCategoryController::class,'foodCategories']);
+    Route::get('/foodCategories' ,[FoodCategoryController::class,'index']);
     Route::get('/foodsForCategory/{id}' ,[FoodCategoryController::class,'foodsForCategory']);
     Route::post('/storeFood' ,[FoodController::class,'store']);
     Route::post('/updateFood/{id}' ,[FoodController::class,'update']);
@@ -115,11 +114,11 @@ Route::get('allInvitationCardStyles',[InvitationCardStyleController::class, 'ind
 Route::get('allInvitationCards',[InvitationCardController::class, 'index']);
 
 Route::get('/allAccessories',[AccessoryController::class, 'index']);
-Route::get('/allAccessoryTypes',[AccessoryTypeController::class, 'allAccessoryTypes']);
+Route::get('/allAccessoryTypes',[AccessoryTypeController::class, 'index']);
 
 Route::get('/allOrders',[OrderController::class, 'index']);
 
-Route::get('/allFoods' ,[FoodController::class,'allFoods']);
+Route::get('/allFoods' ,[FoodController::class,'index']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

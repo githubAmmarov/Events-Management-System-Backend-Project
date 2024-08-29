@@ -17,7 +17,7 @@ class OrderRepository extends baseRepository
     {
         $message = 'these are all orders';
         try {
-            $order = Order::with('food','accessory','sub_room','photography_team','invitation_card','event')->get();
+            $order = Order::with('event','accessory','sub_room','photography_team','invitation_card','food')->get();
             return Response::Success($order,$message);
         } catch (Exception $e) {
             $error = "Failed to retrieve orders." ;

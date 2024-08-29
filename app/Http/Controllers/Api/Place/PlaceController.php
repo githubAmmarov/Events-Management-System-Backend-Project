@@ -10,9 +10,9 @@ use App\Http\Requests\StorePlaceRequest;
 use App\Http\Requests\UpdatePlaceRequest;
 use App\Http\Responses\Response;
 use App\Models\Media;
-use App\Models\PlaceRoomType;
 use App\Models\PlaceType;
 use App\Models\SubRoom;
+use App\Repositories\Classes\PlaceRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -20,11 +20,23 @@ use Throwable;
 
 class PlaceController extends Controller
 {
+    protected $placeRepository;
+    protected $placeService;
+
+    public function __construct(PlaceRepository $placeRepository)
+    {
+        // $this->placeService = $placeService;
+        $this->placeRepository = $placeRepository;
+    }
     /**
      * Display a listing of the resource.
      */
+    public function index()
+    {
+        return $this->placeRepository->index();
+    }
 
-    public function index(Request $request)
+    public function indexByCategory(Request $request)
     {
         $name=$request->validate([
             'name'=>'string',
