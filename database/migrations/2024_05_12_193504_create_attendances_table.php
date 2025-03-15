@@ -20,7 +20,6 @@ return new class extends Migration
                 ->cascadeOnUpdate();
 
             $table->string('name');
-            $table->string('email');
             $table->string('contact_info');
             $table->timestamps();
         });

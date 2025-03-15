@@ -4,11 +4,14 @@ namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Responses\Response;
+use App\Models\Media;
 use Exception;
+use App\Traits\ApiTraits;
 use Illuminate\Support\Facades\Auth;
 
 class baseRepository
 {
+    use ApiTraits;
     protected Model $model;
     public function __construct(Model $model)
     {
@@ -29,17 +32,29 @@ class baseRepository
         }
             return Response::Success($data,$message);
         } catch (Exception $e) {
-            $error = "Failed to retrieve accessories." ;
+            $error = "Failed to retrieve $modelName." ;
             return Response::Error($error, $e , 500);
         }
     }
 
-    public function create($request)
+    public function store($request)
     {
         $modelName = class_basename($this->model);
-        $data=$this->model::create($request);
-        $message="$modelName created successfully";
-        return Response::Success($data,$message);
+        $media = null;
+        if ($request->hasFile('media')) {
+            $mediaPath = $this->savemedia($request,'accessories');
+            $media = Media::create([
+                'media_url' => 'storage/' . $mediaPath
+            ]);
+        }
+        try{
+            $data=$this->model::create($request);
+            $message="$modelName created successfully";
+            return Response::Success($data,$message);
+        }catch (Exception $e) {
+            $error = "Failed to create $modelName." ;
+            return Response::Error($error, $e , 500);
+        }
     }
     public function update($request, $model)
     {

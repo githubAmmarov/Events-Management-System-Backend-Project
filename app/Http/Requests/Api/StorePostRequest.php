@@ -24,7 +24,6 @@ class StorePostRequest extends FormRequest
         return [
             'title' => 'sometimes|string|max:255',
             'description' => 'sometimes|string',
-            'is_public'=> 'sometimes|boolean',
             'image'=> 'sometimes|image|mimes:jpeg,png,jpg,gif,svg'
         ];
     } 

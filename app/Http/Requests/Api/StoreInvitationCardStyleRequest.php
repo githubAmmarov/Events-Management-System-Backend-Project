@@ -4,14 +4,14 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreAccessoryShopRequest extends FormRequest
+class StoreInvitationCardStyleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreAccessoryShopRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'media' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'style' => 'required|string'
         ];
     }
 }
+

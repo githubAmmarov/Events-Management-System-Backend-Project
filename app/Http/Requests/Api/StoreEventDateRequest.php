@@ -11,7 +11,7 @@ class StoreEventDateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class StoreEventDateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+        'event_id'=>'required|integer|exists:events,id',
+        'event_date'=> 'required|date',
         ];
     }
 }

@@ -22,12 +22,12 @@ class StorePlaceRequest extends FormRequest
     public function rules(): array
     {
         return [
-        'place_room_type' => 'required|string|exists:place_room_types,name',
+        'place_type_id' => 'required|integer|exists:place_types,id',
         'name' => 'required|string',
         // 'phone_number' => ['required','regex:/^(\+?963|0)?9[0-9]{8}$/'],
         'phone_number' => 'required|integer',
         'address' => 'required|string',
-        'media' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
+        'media' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg'
         ];
     }
 }

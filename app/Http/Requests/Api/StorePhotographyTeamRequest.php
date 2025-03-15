@@ -25,9 +25,8 @@ class StorePhotographyTeamRequest extends FormRequest
         'name' => 'required|string',
         'address' => 'required|string',
         'cost' => 'required|integer|min:1',
-        // 'phone_number' => ['required','regex:/^(\+?963|0)?9[0-9]{8}$/'],
         'phone_number' => 'required|integer',
-        'media' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
+        'media' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg'
     ];
     }
 }

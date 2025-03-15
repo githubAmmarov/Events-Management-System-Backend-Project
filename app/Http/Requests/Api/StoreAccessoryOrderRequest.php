@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreInvitationCardRequest extends FormRequest
+class StoreAccessoryOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,8 @@ class StoreInvitationCardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'media' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
-            'style' => 'required|string'
+            'accessory_id' => 'required|integer|exists:accessories,id',
+            'order_id' => 'required|integer|exists:orders,id',
         ];
     }
 }
-

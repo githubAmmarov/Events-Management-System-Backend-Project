@@ -10,6 +10,7 @@ use App\Models\Accessory;
 use App\Http\Responses\Response;
 use App\Models\AccessoryType;
 use App\Models\Media;
+use App\Traits\ApiTraits;
 use App\Repositories\Classes\AccessoryRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -19,6 +20,7 @@ use Throwable;
 
 class AccessoryController extends Controller
 {
+    use ApiTraits;
     protected $accessoryService;
     protected $accessoryRepository;
 
@@ -60,21 +62,16 @@ class AccessoryController extends Controller
     $validateData = $request->validated();
 
     return DB::transaction(function () use ($validateData, $request) {
-        $accessoryType = AccessoryType::query()->where('type', $validateData['accessory_type'])->firstOrFail();
-
         $media = null;
         if ($request->hasFile('media')) {
-            $file = $request->file('media');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $mediaPath = $file->storeAs('accessories', $fileName, 'public');
-
+            $mediaPath = $this->savemedia($request,'accessories');
             $media = Media::create([
                 'media_url' => 'storage/' . $mediaPath
             ]);
         }
 
         $accessory = Accessory::create([
-            'accessory_type_id' => $accessoryType->id,
+            'accessory_type_id' => $validateData['accessory_type_id'],
             'media_id' => $media ? $media->id : null,
             'name' => $validateData['name'],
             'price' => $validateData['price'],

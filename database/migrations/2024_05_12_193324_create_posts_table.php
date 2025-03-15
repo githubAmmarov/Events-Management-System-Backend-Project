@@ -19,9 +19,7 @@ return new class extends Migration
             ->cascadeOnDelete()
             ->cascadeOnUpdate();
 
-            $table->text('title');
             $table->longText('description');
-            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

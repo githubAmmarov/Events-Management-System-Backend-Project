@@ -22,10 +22,10 @@ class StoreAccessoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'accessory_type' => 'required|string|exists:accessory_types,type',
-            'media' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'accessory_type_id' => 'required|integer|exists:accessory_types,id',
+            'media' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'name' => 'required|string',
-            'price' => 'required|integer|min:1'
+            'price' => 'required|integer'
         ];
     }
 }

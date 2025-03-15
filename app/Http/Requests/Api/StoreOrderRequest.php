@@ -11,7 +11,7 @@ class StoreOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,13 @@ class StoreOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+        'event_id'=>'required|integer|exists:events,id',
+        'user_id'=>'required|integer|exists:users,id',
+        'sub_room_id'=>'required|integer|exists:sub_rooms,id',
+        'photography_team_id'=>'sometimes|integer|exists:photography_teams,id',
+        'invitation_card_id'=>'required|integer|exists:invitation_cards,id',
+        'is_paid'=>'required|boolean',
+        'total_cost'=>'required|integer',
         ];
     }
 }
